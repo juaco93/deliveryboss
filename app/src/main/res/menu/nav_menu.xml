@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_ordenes"
+            android:checked="true"
+            android:icon="@drawable/ic_encargos"
+            android:title="Mis órdenes" />
+        <item
+            android:id="@+id/nav_direcciones"
+            android:icon="@drawable/ic_direcciones"
+            android:title="Mis direcciones" />
+
+        <!--
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_miperfil"
+            android:title="Mi perfil" />
+        -->
+
+
+        <!--
+        <item
+            android:id="@+id/nav_acerca"
+            android:icon="@drawable/ic_acerca"
+            android:title="Acerca de nosotros" />
+            -->
+
+        <!-- Sección de configuración -->
+        <item
+            android:id="@+id/configuration_section"
+            android:title="Más">
+            <menu>
+                <item
+                    android:id="@+id/nav_ciudad"
+                    android:icon="@drawable/ic_direcciones"
+                    android:title="Elegir otra ciudad" />
+                <item
+                    android:id="@+id/nav_sugerirempresa"
+                    android:icon="@drawable/ic_registrarempresa"
+                    android:title="Sugerir local" />
+                <item
+                    android:id="@+id/nav_compartir"
+                    android:icon="@drawable/ic_compartir"
+                    android:title="Compartir APP" />
+            </menu>
+        </item>
+    </group>
+
+</menu>

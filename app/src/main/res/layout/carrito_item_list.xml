@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingBottom="10dp"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/btnCarritoEdit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <TextView
+            android:id="@+id/txtCarritoSubtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtCarritoNombreProducto"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="$110"
+            android:textColor="@color/cardview_dark_background" />
+
+        <TextView
+            android:id="@+id/txtCarritoNombreProducto"
+            style="@style/Base.TextAppearance.AppCompat.Body2"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txtCarritoCantidad"
+            android:textColor="@color/cardview_dark_background"
+            tools:text="Lomito Especial" />
+
+        <TextView
+            android:id="@+id/txtCarritoCantidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@+id/btnCarritoEdit"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="4"
+            android:textColor="@color/cardview_dark_background" />
+
+        <View
+            android:id="@+id/horizontal_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/txtCarritoNombreProducto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="6dp"
+            android:background="#E0E0E0" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

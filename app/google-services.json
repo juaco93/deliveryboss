@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "612332041285",
+    "firebase_url": "https://deliveryboss-3b9ee.firebaseio.com",
+    "project_id": "deliveryboss-3b9ee",
+    "storage_bucket": "deliveryboss-3b9ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612332041285:android:bce3b9d0f888dbad",
+        "android_client_info": {
+          "package_name": "com.jadevelopment.deliveryboss1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612332041285-s29idfi49aoctu4vi01i56ii7f80jn1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV8YNPQ7M9Jm84wksU79ppKHe3vBDwa-4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">deliveryboss</string>
+
+    <string name="facebook_app_id">790490254443566</string>
+    <string name="fb_login_protocol_scheme">fb790490254443566</string>
+
+    <string-array name="sexo">
+        <item>Sexo</item>
+        <item>Hombre</item>
+        <item>Mujer</item>
+    </string-array>
+
+    <string-array name="tipo_entrega">
+        <item>Delivery</item>
+        <item>Retiro en el local</item>
+    </string-array>
+
+    <string-array name="tipo_sugerencia">
+        <item>Soy Cliente</item>
+        <item>Soy de la Empresa</item>
+    </string-array>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar Sesión</string>
+    <string name="action_sign_in_short">E-mail</string>
+    <string name="error_invalid_email">Este e-mail es invalido</string>
+    <string name="error_invalid_password">Contraseña muy corta</string>
+    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="error_field_required">Campo obligatorio</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="error_network">Error de conexion</string>
+    <string name="error_server">Imposible contactar con el servidor</string>
+    <string name="title_activity_principal">Listado Empresas</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detalle_empresa">DetalleEmpresa</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_seleccion_rubro">SeleccionRubro</string>
+
+    <string name="menu_search">Buscar...</string>
+    <string name="empty_container_text">Realizando búsqueda...</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_soy_usuario">SoyUsuarioActivity</string>
+    <string name="title_activity_registrarme">RegistrarmeActivity</string>
+    <string name="title_activity_carrito">Mi orden</string>
+    <string name="title_activity_menu_lateral">MenuLateral</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="home_item">Home</string>
+    <string name="productos_item">Productos</string>
+    <string name="compras_item">Carrito</string>
+    <string name="ordenes_item">Ordenes</string>
+    <string name="facturas_item">Facturas</string>
+    <string name="log_out_item">Cerrar sesión</string>
+    <string name="configuracion_item">Configuración</string>
+    <string name="title_activity_mis_ordenes">Mis órdenes</string>
+    <string name="title_activity_seleccionar_ciudad">Seleccioná tu ciudad</string>
+    <string name="title_activity_mis_direcciones">Mis direcciones</string>
+    <string name="title_activity_acerca_de">AcercaDeActivity</string>
+    <string name="title_activity_sugerir_empresa">Sugerir empresa</string>
+    <string name="title_activity_seleccion_direccion">SeleccionDireccion</string>
+    <string name="title_activity_sugerir_ciudad">Sugerir ciudad</string>
+    <string name="title_activity_ciudad_no_disponible">Ciudad no disponible</string>
+    <string name="title_activity_mi_perfil">Mi perfil</string>
+    <string name="prompt_seleccionar_ciudad">Seleccioná tu ciudad</string>
+</resources>

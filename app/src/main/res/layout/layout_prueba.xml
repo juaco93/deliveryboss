@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jadevelopment.deliveryboss1.ui.SeleccionRubro">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarRubro"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="120dp"
+            app:srcCompat="@drawable/logo_main" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvComida"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/altura_card_menu"
+            android:layout_marginBottom="28dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/colorBotonRubro"
+            app:cardCornerRadius="@dimen/corner_radius_seleccion_rubro"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:id="@+id/imgComida"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:tint="@color/colorTextoBotonRubro"
+                    app:srcCompat="@drawable/comida">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/txtSeleccionRubroComida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_toEndOf="@+id/imgComida"
+                    android:layout_toRightOf="@+id/imgComida"
+                    android:text="Restaurantes"
+                    android:textColor="@color/colorTextoBotonRubro"
+                    android:textSize="30dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvFarmacia"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/altura_card_menu"
+            android:layout_marginBottom="28dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="32dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/colorBotonRubro"
+            app:cardCornerRadius="@dimen/corner_radius_seleccion_rubro"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:id="@+id/imgFarmacia"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:tint="@color/colorTextoBotonRubro"
+                    app:srcCompat="@drawable/farmacia">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/txtSeleccionRubroFarmacia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginStart="19dp"
+                    android:layout_toEndOf="@+id/imgFarmacia"
+                    android:layout_toRightOf="@+id/imgFarmacia"
+                    android:text="Farmacia"
+                    android:textColor="@color/colorTextoBotonRubro"
+                    android:textSize="30dp" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvMercado"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/altura_card_menu"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/colorBotonRubro"
+            app:cardCornerRadius="@dimen/corner_radius_seleccion_rubro"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:id="@+id/imgMercado"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:tint="@color/colorTextoBotonRubro"
+                    app:srcCompat="@drawable/mercado">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/txtSeleccionRubroMercado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginStart="19dp"
+                    android:layout_toEndOf="@+id/imgMercado"
+                    android:layout_toRightOf="@+id/imgMercado"
+                    android:text="Maxikioscos"
+                    android:textColor="@color/colorTextoBotonRubro"
+                    android:textSize="30dp" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

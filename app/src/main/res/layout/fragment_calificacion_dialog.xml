@@ -1,0 +1,191 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.jadevelopment.deliveryboss1.ui.CalificacionDialogFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/lbCalificacionNombreEmpresa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="LOMITOS LA AVENIDA"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lbLeyenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbCalificacionNombreEmpresa"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="¡Calificá tu orden!"
+            android:textAllCaps="false"
+            android:textSize="18sp" />
+
+        <TableLayout
+            android:id="@+id/tablaOrdenEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbCalificacionNombreEmpresa"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Velocidad"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/RatingCalificacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_borderColor="@color/cardview_shadow_start_color"
+                    app:srb_fillColor="@color/colorComida"
+                    app:srb_numberOfStars="5"
+                    app:srb_rating="0"
+                    app:srb_starSize="25dp"
+                    app:srb_stepSize="1" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Productos"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/RatingCalificacion2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_borderColor="@color/cardview_shadow_start_color"
+                    app:srb_fillColor="@color/colorComida"
+                    app:srb_numberOfStars="5"
+                    app:srb_rating="0"
+                    app:srb_starSize="25dp"
+                    app:srb_stepSize="1" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Atención"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/RatingCalificacion3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_borderColor="@color/cardview_shadow_start_color"
+                    app:srb_fillColor="@color/colorComida"
+                    app:srb_numberOfStars="5"
+                    app:srb_rating="0"
+                    app:srb_starSize="25dp"
+                    app:srb_stepSize="1" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/LayoutCalificacionNotaGeneral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tablaOrdenEstado"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lbCalificacionGeneral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="0.0"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/txtCuerpoCalificacion"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/LayoutCalificacionNotaGeneral"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginEnd="31dp"
+            android:layout_marginRight="31dp"
+            android:layout_marginTop="15dp"
+            android:elevation="0dp"
+            android:hint="Danos tu opinión..."
+            android:inputType="textAutoCorrect|textLongMessage"
+            android:maxLines="6"
+            android:minLines="3"
+            android:textColorLink="@color/cardview_shadow_start_color"
+            android:textStyle="italic" />
+
+
+        <Button
+            android:id="@+id/btnEnviarCalificacion"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/txtCuerpoCalificacion"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/colorComida"
+            android:elevation="10dp"
+            android:text="Calificar"
+            android:textColor="@color/cardview_light_background"></Button>
+
+    </RelativeLayout>
+</FrameLayout>

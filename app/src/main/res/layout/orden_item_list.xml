@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingEnd="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+
+        <TextView
+            android:id="@+id/txtOrdenIdOrden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtOrdenNombreEmpresa"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/txtOrdenNombreEmpresa"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="2dp"
+            android:textStyle="italic"
+            tools:text="Orden #98875" />
+
+        <TextView
+            android:id="@+id/txtOrdenEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/txtOrdenIdOrden"
+            android:layout_toRightOf="@+id/txtOrdenIdOrden"
+            android:background="@color/colorOrdenPendiente"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="Pendiente" />
+
+        <ImageView
+            android:id="@+id/btnOrdenInfo"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignBottom="@+id/txtOrdenEstado"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txtOrdenEstado"
+            app:srcCompat="@drawable/ic_orden_info" />
+
+        <TextView
+            android:id="@+id/txtOrdenFechaHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtOrdenIdOrden"
+            android:layout_marginLeft="12dp"
+            android:textStyle="italic"
+            tools:text="2017-25-03 22:10:00" />
+
+        <!--
+        <TextView
+            android:id="@+id/txtOrdenInfoEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtOrdenFechaHora_estado"
+            android:layout_marginLeft="12dp"
+            android:textStyle="italic"
+            tools:text="Su orden esta siendo preparada" />
+
+            -->
+
+        <TextView
+            android:id="@+id/txtOrdenNombreEmpresa"
+            style="@style/Base.TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtOrdenFechaHora"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="7dp"
+            tools:text="EL TEREBINTO" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutOrdenDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtOrdenIdOrden"
+            android:layout_alignStart="@+id/txtOrdenIdOrden"
+            android:layout_below="@+id/txtOrdenNombreEmpresa"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtOrdenDetalle"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textSize="13sp"
+                tools:text="2 Lomito Especial \n3 Pizzas Muzza\n2Porciones papas" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/horizontal_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layoutOrdenDetalle"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="8dp"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/horizontal_separator"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/txtOrdenCalificar"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="CALIFICAR"
+                android:textAppearance="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:textColorLink="@color/cardview_shadow_start_color"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtOrdenLlamar"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/horizontal_separator"
+                android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@+id/txtOrdenCalificar"
+                android:text="LLAMAR"
+                android:textAppearance="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:textColorLink="@color/cardview_shadow_start_color"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

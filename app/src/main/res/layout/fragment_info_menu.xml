@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jadevelopment.deliveryboss1.ui.DetalleEmpresa">
+<!--
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:elevation="10dp"
+        app:srcCompat="@drawable/cajita_sola"
+        app:backgroundTint="@color/colorComida"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp" />
+-->
+    <RelativeLayout
+        android:id="@+id/content_principal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_productos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/producto_item_list"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/empty_state_containerMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <pl.droidsonroids.gif.GifTextView
+                android:id="@+id/image_empty_state"
+                android:layout_width="94dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:background="@drawable/loadingbw"
+                android:tint="#9E9E9E" />
+
+            <TextView
+                android:id="@+id/txtEmptyContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/empty_container_text" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

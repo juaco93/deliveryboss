@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Originales (Amarillo)-->
+    <!--
+    <color name="colorPrimary">#ffcc00</color>
+    <color name="colorPrimaryDark">#c79c00</color>
+    <color name="colorAccent">#ff5722</color>
+    -->
+
+    <!-- Colores Rojo
+    <color name="colorPrimary">#dd2c00</color>
+    <color name="colorPrimaryDark">#a30000</color>
+    <color name="colorAccent">#1b5e20</color>
+ -->
+
+    <!-- Colores prueba (morado) -->
+         <color name="colorPrimary">#F44336</color>
+         <color name="colorPrimaryDark">#D32F2F</color>
+         <color name="colorAccent">#FFC003</color>
+         <color name="colorSelect">#8e03abff</color>
+
+
+
+    <!-- Colores para background spinner -->
+    <color name="primaryColor">#353D68</color>
+    <color name="primaryDarkColor">#28284e</color>
+    <color name="accentColor">#03A9F4</color>
+    <color name="negro">#000000</color>
+
+    <color name="FondoFormColor">#e6e6e6</color>
+    <color name="FondoCamposColor">#f1f1f1</color>
+    <color name="LineaCamposColor">#c6c6c6</color>
+
+    <!-- Colores de Estado de Orden -->
+         <color name="colorOrdenPendiente">#f0ad4e</color>
+         <color name="colorOrdenConfirmada">#5cb85c</color>
+         <color name="colorOrdenCancelada">#d9534f</color>
+         <color name="colorOrdenEntregada">#337ab7</color>
+
+
+    <color name="colorEstrellas">#ffcc00</color>
+    <!--
+    <color name="colorComida">#dc2c01</color>
+     -->
+    <color name="colorComida">#F44336</color>
+    <color name="colorMercado">#2d690c</color>
+    <color name="colorFarmacia">#008DDE</color>
+    <color name="colorTaxi">#FCCB1A</color>
+    <color name="colorBotonRubro">#80ff0000</color>
+    <color name="colorTextoBotonRubro">#FEF4EA</color>
+    <color name="colorBotonNaranja">#80FF0000</color>
+    <color name="colorTextoBoton">#FEF4EA</color>
+    <color name="colorBotonFacebook">#3B589E</color>
+
+    <color name="nosotros1a">#9c27b0</color>
+    <color name="nosotros1b">#ba68c8</color>
+    <color name="nosotros2a">#00A2E0</color>
+    <color name="nosotros2b">#90caf9</color>
+    <color name="nosotros3a">#FBBC05</color>
+    <color name="nosotros3b">#F0CE68</color>
+    <color name="nosotros4a">#45C7A4</color>
+    <color name="nosotros4b">#7FE3C8</color>
+    <color name="nosotros5a">#E0143D</color>
+    <color name="nosotros5b">#E84B6A</color>
+</resources>
+
