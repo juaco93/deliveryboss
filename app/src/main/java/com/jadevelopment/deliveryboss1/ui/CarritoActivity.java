@@ -1,9 +1,11 @@
 package com.jadevelopment.deliveryboss1.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -720,8 +722,7 @@ public class CarritoActivity extends AppCompatActivity {
                             // SI NO, MODIFICAR
                             ordenesDetalleLocal.set(posicion,detalleMod);
                         }
-                        if(ordenesDetalleLocal.size()>0) mostrarOrdenesDetalle(ordenesDetalleLocal);
-                        if(ordenesDetalleLocal.size()==0) mostrarCarritoEmpty();
+                        refreshOrdenesDetalle();
 
         // RECALCULO DEL TOTAL
         if(tipoEnvio.equals("1")){
@@ -752,6 +753,8 @@ public class CarritoActivity extends AppCompatActivity {
         // may be called multiple times if the mode is invalidated.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            String titulo = String.valueOf(ordenesDetalleLocal.size())+" seleccionados";
+            mode.setTitle(titulo);
             return false; // Return false if nothing is done
         }
 
@@ -766,18 +769,32 @@ public class CarritoActivity extends AppCompatActivity {
                             ordenesDetalleLocal.remove(i);
                         }
                     }
-                    if(ordenesDetalleLocal.size()>0) mostrarOrdenesDetalle(ordenesDetalleLocal);
-                    if(ordenesDetalleLocal.size()==0) mostrarCarritoEmpty();
+                    refreshOrdenesDetalle();
                     return true;
                 default:
                     return false;
             }
         }
 
+
         // Called when the user exits the action mode
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
+            for (int i=0; i<ordenesDetalleLocal.size(); i++) {
+                if(ordenesDetalleLocal.get(i).getSelected()){
+                    ordenesDetalleLocal.get(i).setSelected(false);
+                }
+            }
+            refreshOrdenesDetalle();
+
         }
     };
+
+    public void refreshOrdenesDetalle(){
+        if(ordenesDetalleLocal.size()>0) mostrarOrdenesDetalle(ordenesDetalleLocal);
+        if(ordenesDetalleLocal.size()==0) mostrarCarritoEmpty();
+    }
 }
+
+// cambio en comentario
