@@ -105,6 +105,8 @@ public class CarritoActivity extends AppCompatActivity {
     Float importeTotal;
     String tipoEnvio = "1";
     String idDireccionUsuario = "";
+    int c;
+    int[] elem_a_borrar;
 
     private static final int FRAGMENTO_AGREGAR_DIRECCION = 2;
 
@@ -248,14 +250,27 @@ public class CarritoActivity extends AppCompatActivity {
         mCarritoAdapter.setOnLongItemClickListener(new CarritoAdapter.OnLongItemClickListener() {
             @Override
             public void onLongItemClick(Orden_detalle clickedItemCarrito) {
-                if (mActionMode != null) {
+                if (mActionMode == null) {
+                    // Start the CAB using the ActionMode.Callback defined above
+                    mActionMode = startSupportActionMode(mActionModeCallback);
                 }
-                // Start the CAB using the ActionMode.Callback defined above
-                mActionMode = startSupportActionMode(mActionModeCallback);
 
                 if(clickedItemCarrito.getSelected()){
                     clickedItemCarrito.setSelected(false);
-                } else clickedItemCarrito.setSelected(true);
+                    c--;
+                } else {
+                    clickedItemCarrito.setSelected(true);
+                    c++;
+                }
+                Log.d("carrito1","Cant select->"+String.valueOf(c));
+                elem_a_borrar= new int[ordenesDetalleLocal.size()];
+                int f=0;
+                for (int i=0; i<c; i++) {
+                    if(ordenesDetalleLocal.get(i).getSelected()){
+                        elem_a_borrar[f]=i;
+                        f++;
+                    }
+                }
 
                 Log.d("carritoLongClick","Click largo en item: "+clickedItemCarrito.getProducto_nombre() + "--> Seteado a: " + clickedItemCarrito.getSelected().toString());
             }
@@ -753,7 +768,7 @@ public class CarritoActivity extends AppCompatActivity {
         // may be called multiple times if the mode is invalidated.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            String titulo = String.valueOf(ordenesDetalleLocal.size())+" seleccionados";
+            String titulo = String.valueOf(c)+" seleccionados";
             mode.setTitle(titulo);
             return false; // Return false if nothing is done
         }
@@ -763,13 +778,13 @@ public class CarritoActivity extends AppCompatActivity {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_delete:
-                    mode.finish(); // Action picked, so close the CAB
-                    for (int i=0; i<ordenesDetalleLocal.size(); i++) {
-                        if(ordenesDetalleLocal.get(i).getSelected()){
-                            ordenesDetalleLocal.remove(i);
-                        }
+                    for(int i=0; i<c;i++){
+                        Log.d("carrito1","BORRAR-->"+ordenesDetalleLocal.get(elem_a_borrar[i]).getProducto_nombre()+" selected-->"+ordenesDetalleLocal.get(elem_a_borrar[i]).getSelected());
+                        ordenesDetalleLocal.remove(elem_a_borrar[i]);
                     }
+                    mode.finish(); // Action picked, so close the CAB
                     refreshOrdenesDetalle();
+                    c=0;
                     return true;
                 default:
                     return false;
