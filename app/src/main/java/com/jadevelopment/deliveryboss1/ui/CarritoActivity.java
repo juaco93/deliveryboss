@@ -255,6 +255,7 @@ public class CarritoActivity extends AppCompatActivity {
                     mActionMode = startSupportActionMode(mActionModeCallback);
                 }
 
+
                 if(clickedItemCarrito.getSelected()){
                     clickedItemCarrito.setSelected(false);
                     c--;
@@ -262,15 +263,8 @@ public class CarritoActivity extends AppCompatActivity {
                     clickedItemCarrito.setSelected(true);
                     c++;
                 }
-                Log.d("carrito1","Cant select->"+String.valueOf(c));
-                elem_a_borrar= new int[ordenesDetalleLocal.size()];
-                int f=0;
-                for (int i=0; i<c; i++) {
-                    if(ordenesDetalleLocal.get(i).getSelected()){
-                        elem_a_borrar[f]=i;
-                        f++;
-                    }
-                }
+                String titulo = String.valueOf(c)+" seleccionados";
+                mActionMode.setTitle(titulo);
 
                 Log.d("carritoLongClick","Click largo en item: "+clickedItemCarrito.getProducto_nombre() + "--> Seteado a: " + clickedItemCarrito.getSelected().toString());
             }
@@ -778,9 +772,21 @@ public class CarritoActivity extends AppCompatActivity {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_delete:
-                    for(int i=0; i<c;i++){
-                        Log.d("carrito1","BORRAR-->"+ordenesDetalleLocal.get(elem_a_borrar[i]).getProducto_nombre()+" selected-->"+ordenesDetalleLocal.get(elem_a_borrar[i]).getSelected());
-                        ordenesDetalleLocal.remove(elem_a_borrar[i]);
+                    // Primero guardamos los elementos a borrar en un array
+                    elem_a_borrar= new int[c];
+                    int f=0;
+                    for (int i=0; i<ordenesDetalleLocal.size(); i++) {
+                        if(ordenesDetalleLocal.get(i).getSelected()){
+                            elem_a_borrar[f]=i;
+                            f++;
+                        }
+                    }
+                    Log.d("carrito1","A BORRAR-->"+Arrays.toString(elem_a_borrar));
+                    // Caso seguido los borramos uno por uno del array original (array original= ordenesDetalleLocal)
+                    // Lo borramos en orden invertido para que no afecte la posicion de los items que van quedando
+                    for(int i=c; i>0;i--){
+                        Log.d("carrito1","borrando-->"+String.valueOf(elem_a_borrar[i-1]));
+                        ordenesDetalleLocal.remove(elem_a_borrar[i-1]);
                     }
                     mode.finish(); // Action picked, so close the CAB
                     refreshOrdenesDetalle();
@@ -802,7 +808,7 @@ public class CarritoActivity extends AppCompatActivity {
                 }
             }
             refreshOrdenesDetalle();
-
+            c=0;
         }
     };
 
