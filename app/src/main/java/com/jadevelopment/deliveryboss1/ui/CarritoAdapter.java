@@ -159,6 +159,7 @@ public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHold
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 mOnItemClickListener.onItemClick(mItems.get(position));
+                notifyDataSetChanged();
             }
         }
 
