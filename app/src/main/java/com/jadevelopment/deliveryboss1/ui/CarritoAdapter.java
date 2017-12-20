@@ -55,11 +55,11 @@ public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHold
 
         if (orden.getSelected()){
             //if item is selected then,set foreground color of FrameLayout.
-            holder.rootView.setForeground(new ColorDrawable(ContextCompat.getColor(context,R.color.colorSelect)));
+            holder.rootView.setBackgroundResource(R.color.colorSelect);
         }
         else {
             //else remove selected item color.
-            holder.rootView.setForeground(new ColorDrawable(ContextCompat.getColor(context,android.R.color.transparent)));
+            holder.rootView.setBackgroundResource(android.R.color.transparent);
         }
     }
 

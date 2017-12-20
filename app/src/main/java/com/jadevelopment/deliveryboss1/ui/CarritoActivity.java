@@ -86,6 +86,7 @@ public class CarritoActivity extends AppCompatActivity {
     private TextView txtEmptyContainer;
     List<Usuario_direccion> serverDirecciones;
     String authorization;
+    String stDireccion;
 
     // Variables multiselect
     private ActionMode mActionMode;
@@ -213,8 +214,12 @@ public class CarritoActivity extends AppCompatActivity {
         spDireccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(serverDirecciones!=null && serverDirecciones.size()>0)idDireccionUsuario = serverDirecciones.get(position).getIdusuario_direccion();
-                Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
+               // if(serverDirecciones!=null && serverDirecciones.size()>0)idDireccionUsuario = serverDirecciones.get(position-1).getIdusuario_direccion();
+                //Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
+                if(position>0)stDireccion = serverDirecciones.get(position-1).getIdusuario_direccion();
+                //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
+               // Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
+                Log.d("direcciones", "id de direccion elegida: " + stDireccion);
             }
 
             @Override
@@ -414,7 +419,7 @@ public class CarritoActivity extends AppCompatActivity {
         String total = String.valueOf(importeTotal);
 
         // Creacion del Objeto "Orden"
-        Orden orden = new Orden("","","","",idusuario,idempresa,idDireccionUsuario,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
+        Orden orden = new Orden("","","","",idusuario,idempresa,stDireccion,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
 
 
         // Realizar petición HTTP
@@ -603,13 +608,21 @@ public class CarritoActivity extends AppCompatActivity {
 
     private void mostrarDirecciones(List<Usuario_direccion> direccionesServer) {
         Log.d("direcciones", "Entramos a mostrar direcciones ");
-        //String array to store all the book names
-        String[] items = new String[direccionesServer.size()];
 
+       // String[] items = new String[direccionesServer.size()];
+        String[] items = new String[direccionesServer.size()+1];
+
+
+        int c=1;
+        items[0] = "Seleccioná tu dirección";
         //Traversing through the whole list to get all the names
         for(int i=0; i<direccionesServer.size(); i++){
             //Storing names to string array
-            items[i] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
+
+            items[c] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
+            c++;
+
+//          items[i] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
         }
 
         //Spinner spinner = (Spinner) findViewById(R.id.spinner1);
