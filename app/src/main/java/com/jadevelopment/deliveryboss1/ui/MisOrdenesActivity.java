@@ -67,15 +67,13 @@ public class MisOrdenesActivity extends AppCompatActivity {
 
         mListaOrdenes = (RecyclerView) findViewById(R.id.list_ordenes);
         mOrdenesAdapter = new OrdenesAdapter(this, new ArrayList<Orden>(0));
+        mListaOrdenes.setAdapter(mOrdenesAdapter);
         mOrdenesAdapter.setOnItemClickListener(new OrdenesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Orden clickedOrden) {
-                Log.d("ordenes","HICISTE CLICK EN UNA ORDEN loco :v");
                 showInfoEstadoOrden((new Gson()).toJson(clickedOrden));
             }
         });
-
-        mListaOrdenes.setAdapter(mOrdenesAdapter);
         mEmptyStateContainer = findViewById(R.id.empty_state_containerOrdenes);
         txtEmptyContainer = (TextView) findViewById(R.id.txtOrdenesEmptyContainer);
 
@@ -233,7 +231,6 @@ public class MisOrdenesActivity extends AppCompatActivity {
     }
 
     public void showInfoEstadoOrden(String orden) {
-        Log.d("ordenes","entre a orden: "+orden);
         FragmentManager fragmentManager = getSupportFragmentManager();
         OrdenInfoEstadoFragment newFragment = new OrdenInfoEstadoFragment();
 

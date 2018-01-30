@@ -206,6 +206,8 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
             btnOrdenInfo = (ImageView) itemView.findViewById(R.id.btnOrdenInfo);
             calificar = (TextView) itemView.findViewById(R.id.txtOrdenCalificar);
             llamar = (TextView) itemView.findViewById(R.id.txtOrdenLlamar);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
