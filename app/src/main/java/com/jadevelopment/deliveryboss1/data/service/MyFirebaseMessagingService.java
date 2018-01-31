@@ -96,6 +96,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // app is in foreground, broadcast the push message
                 Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
                 pushNotification.putExtra("message", message);
+                pushNotification.putExtra("idorden", payload.getString("idorden"));
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
                 // play notification sound
@@ -105,12 +106,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // show the notification even if the app is in foreground
                 Intent resultIntent = new Intent(getApplicationContext(), MisOrdenesActivity.class);
                 resultIntent.putExtra("idorden",payload.getString("idorden"));
+                resultIntent.putExtra("estado",payload.getString("estado"));
                 resultIntent.putExtra("message", message);
                 showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
             } else {
                 // app is in background, show the notification in notification tray
                 Intent resultIntent = new Intent(getApplicationContext(), MisOrdenesActivity.class);
                 resultIntent.putExtra("idorden",payload.getString("idorden"));
+                resultIntent.putExtra("estado",payload.getString("estado"));
                 resultIntent.putExtra("message", message);
 
                 // check for image attachment

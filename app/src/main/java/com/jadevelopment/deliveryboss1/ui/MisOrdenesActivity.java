@@ -174,7 +174,20 @@ public class MisOrdenesActivity extends AppCompatActivity {
                     if(getIntent().getStringExtra("idorden")!=null){
                         int cant = serverOrdenes.size();
                         for(int i=0;i<cant;i++){
-                            if(serverOrdenes.get(i).getIdorden().equals(getIntent().getStringExtra("idorden")))showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
+                            // Chequeamos el idorden para ver si esta en las listadas, y si está actuamos según el estado de la orden
+                            // Si estado='confirmada' o estado='cancelada' mostramos el estado de la orden
+                            // Si estado='entregada' entonces mostramos el dialogo para calificar la orden
+                            if(serverOrdenes.get(i).getIdorden().equals(getIntent().getStringExtra("idorden"))){
+                                if(getIntent().getStringExtra("estado").equals("entregada")){
+                                    if(serverOrdenes.get(i).getCalificado()==null)showDialogCalificar((new Gson()).toJson(serverOrdenes.get(i)));
+                                }
+                                if(getIntent().getStringExtra("estado").equals("confirmada")){
+                                    showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
+                                }
+                                if(getIntent().getStringExtra("estado").equals("cancelada")){
+                                    showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
+                                }
+                            }
                         }
                     }
                 }
@@ -242,6 +255,18 @@ public class MisOrdenesActivity extends AppCompatActivity {
 
     }
 
+    public void showDialogCalificar(String orden) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        CalificacionDialogFragment newFragment = new CalificacionDialogFragment();
+
+        Bundle args = new Bundle();
+        if(!orden.isEmpty() && !orden.equals(""))args.putString("orden", orden);
+        newFragment.setArguments(args);
+
+        newFragment.show(fragmentManager.beginTransaction(), "Calificá tu orden");
+
+    }
+
     private void showLoadingIndicator(final boolean show) {
         swipeRefreshLayout.setRefreshing(show);
     }
@@ -250,6 +275,12 @@ public class MisOrdenesActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
     }
 
 }
