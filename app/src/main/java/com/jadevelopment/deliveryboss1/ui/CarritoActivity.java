@@ -179,7 +179,6 @@ public class CarritoActivity extends AppCompatActivity {
         spTipoEntrega.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 //DELIVERY
                 if(position==0){
                     Float precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
@@ -189,6 +188,8 @@ public class CarritoActivity extends AppCompatActivity {
                     txtTotal.setText("$"+String.valueOf(subtotSt));
                     tipoEnvio = "1";
                     spDireccion.setEnabled(true);
+
+                    //chequearDireccion();
                 }
                 //RETIRO EN LOCAL
                 if(position==1){
@@ -201,7 +202,10 @@ public class CarritoActivity extends AppCompatActivity {
                     tipoEnvio = "2";
                     idDireccionUsuario = null;
                     spDireccion.setEnabled(false);
+
+                    chequearDireccion();
                 }
+
             }
 
             @Override
@@ -217,6 +221,7 @@ public class CarritoActivity extends AppCompatActivity {
                // if(serverDirecciones!=null && serverDirecciones.size()>0)idDireccionUsuario = serverDirecciones.get(position-1).getIdusuario_direccion();
                 //Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
                 if(position>0)stDireccion = serverDirecciones.get(position-1).getIdusuario_direccion();
+                chequearDireccion();
                 //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
                // Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
                 Log.d("direcciones", "id de direccion elegida: " + stDireccion);
@@ -499,24 +504,33 @@ public class CarritoActivity extends AppCompatActivity {
         }
     }
 
-    private boolean chequearDireccion(){
-     if(spDireccion.getSelectedItem().toString().equals("Agrega tu dirección de envío")){
-         btnConfirmarOrden.setEnabled(false);
-         btnConfirmarOrden.setText("¡No tenés dirección para tu envío!");
-         return false;
-     }  else {
-         if(spTipoEntrega.getSelectedItem().toString().equals("Retiro en el local")){
-             btnConfirmarOrden.setEnabled(true);
-             btnConfirmarOrden.setText("Enviar Orden");
-             return true;
-         }
-         else {
-             btnConfirmarOrden.setEnabled(true);
-             btnConfirmarOrden.setText("Enviar Orden");
-             return true;
-         }
-     }
-    }
+
+    private boolean chequearDireccion() {
+        if (spDireccion.getSelectedItem().toString().equals("Agrega tu dirección de envío")) {
+            btnConfirmarOrden.setEnabled(false);
+            btnConfirmarOrden.setText("¡No tenés dirección para tu envío!");
+            return false;
+        } else {
+            if (spDireccion.getSelectedItem().toString().equals("Elegí tu dirección") && spTipoEntrega.getSelectedItem().toString().equals("Delivery")) {
+                btnConfirmarOrden.setEnabled(false);
+                btnConfirmarOrden.setText("¡Elegí la dirección de envío!");
+                return false;
+            }
+            else {
+                    if (spTipoEntrega.getSelectedItem().toString().equals("Retiro en el local")) {
+                        btnConfirmarOrden.setEnabled(true);
+                        btnConfirmarOrden.setText("Enviar Orden");
+                        return true;
+                    } else {
+
+                        btnConfirmarOrden.setEnabled(true);
+                        btnConfirmarOrden.setText("Enviar Orden");
+                        return true;
+                    }
+            }
+          }
+        }
+
     private boolean chequearPagaCon(){
         if(pagaCon.getText()!=null && !TextUtils.isEmpty(pagaCon.getText())){
             String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
@@ -608,7 +622,7 @@ public class CarritoActivity extends AppCompatActivity {
 
 
         int c=1;
-        items[0] = "Seleccioná tu dirección";
+        items[0] = "Elegí tu dirección";
         //Traversing through the whole list to get all the names
         for(int i=0; i<direccionesServer.size(); i++){
             //Storing names to string array
