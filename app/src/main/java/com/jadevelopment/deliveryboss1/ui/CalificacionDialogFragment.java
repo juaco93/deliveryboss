@@ -104,7 +104,9 @@ public class CalificacionDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 if(calificacion.getRating()>=1 && calificacion2.getRating()>=1 && calificacion3.getRating()>=1) {
                     enviarCalificacion();
-                    dismiss();
+                    //dismiss();
+                    // Modificado a dismiss() a dissmissalowingstateloss() porque al venir de una notificacion tiraba excepcion luego de calificar
+                    CalificacionDialogFragment.this.dismissAllowingStateLoss();
                 }else{
                     showErrorMessage("¡No podés calificar en 0!");
                 }

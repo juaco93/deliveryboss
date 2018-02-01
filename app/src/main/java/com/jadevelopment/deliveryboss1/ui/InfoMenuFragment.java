@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.transition.ArcMotion;
+import android.support.transition.ChangeBounds;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -14,11 +17,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +67,8 @@ public class InfoMenuFragment extends Fragment {
     List<Orden_detalle> ordenesDetalleLocal = new ArrayList<>();
 
     private FloatingActionButton mSharedFab;
+    boolean visible;
+    ViewGroup transitionsContainer;
 
     public InfoMenuFragment() {
         // Required empty public constructor
@@ -79,6 +86,8 @@ public class InfoMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_info_menu, container, false);
+
+        transitionsContainer = (ViewGroup) v.findViewById(R.id.contenedor_transiciones);
 
 
         txtEmptyContainer = (TextView) v.findViewById(R.id.txtEmptyContainer);
@@ -300,10 +309,19 @@ public class InfoMenuFragment extends Fragment {
                         Toast.makeText(context,"Agregaste: " + detalle.getCantidad()+" "+detalle.getProducto_nombre()+" a tu orden!",Toast.LENGTH_LONG).show();
                     }
 
+                    // Animacion del Fab del Carrito
+                    /*
+                    TransitionManager.beginDelayedTransition(transitionsContainer);
+                    visible = !visible;
+                    mSharedFab.setVisibility(visible ? View.VISIBLE : View.GONE);
+                    */
+
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     //Si cierra el dialogo sin agregar nada...
                 }
                 break;
+
+
         }
     }
 

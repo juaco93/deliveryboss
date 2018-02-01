@@ -242,8 +242,20 @@ public class CarritoActivity extends AppCompatActivity {
         mCarritoAdapter.setOnItemClickListener(new CarritoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Orden_detalle clickedItemCarrito) {
-                //Log.d("carrito","click en un item del carrito: ");
-                showDialog("orden_detalle",(new Gson()).toJson(clickedItemCarrito));
+                if(c>0){
+                    if(clickedItemCarrito.getSelected()){
+                        clickedItemCarrito.setSelected(false);
+                        c--;
+                    } else {
+                        clickedItemCarrito.setSelected(true);
+                        c++;
+                    }
+                    String titulo = String.valueOf(c)+" seleccionados";
+                    mActionMode.setTitle(titulo);
+                }else{
+                    //Log.d("carrito","click en un item del carrito: ");
+                    showDialog("orden_detalle",(new Gson()).toJson(clickedItemCarrito));
+                }
             }
         });
 
@@ -264,7 +276,6 @@ public class CarritoActivity extends AppCompatActivity {
                     // Start the CAB using the ActionMode.Callback defined above
                     mActionMode = startSupportActionMode(mActionModeCallback);
                 }
-
 
                 if(clickedItemCarrito.getSelected()){
                     clickedItemCarrito.setSelected(false);
