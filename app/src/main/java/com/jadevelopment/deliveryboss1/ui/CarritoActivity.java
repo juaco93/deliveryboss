@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -87,11 +88,10 @@ public class CarritoActivity extends AppCompatActivity {
     List<Usuario_direccion> serverDirecciones;
     String authorization;
     String stDireccion;
+    Boolean abierto_hoy = false;
 
     // Variables multiselect
     private ActionMode mActionMode;
-    Menu context_menu;
-    boolean isMultiSelect = false;
 
     Spinner spTipoEntrega;
     Spinner spDireccion;
@@ -148,6 +148,7 @@ public class CarritoActivity extends AppCompatActivity {
         ///// INICIALIZACION DE VARIABLES
         String listaOrdenes = getIntent().getExtras().getString("ordenes_detalle");
         String empresaJSON = getIntent().getExtras().getString("empresa");
+        abierto_hoy = getIntent().getExtras().getBoolean("abierto_hoy");
         empresa = new Gson().fromJson(empresaJSON, EmpresasBody.class);
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
@@ -389,7 +390,12 @@ public class CarritoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Obtenemos las direcciones del usuario para el delivery
         obtenerDirecciones();
+
+        // Chequeamos si el local esta abierto para permitir el envio de ordenes
+        chequearLocalAbiertoHoy();
     }
 
 
@@ -853,6 +859,34 @@ public class CarritoActivity extends AppCompatActivity {
     public void refreshOrdenesDetalle(){
         if(ordenesDetalleLocal.size()>0) mostrarOrdenesDetalle(ordenesDetalleLocal);
         if(ordenesDetalleLocal.size()==0) mostrarCarritoEmpty();
+    }
+
+    public void chequearLocalAbiertoHoy(){
+        if(abierto_hoy){
+            btnConfirmarOrden.setEnabled(true);
+            btnConfirmarOrden.setText("Enviar Orden");
+        }else{
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new android.support.v7.app.AlertDialog.Builder(this);
+            } else {
+                builder = new AlertDialog.Builder(getBaseContext());
+            }
+            builder.setTitle("¡Éste local no abre hoy!")
+                    .setMessage("Lo sentimos, hoy no podrás realizar pedidos aquí. Consultá los horarios en la solapa Información para más detalles.")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            Intent intent = new Intent(CarritoActivity.this,DetalleEmpresa.class);
+                            intent.putExtra("carrito",(new Gson()).toJson(ordenesDetalleLocal));
+                            intent.putExtra("empresaJson",(new Gson()).toJson(empresa));
+                            startActivity(intent);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setCancelable(false)
+                    .show();
+        }
     }
 }
 
