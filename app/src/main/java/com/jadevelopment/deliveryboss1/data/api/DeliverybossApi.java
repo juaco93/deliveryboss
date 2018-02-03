@@ -4,6 +4,7 @@ import com.jadevelopment.deliveryboss1.data.api.model.ApiResponse;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseCalificaciones;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseCiudades;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseDirecciones;
+import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseMantenimiento;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseOrdenes;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseProductos;
 import com.jadevelopment.deliveryboss1.data.api.model.Calificacion;
@@ -18,7 +19,6 @@ import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseEmpresas;
 import com.jadevelopment.deliveryboss1.data.api.model.UsuarioRegisterBody;
 import com.jadevelopment.deliveryboss1.data.api.model.Usuario_direccion;
 import com.jadevelopment.deliveryboss1.data.api.model.regIdBody;
-import com.jadevelopment.deliveryboss1.ui.SugerirEmpresa;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,9 +28,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
-
-import static com.jadevelopment.deliveryboss1.R.id.calificacion;
 
 /**
  * Created by Joaquin on 23/6/2017.
@@ -128,6 +125,11 @@ public interface  DeliverybossApi {
     Call<ApiResponseCiudades> obtenerCiudades(@Header("Authorization") String authorization
     );
 
+    // METODO PARA OBTENER MODOS (mantenimiento, normal, etc)
+    @GET("mantenimientos/")
+    Call<ApiResponseMantenimiento> obtenerMantenimiento(@Header("Authorization") String authorization
+    );
+
     // SUGERIR EMPRESA
     @POST("sugerir_empresas")
     Call<ApiResponse> sugerirEmpresa(@Header("Authorization") String authorization,
@@ -139,4 +141,6 @@ public interface  DeliverybossApi {
     Call<ApiResponse> sugerirCiudad(@Header("Authorization") String authorization,
                                      @Body CiudadSugerida ciudadSugerida
     );
+
+
 }

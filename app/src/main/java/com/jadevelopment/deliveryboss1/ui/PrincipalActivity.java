@@ -1,15 +1,12 @@
 package com.jadevelopment.deliveryboss1.ui;
 
-import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,9 +15,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -33,20 +29,18 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jadevelopment.deliveryboss1.R;
 import com.jadevelopment.deliveryboss1.data.api.CircleTransform;
+import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseMantenimiento;
 import com.jadevelopment.deliveryboss1.data.api.model.EmpresasBody;
+import com.jadevelopment.deliveryboss1.data.api.model.Mantenimiento;
 import com.jadevelopment.deliveryboss1.data.app.Config;
 import com.jadevelopment.deliveryboss1.data.prefs.SessionPrefs;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseEmpresas;
@@ -73,6 +67,8 @@ public class PrincipalActivity extends AppCompatActivity {
     private TextView txtEmptyStateEmpresas;
     private EmpresasAdapter mEmpresasAdapter;
     List<EmpresasBody> serverEmpresas;
+    List<Mantenimiento> mantenimientos;
+    Boolean mantenimientoActivo=false;
     //String ciudadIntent;
     String rubroIntent;
     String nombreApp = "deliveryboss en ";
@@ -218,7 +214,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
 
-        obtenerEmpresas(rubroIntent);
+        // Chequeamos si estamos en mantenimiento. De no ser asi obtenemos las empresas.
+        obtenerMantenimiento();
+        if(!mantenimientoActivo)obtenerEmpresas(rubroIntent);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_content);
         Log.d("swipe", "swipe valor: " + swipeRefreshLayout.toString());
@@ -226,7 +224,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 @Override
                 public void onRefresh() {
                     // Pedir al servidor información reciente
-                    obtenerEmpresas(rubroIntent);
+                    if(!mantenimientoActivo)obtenerEmpresas(rubroIntent);
                 }
             });
 
@@ -397,6 +395,88 @@ public class PrincipalActivity extends AppCompatActivity {
                 showErrorMessage("Comprueba tu conexión a Internet");
             }
         });
+    }
+
+    private void obtenerMantenimiento() {
+        authorization = SessionPrefs.get(this).getPrefUsuarioToken();
+
+        // Realizar petición HTTP
+        Call<ApiResponseMantenimiento> call = mDeliverybossApi.obtenerMantenimiento(authorization);
+        call.enqueue(new Callback<ApiResponseMantenimiento>() {
+            @Override
+            public void onResponse(Call<ApiResponseMantenimiento> call,
+                                   Response<ApiResponseMantenimiento> response) {
+                if (!response.isSuccessful()) {
+                    // Procesar error de API
+                    String error = "Ha ocurrido un error. Contacte al administrador";
+                    if (response.errorBody()
+                            .contentType()
+                            .subtype()
+                            .equals("json")) {
+                        //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
+
+                        //error = apiError.getMessage();
+                        //Log.d(TAG, apiError.getDeveloperMessage());
+                    } else {
+                        /*try {
+                            // Reportar causas de error no relacionado con la API
+                            //Log.d(TAG, response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }*/
+                    }
+                    showErrorMessage(error);
+                    return;
+                }
+
+                mantenimientos = response.body().getDatos();
+
+                if (mantenimientos.size() > 0) {
+                    Log.d("mantenimiento",mantenimientos.get(0).getTitulo()+": "+ mantenimientos.get(0).getMensaje());
+                    Log.d("mantenimiento","Estado Mantenimiento: "+mantenimientos.get(0).getEstado());
+                    chequearMantenimiento(mantenimientos);
+                } else {
+                    // Si por alguna razon no podemos obtener el registro de mantenimiento, activamos el modo normal.
+                    mantenimientoActivo=false;
+                    }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponseMantenimiento> call, Throwable t) {
+                showLoadingIndicator(false);
+                Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                showErrorMessage("Comprueba tu conexión a Internet");
+            }
+        });
+    }
+
+    private void chequearMantenimiento(List<Mantenimiento> mantenimientosServer) {
+        // Si estado es TRUE significa que estamos en mantenimiento
+        if(mantenimientosServer.get(0).getEstado().equals("1")){
+            mantenimientoActivo=true;
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new android.support.v7.app.AlertDialog.Builder(this);
+            } else {
+                builder = new AlertDialog.Builder(getBaseContext());
+            }
+            builder.setTitle(mantenimientosServer.get(0).getTitulo())
+                    .setMessage(mantenimientosServer.get(0).getMensaje())
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(false)
+                    .show();
+        }
+        // Sino, estamos en modo normal
+        else{
+            mantenimientoActivo=false;
+        }
     }
 
     private void mostrarEmpresas(List<EmpresasBody> empresasServer) {

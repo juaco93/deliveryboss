@@ -647,7 +647,7 @@ public class CarritoActivity extends AppCompatActivity {
             items[c] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
             c++;
 
-//          items[i] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
+          //items[i] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
         }
 
         //Spinner spinner = (Spinner) findViewById(R.id.spinner1);
@@ -876,7 +876,7 @@ public class CarritoActivity extends AppCompatActivity {
                     .setMessage("Lo sentimos, hoy no podrás realizar pedidos aquí. Consultá los horarios en la solapa Información para más detalles.")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
+                            // Volvemos a la activity detalle empresa
                             Intent intent = new Intent(CarritoActivity.this,DetalleEmpresa.class);
                             intent.putExtra("carrito",(new Gson()).toJson(ordenesDetalleLocal));
                             intent.putExtra("empresaJson",(new Gson()).toJson(empresa));
@@ -889,6 +889,3 @@ public class CarritoActivity extends AppCompatActivity {
         }
     }
 }
-
-// cambio en comentario
-//MUY BIEN
