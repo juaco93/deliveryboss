@@ -180,8 +180,12 @@ public class CarritoActivity extends AppCompatActivity {
         spTipoEntrega.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //DELIVERY
+                // Opcion "Elegí el tipo de entrega"
                 if(position==0){
+                    chequearTipoEntrega();
+                }
+                //DELIVERY
+                if(position==1){
                     Float precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     importeTotal = sumarTotal(Float.valueOf(empresa.getPrecio_delivery()));
@@ -193,7 +197,7 @@ public class CarritoActivity extends AppCompatActivity {
                     chequearDireccion();
                 }
                 //RETIRO EN LOCAL
-                if(position==1){
+                if(position==2){
                     Float precioDelivery = 0.00f;
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     btnConfirmarOrden.setEnabled(true);
@@ -334,6 +338,7 @@ public class CarritoActivity extends AppCompatActivity {
         btnConfirmarOrden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(chequearTipoEntrega()){
                 // Primero chequeamos que alcance el monto de compra minima
                 if(chequearCompraMinima()){
                     // Luego chequeamos si eligio Delivery, que tenga direccion para el mismo
@@ -382,11 +387,19 @@ public class CarritoActivity extends AppCompatActivity {
                             showError("Por favor, ingresá el monto con el que vas a abonar");
                         }
                     }
-                }else if(!chequearCompraMinima()){
+
+                } // FIN IF chequearCompraMinima
+                else if(!chequearCompraMinima()){
                     showError("No llegas al mínimo. Agregá mas productos al carrito!");
-                }
+
+                } //Fin IF chequearDireccion
                 if(spDireccion.isEnabled() && !chequearDireccion()){
                     showError("No tenés ninguna dirección de envío! Agregá una con '+'");
+                }
+
+                } // Fin IF chequearTipoEntrega
+                else{
+                    showError("No seleccionaste el método de entrega!");
                 }
             }
         });
@@ -396,6 +409,9 @@ public class CarritoActivity extends AppCompatActivity {
 
         // Chequeamos si el local esta abierto para permitir el envio de ordenes
         chequearLocalAbiertoHoy();
+
+        // Chequeamos que haya seleccionado el tipo de entrega
+        chequearTipoEntrega();
     }
 
 
@@ -519,6 +535,20 @@ public class CarritoActivity extends AppCompatActivity {
             btnConfirmarOrden.setText("¡Aún no llegas al mínimo!");
             return false;
         }
+    }
+
+    private boolean chequearTipoEntrega() {
+        if (spTipoEntrega.getSelectedItem() != null) {
+            if (!spTipoEntrega.getSelectedItem().equals("Elegí el tipo de entrega")) {
+                btnConfirmarOrden.setEnabled(true);
+                btnConfirmarOrden.setText("Enviar Orden");
+                return true;
+            } else {
+                btnConfirmarOrden.setEnabled(false);
+                btnConfirmarOrden.setText("¡Elegí el tipo de entrega!");
+                return false;
+            }
+        }else return false;
     }
 
 

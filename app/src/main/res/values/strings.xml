@@ -11,6 +11,7 @@
     </string-array>
 
     <string-array name="tipo_entrega">
+        <item>Elegí el tipo de entrega</item>
         <item>Delivery</item>
         <item>Retiro en el local</item>
     </string-array>
