@@ -910,8 +910,8 @@ public class CarritoActivity extends AppCompatActivity {
             } else {
                 builder = new AlertDialog.Builder(getBaseContext());
             }
-            builder.setTitle("¡Éste local no abre hoy!")
-                    .setMessage("Lo sentimos, hoy no podrás realizar pedidos aquí. Consultá los horarios en la solapa Información para más detalles.")
+            builder.setTitle("¡Este local no abre hoy!")
+                    .setMessage("Lo sentimos, hoy no podrás realizar pedidos en este local. Consultá los horarios en la pestaña Información para más detalles.")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Volvemos a la activity detalle empresa
@@ -921,7 +921,7 @@ public class CarritoActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     })
-                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setIcon(R.drawable.ic_info)
                     .setCancelable(false)
                     .show();
         }

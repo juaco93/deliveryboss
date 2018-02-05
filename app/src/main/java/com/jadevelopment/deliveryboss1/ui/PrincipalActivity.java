@@ -469,7 +469,7 @@ public class PrincipalActivity extends AppCompatActivity {
                             finish();
                         }
                     })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(R.drawable.ic_info)
                     .setCancelable(false)
                     .show();
         }
