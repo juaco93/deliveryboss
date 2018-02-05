@@ -190,7 +190,7 @@ public class CarritoActivity extends AppCompatActivity {
                     tipoEnvio = "1";
                     spDireccion.setEnabled(true);
 
-                    //chequearDireccion();
+                    chequearDireccion();
                 }
                 //RETIRO EN LOCAL
                 if(position==1){
@@ -238,7 +238,7 @@ public class CarritoActivity extends AppCompatActivity {
         txtTotal.setText("$"+String.valueOf(subtotSt));
 
         // LISTA DE PRODUCTOS
-        ////////////////////// FUNCIONES PARA MODIFICAR CANTIDADES ETC DEL CARRITO  //////////////////////////////
+        ////////////////////// FUNCIONES PARA MODIFICAR CANTIDADES DEL CARRITO  //////////////////////////////
         // click normal //
         mCarritoAdapter.setOnItemClickListener(new CarritoAdapter.OnItemClickListener() {
             @Override
@@ -523,6 +523,7 @@ public class CarritoActivity extends AppCompatActivity {
 
 
     private boolean chequearDireccion() {
+        if(spDireccion.getSelectedItem()!=null){
         if (spDireccion.getSelectedItem().toString().equals("Agrega tu dirección de envío")) {
             btnConfirmarOrden.setEnabled(false);
             btnConfirmarOrden.setText("¡No tenés dirección para tu envío!");
@@ -546,6 +547,13 @@ public class CarritoActivity extends AppCompatActivity {
                     }
             }
           }
+
+        }
+        // Si el spDireccion es igual a NULL
+        else{
+            return false;
+        }
+
         }
 
     private boolean chequearPagaCon(){
