@@ -10,7 +10,7 @@ import java.util.List;
 public class EmpresasBody {
     String idempresa;
     String logo;
-    String nombre_fantasia;
+    String nombre_empresa;
     String direccion;
     String latitud;
     String longitud;
@@ -19,7 +19,7 @@ public class EmpresasBody {
     String zona_delivery;
     String precio_delivery;
     String compra_minima;
-    String telefono;
+    String telefono_empresa;
     String oculto;
     String cerrado;
     String empresa_rubro;
@@ -33,10 +33,10 @@ public class EmpresasBody {
     String calificacion3;
     String ciudad;
 
-    public EmpresasBody(String idempresa, String logo, String nombre_fantasia, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, String horario, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
+    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, String horario, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
         this.idempresa = idempresa;
         this.logo = logo;
-        this.nombre_fantasia = nombre_fantasia;
+        this.nombre_empresa = nombre_empresa;
         this.direccion = direccion;
         this.latitud = latitud;
         this.longitud = longitud;
@@ -45,7 +45,7 @@ public class EmpresasBody {
         this.zona_delivery = zona_delivery;
         this.precio_delivery = precio_delivery;
         this.compra_minima = compra_minima;
-        this.telefono = telefono;
+        this.telefono_empresa = telefono_empresa;
         this.oculto = oculto;
         this.cerrado = cerrado;
         this.empresa_rubro = empresa_rubro;
@@ -76,12 +76,12 @@ public class EmpresasBody {
         this.logo = logo;
     }
 
-    public String getNombre_fantasia() {
-        return nombre_fantasia;
+    public String getNombre_empresa() {
+        return nombre_empresa;
     }
 
-    public void setNombre_fantasia(String nombre_fantasia) {
-        this.nombre_fantasia = nombre_fantasia;
+    public void setNombre_empresa(String nombre_empresa) {
+        this.nombre_empresa = nombre_empresa;
     }
 
     public String getDireccion() {
@@ -148,12 +148,12 @@ public class EmpresasBody {
         this.compra_minima = compra_minima;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getTelefono_empresa() {
+        return telefono_empresa;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setTelefono_empresa(String telefono_empresa) {
+        this.telefono_empresa = telefono_empresa;
     }
 
     public String getOculto() {
