@@ -115,7 +115,7 @@ public class CalificacionDialogFragment extends DialogFragment {
 
         if(getArguments().getString("orden")!=null){
             orden = (new Gson()).fromJson((getArguments().getString("orden")),Orden.class);
-            lbCalificacionNombreEmpresa.setText(orden.getNombre_fantasia());
+            lbCalificacionNombreEmpresa.setText(orden.getNombre_empresa());
         }
 
         // Set the dialog layout

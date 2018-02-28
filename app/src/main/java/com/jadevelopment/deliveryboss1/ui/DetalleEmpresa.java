@@ -64,7 +64,7 @@ public class DetalleEmpresa extends AppCompatActivity{
 
         Intent intentRecibido = getIntent();
         empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
-        getSupportActionBar().setTitle(empresa.getNombre_fantasia());
+        getSupportActionBar().setTitle(empresa.getNombre_empresa());
 
         codRubro = getRubro();
 

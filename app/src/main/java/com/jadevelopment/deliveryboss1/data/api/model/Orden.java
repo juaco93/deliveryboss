@@ -20,12 +20,12 @@ public class Orden {
     String nota;
     String tipo_entrega_idtipo_entrega;
     String orden_estado_idorden_estado;
-    String nombre_fantasia;
+    String nombre_empresa;
     String telefono;
     String calificado;
     List<Orden_detalle> orden_detalle;
 
-    public Orden(String fecha_hora, String fecha_hora_estado, String info_estado, String estado, String usuario_idusuario, String empresa_idempresa, String usuario_direccion_idusuario_direccion, String importe_total, String paga_con, String nota, String tipo_entrega_idtipo_entrega, String orden_estado_idorden_estado, String nombre_fantasia, String telefono, String calificado, List<Orden_detalle> orden_detalle) {
+    public Orden(String fecha_hora, String fecha_hora_estado, String info_estado, String estado, String usuario_idusuario, String empresa_idempresa, String usuario_direccion_idusuario_direccion, String importe_total, String paga_con, String nota, String tipo_entrega_idtipo_entrega, String orden_estado_idorden_estado, String nombre_empresa, String telefono, String calificado, List<Orden_detalle> orden_detalle) {
         this.fecha_hora = fecha_hora;
         this.fecha_hora_estado = fecha_hora_estado;
         this.info_estado = info_estado;
@@ -38,7 +38,7 @@ public class Orden {
         this.nota = nota;
         this.tipo_entrega_idtipo_entrega = tipo_entrega_idtipo_entrega;
         this.orden_estado_idorden_estado = orden_estado_idorden_estado;
-        this.nombre_fantasia = nombre_fantasia;
+        this.nombre_empresa = nombre_empresa;
         this.telefono = telefono;
         this.calificado = calificado;
         this.orden_detalle = orden_detalle;
@@ -148,12 +148,12 @@ public class Orden {
         this.orden_estado_idorden_estado = orden_estado_idorden_estado;
     }
 
-    public String getNombre_fantasia() {
-        return nombre_fantasia;
+    public String getNombre_empresa() {
+        return nombre_empresa;
     }
 
-    public void setNombre_fantasia(String nombre_fantasia) {
-        this.nombre_fantasia = nombre_fantasia;
+    public void setNombre_empresa(String nombre_empresa) {
+        this.nombre_empresa = nombre_empresa;
     }
 
     public String getTelefono() {

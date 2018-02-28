@@ -57,7 +57,7 @@ public class OrdenInfoEstadoFragment extends DialogFragment {
         if(getArguments().getString("orden")!=null){
             orden = (new Gson()).fromJson((getArguments().getString("orden")),Orden.class);
             txtOrdenNumeroOrden.setText("Detalle de la orden #"+orden.getIdorden());
-            txtOrdenLocal.setText(orden.getNombre_fantasia());
+            txtOrdenLocal.setText(orden.getNombre_empresa());
             txtOrdenFecha.setText(orden.getFecha_hora());
             txtOrdenFechaEstado.setText(orden.getFecha_hora_estado());
             txtOrdenEstado.setText(orden.getEstado());

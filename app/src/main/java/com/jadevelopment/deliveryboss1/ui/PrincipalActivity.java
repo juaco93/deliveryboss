@@ -511,7 +511,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         for (int i = 0; i < serverEmpresas.size(); i++) {
 
-            final String nombre = serverEmpresas.get(i).getNombre_fantasia().toLowerCase();
+            final String nombre = serverEmpresas.get(i).getNombre_empresa().toLowerCase();
             final String rubro = serverEmpresas.get(i).getSubrubro().toLowerCase();
             if (nombre.contains(query)|| rubro.contains(query)) {
 

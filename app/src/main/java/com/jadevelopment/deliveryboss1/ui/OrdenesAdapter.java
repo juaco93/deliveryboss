@@ -50,7 +50,7 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Orden orden = mItems.get(position);
         holder.idorden.setText("Orden #" + orden.getIdorden());
-        holder.nombreEmpresa.setText(orden.getNombre_fantasia());
+        holder.nombreEmpresa.setText(orden.getNombre_empresa());
         holder.fecha.setText(orden.getFecha_hora());
         holder.estado.setText(orden.getEstado());
 

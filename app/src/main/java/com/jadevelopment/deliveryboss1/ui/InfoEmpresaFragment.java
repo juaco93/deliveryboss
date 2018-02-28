@@ -172,7 +172,7 @@ public class InfoEmpresaFragment extends Fragment{
             compraMinima.setText("Compra mínima: $" + empresa.getCompra_minima());
 
             ////// CARD CALIFICACIONES ///////
-            lbCalificacion.setText(empresa.getNombre_fantasia());
+            lbCalificacion.setText(empresa.getNombre_empresa());
             if(empresa.getCalificacion_general()!=null){
                 String calRedond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion_general()));
                 String cal1Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion1()));
@@ -230,7 +230,7 @@ public class InfoEmpresaFragment extends Fragment{
                         float lat = Float.valueOf(empresa.getLatitud());
                         float lon = Float.valueOf(empresa.getLongitud());
                         LatLng ubicacionEmpresa = new LatLng(lat, lon);
-                        googleMap.addMarker(new MarkerOptions().position(ubicacionEmpresa).title(empresa.getNombre_fantasia()).snippet(empresa.getDireccion()));
+                        googleMap.addMarker(new MarkerOptions().position(ubicacionEmpresa).title(empresa.getNombre_empresa()).snippet(empresa.getDireccion()));
 
                         float latCamara = lat+0.001f;
                         LatLng ubicacionCamara = new LatLng(latCamara,lon);

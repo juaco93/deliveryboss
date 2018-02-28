@@ -133,7 +133,7 @@ public class InfoMenuFragment extends Fragment {
         Intent intentRecibido = getActivity().getIntent();
         empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
         Log.d("gson",empresa.getIdempresa());
-        Log.d("gson",empresa.getNombre_fantasia());
+        Log.d("gson",empresa.getNombre_empresa());
 
         obtenerProductos("");
 

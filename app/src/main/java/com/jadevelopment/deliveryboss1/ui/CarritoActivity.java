@@ -153,7 +153,8 @@ public class CarritoActivity extends AppCompatActivity {
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
         importeTotal = sumarTotal(0.00f);
-        nombreEmpresa.setText(empresa.getNombre_fantasia());
+        //nombreEmpresa.setText(empresa.getEmpresa());
+        nombreEmpresa.setText(empresa.getNombre_empresa());
 
         //// RETROFIT
         // Interceptor para log del Request
@@ -439,7 +440,7 @@ public class CarritoActivity extends AppCompatActivity {
         String authorization = SessionPrefs.get(this).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
         String idempresa = empresa.getIdempresa();
-        String nombreEmpresa = empresa.getNombre_fantasia();
+        String nombreEmpresa = empresa.getNombre_empresa();
 
         // Tratamiento especial del "Paga con"
         String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
