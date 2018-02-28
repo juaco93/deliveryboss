@@ -40,7 +40,7 @@
             android:background="#E0E0E0" />
 
         <TextView
-            android:id="@+id/txtNombreFantasia"
+            android:id="@+id/txtNombreEmpresa"
             style="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,9 +57,9 @@
             style="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtNombreFantasia"
-            android:layout_alignStart="@+id/txtNombreFantasia"
-            android:layout_below="@+id/txtNombreFantasia"
+            android:layout_alignLeft="@+id/txtNombreEmpresa"
+            android:layout_alignStart="@+id/txtNombreEmpresa"
+            android:layout_below="@+id/txtNombreEmpresa"
             android:background="@color/colorEstrellas"
             android:paddingLeft="1dp"
             android:paddingRight="1dp"
@@ -91,7 +91,7 @@
             style="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtNombreFantasia"
+            android:layout_below="@+id/txtNombreEmpresa"
             android:layout_marginLeft="2dp"
             android:layout_toEndOf="@+id/calificacion"
             android:layout_toRightOf="@+id/calificacion"
@@ -103,7 +103,7 @@
             android:id="@+id/calificacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtNombreFantasia"
+            android:layout_below="@+id/txtNombreEmpresa"
             android:layout_marginLeft="3dp"
             android:layout_toRightOf="@+id/txtCalificacionFloat"
             app:srb_borderColor="@color/colorEstrellas"
@@ -119,9 +119,9 @@
             android:id="@+id/txtRubroElegido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtNombreFantasia"
-            android:layout_alignStart="@+id/txtNombreFantasia"
-            android:layout_below="@+id/txtNombreFantasia"
+            android:layout_alignLeft="@+id/txtNombreEmpresa"
+            android:layout_alignStart="@+id/txtNombreEmpresa"
+            android:layout_below="@+id/txtNombreEmpresa"
             android:paddingTop="21dp"
             tools:text="Pizzas, Lomos, Empanadas" />
 

@@ -59,7 +59,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
                     break;
             }
 
-        holder.nombreFantasia.setText(empresa.getNombre_fantasia());
+        holder.nombreEmpresa.setText(empresa.getNombre_empresa());
 
         if(empresa.getCalificacion_general()!=null) {
             holder.calificacion.setRating(Float.parseFloat(empresa.getCalificacion_general()));
@@ -154,7 +154,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView logoEmpresa;
-        public TextView nombreFantasia;
+        public TextView nombreEmpresa;
         //public TextView direccion;
         public TextView precioDelivery;
         public TextView horarios;
@@ -171,7 +171,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
             //statusIndicator = itemView.findViewById(R.id.indicator_appointment_status);
             logoEmpresa = (ImageView) itemView.findViewById(R.id.img_logo_empresa);
-            nombreFantasia = (TextView) itemView.findViewById(R.id.txtNombreFantasia);
+            nombreEmpresa = (TextView) itemView.findViewById(R.id.txtNombreEmpresa);
             //direccion = (TextView) itemView.findViewById(R.id.txtDireccion);
             precioDelivery = (TextView) itemView.findViewById(R.id.txtPrecioDelivery);
             horarios = (TextView) itemView.findViewById(R.id.txtHorarios);
