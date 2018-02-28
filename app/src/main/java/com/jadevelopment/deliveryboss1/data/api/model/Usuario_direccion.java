@@ -15,8 +15,11 @@ public class Usuario_direccion {
     String barrio;
     String telefono;
     String indicaciones;
+    String latitud;
+    String longitud;
 
-    public Usuario_direccion(String idusuario_direccion, String usuario_idusuario, String ciudad_idciudad, String ciudad, String calle, String numero, String habitacion, String barrio, String telefono, String indicaciones) {
+    public Usuario_direccion(String idusuario_direccion, String usuario_idusuario, String ciudad_idciudad, String ciudad, String calle, String numero, String habitacion, String barrio, String telefono, String indicaciones, String latitud, String longitud) {
+
         this.idusuario_direccion = idusuario_direccion;
         this.usuario_idusuario = usuario_idusuario;
         this.ciudad_idciudad = ciudad_idciudad;
@@ -27,6 +30,8 @@ public class Usuario_direccion {
         this.barrio = barrio;
         this.telefono = telefono;
         this.indicaciones = indicaciones;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public String getIdusuario_direccion() {
@@ -107,5 +112,21 @@ public class Usuario_direccion {
 
     public void setIndicaciones(String indicaciones) {
         this.indicaciones = indicaciones;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 }

@@ -218,7 +218,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }else {
 
             // Creacion del Objeto "Direccion"
-            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stTelefono, stReferencia);
+            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stTelefono, stReferencia, "", "");
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.insertarDireccionUsuario(authorization, idusuario, nuevaDireccion);
@@ -292,7 +292,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }else {
 
             // Creacion del Objeto "Direccion"
-            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio, stTelefono, stReferencia);
+            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio, stTelefono, stReferencia, "", "");
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.modificarDireccionUsuario(authorization, idusuario, iddireccion, nuevaDireccion);
