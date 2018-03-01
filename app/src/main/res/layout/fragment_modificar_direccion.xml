@@ -35,15 +35,15 @@
                     android:layout_height="wrap_content"
                     android:text="Ciudad *" />
 
-                    <Spinner
-                        android:id="@+id/spDireccionEditCiudad"
-                        android:layout_width="240dp"
-                        android:layout_height="wrap_content"
-                        android:hint="Ciudad"
-                        android:layout_below="@+id/lbDireccionEditCiudad"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="10dp" />
+                <Spinner
+                    android:id="@+id/spDireccionEditCiudad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/lbDireccionEditCiudad"
+                    android:layout_marginTop="10dp"
+                    android:hint="Ciudad" />
 
 
             </RelativeLayout>
@@ -65,53 +65,51 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/lbDireccionEditNumero"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/txtDireccionEditNumero"
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lbDireccionEditNumero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Número *"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="Numero"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@android:color/black" />
-            </android.support.design.widget.TextInputLayout>
+                    app:passwordToggleEnabled="true">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/lbDireccionEditHabitacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true">
+                    <EditText
+                        android:id="@+id/txtDireccionEditNumero"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Número *"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="Numero"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/black" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/txtDireccionEditHabitacion"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/lbDireccionEditHabitacion"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:hint="Piso/Depto"
-                    android:inputType="text"
-                    android:textAllCaps="false" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/lbDireccionEditEntreCalles"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true">
-
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/txtDireccionEditHabitacion"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Piso/Depto *"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="Numero"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/black" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/lbDireccionEditBarrio"
@@ -166,6 +164,33 @@
                     android:inputType="text"
                     android:textAllCaps="false" />
             </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/btnAgregarUbicacion"
+                    android:layout_height="40dp"
+                    android:layout_width="40dp"
+                    android:src="@drawable/ic_location"
+                    android:background="@color/colorComida"
+                    >
+
+                </ImageButton>
+
+                <EditText
+                    android:id="@+id/txtDireccionEditUbicacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Agregar ubicación *"
+                    android:inputType="text"
+                    android:enabled="false"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+
+
 
             <Button
                 android:id="@+id/btnAgregarDireccion"

@@ -153,7 +153,6 @@ public class CarritoActivity extends AppCompatActivity {
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
         importeTotal = sumarTotal(0.00f);
-        //nombreEmpresa.setText(empresa.getEmpresa());
         nombreEmpresa.setText(empresa.getNombre_empresa());
 
         //// RETROFIT

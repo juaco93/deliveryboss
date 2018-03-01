@@ -19,11 +19,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jadevelopment.deliveryboss1.R;
@@ -54,6 +62,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ModificarDireccionFragment extends DialogFragment {
 
+    private static final int ABRIR_MAPA_REQUEST_CODE = 1;
+
     //EditText ciudad;
     EditText calle;
     EditText numero;
@@ -61,6 +71,8 @@ public class ModificarDireccionFragment extends DialogFragment {
     EditText barrio;
     EditText telefono;
     EditText referencia;
+    ImageButton ubicacion;
+    EditText latitudLongitud;
     Spinner ciudad;
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
@@ -87,6 +99,12 @@ public class ModificarDireccionFragment extends DialogFragment {
     String stTelefono;
     String stReferencia;
 
+    String latRecibida = "";
+    String longRecibida = "";
+
+    MapView mMapView;
+    private GoogleMap googleMap;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -106,6 +124,8 @@ public class ModificarDireccionFragment extends DialogFragment {
         barrio = (EditText) view.findViewById(R.id.txtDireccionEditBarrio);
         telefono = (EditText) view.findViewById(R.id.txtDireccionEditTelefono);
         referencia = (EditText) view.findViewById(R.id.txtDireccionEditReferencia);
+        ubicacion = (ImageButton) view.findViewById(R.id.btnAgregarUbicacion);
+        latitudLongitud = (EditText) view.findViewById(R.id.txtDireccionEditUbicacion);
 
         //FloatLabels
         mFloatLabelCalle = (TextInputLayout) view.findViewById(R.id.lbDireccionEditCalle);
@@ -129,10 +149,20 @@ public class ModificarDireccionFragment extends DialogFragment {
             }
         });
 
-
         btnAceptar = (Button) view.findViewById(R.id.btnAgregarDireccion);
 
 //        Log.d("direccionJSON",getArguments().getString("direccion"));
+
+        // MAPA PARA AGREGAR MARCADOR
+
+        ubicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),MapsActivity.class);
+                if(latitudLongitud.getText()!=null && !latitudLongitud.getText().equals("")) intent.putExtra("latitudLongitud",latitudLongitud.getText());
+                startActivityForResult(intent,ABRIR_MAPA_REQUEST_CODE);
+            }
+        });
 
 
 
@@ -180,6 +210,7 @@ public class ModificarDireccionFragment extends DialogFragment {
             barrio.setText(direccion.getBarrio());
             telefono.setText(direccion.getTelefono());
             referencia.setText(direccion.getIndicaciones());
+            latitudLongitud.setText(direccion.getLatitud()+','+direccion.getLongitud());
             esAlta = false;
         }else{
             //ciudad.setText("");
@@ -218,7 +249,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }else {
 
             // Creacion del Objeto "Direccion"
-            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stTelefono, stReferencia, "", "");
+            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stTelefono, stReferencia, latRecibida, longRecibida);
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.insertarDireccionUsuario(authorization, idusuario, nuevaDireccion);
@@ -292,7 +323,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }else {
 
             // Creacion del Objeto "Direccion"
-            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio, stTelefono, stReferencia, "", "");
+            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio, stTelefono, stReferencia, latRecibida, longRecibida);
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.modificarDireccionUsuario(authorization, idusuario, iddireccion, nuevaDireccion);
@@ -512,6 +543,22 @@ public class ModificarDireccionFragment extends DialogFragment {
             cancel = true;
         }
         return cancel;
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ABRIR_MAPA_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                latRecibida = data.getStringExtra("CoordLat");
+                longRecibida = data.getStringExtra("CoordLon");
+
+                latitudLongitud.setText(latRecibida+','+longRecibida);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
 }

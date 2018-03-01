@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/deliveryboss.iml" filepath="$PROJECT_DIR$/deliveryboss.iml" />
+      <module fileurl="file://D:\AndroidStudioProjects\deliveryboss2\deliveryboss.iml" filepath="D:\AndroidStudioProjects\deliveryboss2\deliveryboss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deliveryboss2.iml" filepath="$PROJECT_DIR$/deliveryboss2.iml" />
     </modules>
   </component>
 </project>
