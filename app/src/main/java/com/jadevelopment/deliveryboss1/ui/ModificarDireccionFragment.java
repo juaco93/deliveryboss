@@ -158,8 +158,9 @@ public class ModificarDireccionFragment extends DialogFragment {
         ubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getActivity(),"Mantené presionado en el mapa para marcar tu ubicación",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(),MapsActivity.class);
-                if(latitudLongitud.getText()!=null && !latitudLongitud.getText().equals("")) intent.putExtra("latitudLongitud",latitudLongitud.getText());
+                if(latitudLongitud.getText()!=null && !latitudLongitud.getText().equals("") && !latitudLongitud.getText().toString().trim().equals(","))intent.putExtra("latitudLongitud",latitudLongitud.getText().toString());
                 startActivityForResult(intent,ABRIR_MAPA_REQUEST_CODE);
             }
         });
@@ -210,7 +211,12 @@ public class ModificarDireccionFragment extends DialogFragment {
             barrio.setText(direccion.getBarrio());
             telefono.setText(direccion.getTelefono());
             referencia.setText(direccion.getIndicaciones());
-            latitudLongitud.setText(direccion.getLatitud()+','+direccion.getLongitud());
+            if((direccion.getLatitud()!=null && !direccion.getLatitud().isEmpty()) && (direccion.getLongitud()!=null && !direccion.getLongitud().isEmpty())){
+                latitudLongitud.setText(direccion.getLatitud()+','+direccion.getLongitud());
+            }else{
+                latitudLongitud.setText("¡Agregá tu ubicación!");
+            }
+
             esAlta = false;
         }else{
             //ciudad.setText("");
@@ -301,6 +307,7 @@ public class ModificarDireccionFragment extends DialogFragment {
     }
 
     private void modificarDireccion() {
+
         // Variables del Objeto "Direccion"
         String authorization = SessionPrefs.get(getActivity()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getActivity()).getPrefUsuarioIdUsuario();
@@ -490,7 +497,7 @@ public class ModificarDireccionFragment extends DialogFragment {
 
         calle.setError(null);
         numero.setError(null);
-        habitacion.setError(null);
+        //habitacion.setError(null);
         barrio.setError(null);
         telefono.setError(null);
 

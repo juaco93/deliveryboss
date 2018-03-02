@@ -100,7 +100,7 @@
                         android:id="@+id/txtDireccionEditHabitacion"
                         android:layout_width="170dp"
                         android:layout_height="wrap_content"
-                        android:hint="Piso/Depto *"
+                        android:hint="Piso/Depto"
                         android:imeActionId="@+id/login"
                         android:imeActionLabel="Numero"
                         android:imeOptions="actionUnspecified"
@@ -166,16 +166,15 @@
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageButton
                     android:id="@+id/btnAgregarUbicacion"
-                    android:layout_height="40dp"
                     android:layout_width="40dp"
-                    android:src="@drawable/ic_location"
+                    android:layout_height="40dp"
                     android:background="@color/colorComida"
-                    >
+                    android:src="@drawable/ic_location">
 
                 </ImageButton>
 
@@ -183,9 +182,9 @@
                     android:id="@+id/txtDireccionEditUbicacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:hint="Agregar ubicación *"
                     android:inputType="text"
-                    android:enabled="false"
                     android:textAllCaps="false" />
             </LinearLayout>
 
