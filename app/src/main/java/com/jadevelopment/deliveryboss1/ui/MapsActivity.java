@@ -139,5 +139,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent(MapsActivity.this, ModificarDireccionFragment.class);
+            // no hay marcador ni nada. Volvemos a los valores que recibimos de entrada
+            intent.getStringExtra("latitudLongitud");
+            String latitudLongitudRecibidas = intent.getStringExtra("latitudLongitud");
+
+            latLngForm = latitudLongitudRecibidas.split(",");
+            String latOriginal = latLngForm[0];
+            String longOriginal = latLngForm[1];
+
+            returnIntent.putExtra("CoordLat", latOriginal);
+            returnIntent.putExtra("CoordLon", longOriginal);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+
+    }
+
+
 
 }

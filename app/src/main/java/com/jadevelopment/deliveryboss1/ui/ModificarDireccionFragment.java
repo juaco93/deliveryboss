@@ -101,6 +101,8 @@ public class ModificarDireccionFragment extends DialogFragment {
 
     String latRecibida = "";
     String longRecibida = "";
+    String latEnviada = "";
+    String longEnviada = "";
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -160,7 +162,11 @@ public class ModificarDireccionFragment extends DialogFragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"Mantené presionado en el mapa para marcar tu ubicación",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(),MapsActivity.class);
-                if(latitudLongitud.getText()!=null && !latitudLongitud.getText().equals("") && !latitudLongitud.getText().toString().trim().equals(","))intent.putExtra("latitudLongitud",latitudLongitud.getText().toString());
+                if((latEnviada!=null && !latEnviada.equals("")) && (longEnviada!=null && !longEnviada.equals("")) ){
+                    Log.d("ubicacion","Ubicacion enviada: "+latEnviada+","+longEnviada);
+                    intent.putExtra("latitudLongitud",latEnviada+","+longEnviada);
+                }
+
                 startActivityForResult(intent,ABRIR_MAPA_REQUEST_CODE);
             }
         });
@@ -212,7 +218,9 @@ public class ModificarDireccionFragment extends DialogFragment {
             telefono.setText(direccion.getTelefono());
             referencia.setText(direccion.getIndicaciones());
             if((direccion.getLatitud()!=null && !direccion.getLatitud().isEmpty()) && (direccion.getLongitud()!=null && !direccion.getLongitud().isEmpty())){
-                latitudLongitud.setText(direccion.getLatitud()+','+direccion.getLongitud());
+                latitudLongitud.setText("¡Ubicación registrada!");
+                latEnviada= direccion.getLatitud();
+                longEnviada=direccion.getLongitud();
             }else{
                 latitudLongitud.setText("¡Agregá tu ubicación!");
             }
@@ -331,6 +339,10 @@ public class ModificarDireccionFragment extends DialogFragment {
 
             // Creacion del Objeto "Direccion"
             Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio, stTelefono, stReferencia, latRecibida, longRecibida);
+
+            Gson gson = new Gson();
+            String dire = gson.toJson(nuevaDireccion);
+            Log.d("ubicacion", "Objeto Direccion enviada a sv-->"+ dire );
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.modificarDireccionUsuario(authorization, idusuario, iddireccion, nuevaDireccion);
@@ -549,6 +561,17 @@ public class ModificarDireccionFragment extends DialogFragment {
             focusView = telefono;
             cancel = true;
         }
+
+        // Ubicacion
+        if (latitudLongitud.getText()!=null){
+            if(TextUtils.isEmpty(latitudLongitud.getText())) {
+                Log.d("direccionMod", "Esta vacio ubicacion: " + stTelefono + " <-");
+                latitudLongitud.setError(getString(R.string.error_field_required));
+                //mFloatLabelTelefono.setError(getString(R.string.error_field_required));
+                focusView = latitudLongitud;
+                cancel = true;
+            }
+        }
         return cancel;
     }
 
@@ -557,13 +580,32 @@ public class ModificarDireccionFragment extends DialogFragment {
         if (requestCode == ABRIR_MAPA_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
 
-                latRecibida = data.getStringExtra("CoordLat");
-                longRecibida = data.getStringExtra("CoordLon");
+                if(latRecibida!=null && longRecibida!=null) {
+                    latRecibida = data.getStringExtra("CoordLat");
+                    longRecibida = data.getStringExtra("CoordLon");
 
-                latitudLongitud.setText(latRecibida+','+longRecibida);
+                    Log.d("ubicacion","Ubicacion recibida: "+latRecibida+","+longRecibida);
+                    latitudLongitud.setText("¡Ubicación registrada!");
+                }
+                // Latitud y longitud en null
+                else{
+                    Log.d("ubicacion", "Lat y Long desde el mapa no se guardaron");
+                }
             }
+
+            // Salio del mapa sin guardar nada y esta la lat y long en NULL (presiono flecha atras)
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
+                if(direccion.getLatitud()!=null && direccion.getLongitud()!=null) {
+                    if(!direccion.getLatitud().isEmpty() && !direccion.getLongitud().isEmpty()) {
+                        Log.d("ubicacion", "Usando latitud y longitud ORIGINALES");
+                        latRecibida = direccion.getLatitud();
+                        longRecibida = direccion.getLongitud();
+
+                        Log.d("ubicacion","Valor de latRecibida--->" + latRecibida);
+                        Log.d("ubicacion","Valor de longRecibida--->" + longRecibida);
+                    }
+                }
             }
         }
     }
