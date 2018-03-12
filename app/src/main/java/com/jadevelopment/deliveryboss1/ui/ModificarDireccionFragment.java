@@ -221,6 +221,8 @@ public class ModificarDireccionFragment extends DialogFragment {
                 latitudLongitud.setText("¡Ubicación registrada!");
                 latEnviada= direccion.getLatitud();
                 longEnviada=direccion.getLongitud();
+                latRecibida= direccion.getLatitud();
+                longRecibida=direccion.getLongitud();
             }else{
                 latitudLongitud.setText("¡Agregá tu ubicación!");
             }
@@ -292,7 +294,7 @@ public class ModificarDireccionFragment extends DialogFragment {
                                 e.printStackTrace();
                             }
                             if (mensaje.getEstado().equals("3"))
-                                error = "Su orden no ha podido ser enviada, revise su conexión a internet";
+                                error = "No se pudo modificar tu dirección. Revisá su conexión a internet";
                         }
                         showError(error);
                         return;
@@ -371,7 +373,7 @@ public class ModificarDireccionFragment extends DialogFragment {
                                 e.printStackTrace();
                             }
                             if (mensaje.getEstado().equals("3"))
-                                error = "Su orden no ha podido ser enviada, revise su conexión a internet";
+                                error = "No se pudo modificar tu dirección. Revisá su conexión a internet";
                         }
                         showError(error);
                         return;

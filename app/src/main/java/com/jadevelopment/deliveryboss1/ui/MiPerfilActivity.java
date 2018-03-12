@@ -9,6 +9,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +21,10 @@ import com.squareup.picasso.Picasso;
 
 public class MiPerfilActivity extends AppCompatActivity {
     ImageView perfilFoto;
-    TextView perfilNombre;
-    TextView perfilEmail;
-    CardView cvCerrarSesion;
+    EditText perfilNombre;
+    EditText perfilApellido;
+    EditText perfilEmail;
+    Button cvCerrarSesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +37,13 @@ public class MiPerfilActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         perfilFoto = (ImageView) findViewById(R.id.imgPerfilFoto);
-        perfilNombre = (TextView) findViewById(R.id.txtPerfilNombre);
-        perfilEmail = (TextView) findViewById(R.id.txtPerfilEmail);
-        cvCerrarSesion = (CardView) findViewById(R.id.cvLogout);
+        perfilNombre = (EditText) findViewById(R.id.txtPerfilNombre);
+        perfilApellido = (EditText) findViewById(R.id.txtPerfilApellido);
+        perfilEmail = (EditText) findViewById(R.id.txtPerfilEmail);
+        cvCerrarSesion = (Button) findViewById(R.id.btnCerrarSesion);
 
         String nombre = SessionPrefs.get(this).getPrefUsuarioNombre();
+        String apellido = SessionPrefs.get(this).getPrefUsuarioApellido();
         String email = SessionPrefs.get(this).getPrefUsuarioEmail();
         String imagen = SessionPrefs.get(this).getPrefUsuarioImagen();
 
@@ -53,6 +58,7 @@ public class MiPerfilActivity extends AppCompatActivity {
                         .into(perfilFoto);
             }}
         perfilNombre.setText(nombre);
+        perfilApellido.setText(apellido);
         perfilEmail.setText(email);
         cvCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

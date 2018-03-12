@@ -101,10 +101,16 @@ public class SessionPrefs {
     public String getPrefUsuarioToken(){
         return mPrefs.getString(PREF_USUARIO_TOKEN, null);
     }
-    public String getPrefUsuarioNombre(){
+    public String getPrefUsuarioNombreyApellido(){
         String nombre = mPrefs.getString(PREF_USUARIO_NOMBRE, null);
         String apellido = mPrefs.getString(PREF_USUARIO_APELLIDO, null);
         return (nombre + " " + apellido);
+    }
+    public String getPrefUsuarioNombre(){
+        return mPrefs.getString(PREF_USUARIO_NOMBRE, null);
+    }
+    public String getPrefUsuarioApellido(){
+        return mPrefs.getString(PREF_USUARIO_APELLIDO, null);
     }
     public String getPrefUsuarioEmail(){
         return mPrefs.getString(PREF_USUARIO_EMAIL, null);

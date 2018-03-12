@@ -8,6 +8,8 @@
     tools:context="com.jadevelopment.deliveryboss1.ui.MiPerfilActivity"
     tools:showIn="@layout/activity_mi_perfil">
 
+    <!--
+
     <TextView
         android:id="@+id/txtPerfilNombre"
         android:layout_width="wrap_content"
@@ -78,4 +80,127 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+
+    -->
+    <RelativeLayout
+        android:id="@+id/mi_perfil_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imgPerfilFoto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/sin_imagen" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lbNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgPerfilFoto">
+
+            <EditText
+                android:id="@+id/txtPerfilNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre"
+                android:inputType="textCapSentences"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lbApellido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbNombre">
+
+            <EditText
+                android:id="@+id/txtPerfilApellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Apellido"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lbEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbApellido"
+            app:passwordToggleEnabled="false">
+
+            <EditText
+                android:id="@+id/txtPerfilEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlFechaNacimiento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbEmail">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lbFechaNacimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lbEmail">
+
+                <EditText
+                    android:id="@+id/txtPerfilFechaNacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:focusable="false"
+                    android:hint="Fecha nacimiento"
+                    android:inputType="text"
+                    android:textAllCaps="false" />
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lbGenero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlFechaNacimiento">
+
+            <EditText
+                android:id="@+id/txtPerfilGenero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Género"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/altura_boton"
+            android:layout_below="@id/lbGenero"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorBotonNaranja"
+            android:text="Cerrar Sesión"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextoBoton"
+            android:textSize="@dimen/size_texto_boton" />
+    </RelativeLayout>
 </RelativeLayout>

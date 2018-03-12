@@ -1,7 +1,5 @@
 package com.jadevelopment.deliveryboss1.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -15,8 +13,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,7 +30,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.text.SimpleDateFormat;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -44,7 +39,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.common.api.Api;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -65,7 +59,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -144,10 +137,10 @@ public class RegistrarmeActivity extends AppCompatActivity {
         //FloatLabels
         mFloatLabelNombre = (TextInputLayout) findViewById(R.id.lbNombre);
         mFloatLabelApellido = (TextInputLayout) findViewById(R.id.lbApellido);
-        mFloatLabelEmail = (TextInputLayout) findViewById(R.id.lbEmail);
-        mFloatLabelContrasena = (TextInputLayout) findViewById(R.id.lbContrasena);
+        mFloatLabelEmail = (TextInputLayout) findViewById(R.id.lbApellido);
+        mFloatLabelContrasena = (TextInputLayout) findViewById(R.id.lbEmail);
         mFloatLabelFechaNacimiento = (TextInputLayout) findViewById(R.id.lbFechaNacimiento);
-        mFloatLabelSexo = (TextInputLayout) findViewById(R.id.lbSexo);
+        mFloatLabelSexo = (TextInputLayout) findViewById(R.id.lbGenero);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sexo, R.layout.spinner_item_registro);

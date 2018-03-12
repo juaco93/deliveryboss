@@ -480,7 +480,7 @@ public class CarritoActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(mensaje.getEstado().equals("3"))error = "Su orden no ha podido ser enviada, revise su conexión a internet";
+                        if(mensaje.getEstado().equals("3"))error = "Tu orden no ha podido ser enviada. Revisá su conexión a internet";
                     }
                     showError(error);
                     return;

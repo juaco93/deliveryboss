@@ -5,7 +5,7 @@
     <string name="fb_login_protocol_scheme">fb790490254443566</string>
 
     <string-array name="sexo">
-        <item>Sexo</item>
+        <item>Género</item>
         <item>Hombre</item>
         <item>Mujer</item>
     </string-array>

@@ -116,7 +116,7 @@ public class PrincipalActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
             // Añadir carácteristicas
 
-            String nombre = SessionPrefs.get(this).getPrefUsuarioNombre();
+            String nombre = SessionPrefs.get(this).getPrefUsuarioNombreyApellido();
             String email = SessionPrefs.get(this).getPrefUsuarioEmail();
             String imagen = SessionPrefs.get(this).getPrefUsuarioImagen();
 
