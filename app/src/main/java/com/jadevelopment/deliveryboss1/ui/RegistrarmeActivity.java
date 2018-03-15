@@ -137,10 +137,9 @@ public class RegistrarmeActivity extends AppCompatActivity {
         //FloatLabels
         mFloatLabelNombre = (TextInputLayout) findViewById(R.id.lbNombre);
         mFloatLabelApellido = (TextInputLayout) findViewById(R.id.lbApellido);
-        mFloatLabelEmail = (TextInputLayout) findViewById(R.id.lbApellido);
-        mFloatLabelContrasena = (TextInputLayout) findViewById(R.id.lbEmail);
+        mFloatLabelEmail = (TextInputLayout) findViewById(R.id.lbEmail);
+        mFloatLabelContrasena = (TextInputLayout) findViewById(R.id.lbContrasena);
         mFloatLabelFechaNacimiento = (TextInputLayout) findViewById(R.id.lbFechaNacimiento);
-        mFloatLabelSexo = (TextInputLayout) findViewById(R.id.lbGenero);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sexo, R.layout.spinner_item_registro);

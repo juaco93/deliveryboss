@@ -30,7 +30,7 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/lbNombre"
+            android:id="@+id/lbPerfilNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imgPerfilFoto">
@@ -47,17 +47,17 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/lbApellido"
+            android:id="@+id/lbPerfilApellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lbNombre">
+            android:layout_below="@+id/lbPerfilNombre">
 
             <EditText
                 android:id="@+id/txtPerfilApellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apellido"
                 android:enabled="false"
+                android:hint="Apellido"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
 
@@ -67,7 +67,7 @@
             android:id="@+id/lbPerfilTelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lbApellido"
+            android:layout_below="@+id/lbPerfilApellido"
             app:passwordToggleEnabled="false">
 
             <EditText
@@ -81,7 +81,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/lbEmail"
+            android:id="@+id/lbPerfilEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lbPerfilTelefono"
@@ -101,13 +101,12 @@
             android:id="@+id/rlFechaNacimiento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lbEmail">
+            android:layout_below="@+id/lbPerfilEmail">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/lbFechaNacimiento"
+                android:id="@+id/lbPerfilFechaNacimiento"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lbEmail">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/txtPerfilFechaNacimiento"
@@ -115,10 +114,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:enabled="false"
-                    android:hint="Fecha nacimiento"
-                    android:inputType="date"
                     android:focusable="false"
-                    />
+                    android:hint="Fecha nacimiento"
+                    android:inputType="date" />
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>

@@ -6,11 +6,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +19,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -29,15 +27,12 @@ import com.jadevelopment.deliveryboss1.R;
 import com.jadevelopment.deliveryboss1.data.api.CircleTransform;
 import com.jadevelopment.deliveryboss1.data.api.DeliverybossApi;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponse;
-import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseEmpresas;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseUsuario;
-import com.jadevelopment.deliveryboss1.data.api.model.EmpresasBody;
 import com.jadevelopment.deliveryboss1.data.api.model.Usuario;
 import com.jadevelopment.deliveryboss1.data.prefs.SessionPrefs;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -55,6 +50,14 @@ public class MiPerfilActivity extends AppCompatActivity {
     EditText perfilTelefono;
     EditText perfilEmail;
     EditText perfilFechaNacimiento;
+
+    private TextInputLayout mFloatLabelNombre;
+    private TextInputLayout mFloatLabelApellido;
+    private TextInputLayout mFloatLabelTelefono;
+    private TextInputLayout mFloatLabelEmail;
+    private TextInputLayout mFloatLabelFechaNacimiento;
+
+
     Button cvCerrarSesion;
 
     private Retrofit mRestAdapter;
@@ -62,7 +65,6 @@ public class MiPerfilActivity extends AppCompatActivity {
     ApiResponseUsuario serverUsuario;
 
     Calendar myCalendar = Calendar.getInstance();
-
     boolean modificar=false;
 
     @Override
@@ -84,6 +86,12 @@ public class MiPerfilActivity extends AppCompatActivity {
         perfilEmail = (EditText) findViewById(R.id.txtPerfilEmail);
         perfilFechaNacimiento = (EditText) findViewById(R.id.txtPerfilFechaNacimiento);
         cvCerrarSesion = (Button) findViewById(R.id.btnCerrarSesion);
+
+        mFloatLabelNombre = (TextInputLayout) findViewById(R.id.lbPerfilNombre);
+        mFloatLabelApellido = (TextInputLayout) findViewById(R.id.lbPerfilApellido);
+        mFloatLabelTelefono = (TextInputLayout) findViewById(R.id.lbPerfilTelefono);
+        mFloatLabelEmail = (TextInputLayout) findViewById(R.id.lbPerfilEmail);
+        mFloatLabelFechaNacimiento = (TextInputLayout) findViewById(R.id.lbPerfilFechaNacimiento);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -149,25 +157,26 @@ public class MiPerfilActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_modificar_datos:
-                if(!modificar) {
-                    modificar=true;
-                    item.setIcon(R.drawable.ic_action_okay);
-                    perfilNombre.setEnabled(true);
-                    perfilApellido.setEnabled(true);
-                    perfilTelefono.setEnabled(true);
-                    //perfilEmail.setEnabled(true);
-                    perfilFechaNacimiento.setEnabled(true);
+                    if (!modificar) {
+                        modificar = true;
+                        item.setIcon(R.drawable.ic_action_okay);
+                        perfilNombre.setEnabled(true);
+                        perfilApellido.setEnabled(true);
+                        perfilTelefono.setEnabled(true);
+                        //perfilEmail.setEnabled(true);
+                        perfilFechaNacimiento.setEnabled(true);
+                    } else {
+                        if(modificarUsuario()){
+                            item.setIcon(R.drawable.ic_action_edit_2);
+                            perfilNombre.setEnabled(false);
+                            perfilApellido.setEnabled(false);
+                            perfilTelefono.setEnabled(false);
+                            //perfilEmail.setEnabled(false);
+                            perfilFechaNacimiento.setEnabled(false);
+                            modificar = false;
 
-                }else{
-                    item.setIcon(R.drawable.ic_action_edit_2);
-                    perfilNombre.setEnabled(false);
-                    perfilApellido.setEnabled(false);
-                    perfilTelefono.setEnabled(false);
-                    //perfilEmail.setEnabled(false);
-                    perfilFechaNacimiento.setEnabled(false);
-                    modificar=false;
-                    modificarUsuario();
-                }
+                        }
+                    }
 
         }
 
@@ -236,9 +245,15 @@ public class MiPerfilActivity extends AppCompatActivity {
         });
     }
 
-    private void modificarUsuario() {
+    private boolean modificarUsuario() {
         String authorization = SessionPrefs.get(this).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
+
+        mFloatLabelNombre.setError(null);
+        mFloatLabelApellido.setError(null);
+        mFloatLabelTelefono.setError(null);
+        mFloatLabelEmail.setError(null);
+        mFloatLabelFechaNacimiento.setError(null);
 
         String imagen = urlFoto;
         String nombre = perfilNombre.getText().toString();
@@ -248,54 +263,97 @@ public class MiPerfilActivity extends AppCompatActivity {
         String sexo_idsexo =sexo;
         String fecha_nacimiento = perfilFechaNacimiento.getText().toString();
 
-        final Usuario usuarioMod = new Usuario("","",imagen,nombre,apellido,telefono,e_mail,sexo_idsexo,fecha_nacimiento);
+        final boolean[] cancel = {false};
+        View focusView = null;
 
-        Gson gson = new Gson();
-        String jsonInString = gson.toJson(usuarioMod);
+        // Nombre
+        if (TextUtils.isEmpty(nombre)) {
+            Log.d("registro","Esta vacio nombre: "+ nombre+" <-");
+            perfilNombre.setError(getString(R.string.error_field_required));
+            mFloatLabelNombre.setError(getString(R.string.error_field_required));
+            focusView = perfilNombre;
+            cancel[0] = true;
+        }
+        // Apellido
+        if (TextUtils.isEmpty(apellido)) {
+            perfilApellido.setError(getString(R.string.error_field_required));
+            mFloatLabelApellido.setError(getString(R.string.error_field_required));
+            focusView = perfilApellido;
+            cancel[0] = true;
+        }
 
-        Log.d("logindb","Modificando usuario>"+jsonInString);
+        // Check for a valid telefono
+        if (TextUtils.isEmpty(telefono)) {
+            perfilTelefono.setError(getString(R.string.error_field_required));
+            mFloatLabelTelefono.setError(getString(R.string.error_field_required));
+            focusView = perfilTelefono;
+            cancel[0] = true;
+        }
 
-        // Realizar petición HTTP
-        Call<ApiResponse> call = mDeliverybossApi.modificarUsuario(authorization,usuarioMod,idusuario);
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call,
-                                   Response<ApiResponse> response) {
-                if (!response.isSuccessful()) {
-                    // Procesar error de API
-                    String error = "Ha ocurrido un error. Contacte al administrador";
-                    if (response.errorBody()
-                            .contentType()
-                            .subtype()
-                            .equals("json")) {
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(e_mail)) {
+            perfilEmail.setError(getString(R.string.error_field_required));
+            mFloatLabelEmail.setError(getString(R.string.error_field_required));
+            focusView = perfilEmail;
+            cancel[0] = true;
+        }
+
+
+        if (cancel[0]) {
+            focusView.requestFocus();
+            return false;
+        } else {
+
+            final Usuario usuarioMod = new Usuario("", "", imagen, nombre, apellido, telefono, e_mail, sexo_idsexo, fecha_nacimiento);
+
+            Gson gson = new Gson();
+            String jsonInString = gson.toJson(usuarioMod);
+
+            Log.d("logindb", "Modificando usuario>" + jsonInString);
+
+            // Realizar petición HTTP
+            Call<ApiResponse> call = mDeliverybossApi.modificarUsuario(authorization, usuarioMod, idusuario);
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call,
+                                       Response<ApiResponse> response) {
+                    if (!response.isSuccessful()) {
+                        // Procesar error de API
+                        String error = "Ha ocurrido un error. Contacte al administrador";
+                        if (response.errorBody()
+                                .contentType()
+                                .subtype()
+                                .equals("json")) {
+                        } else {
+
+                        }
+
+
+                    }
+                    String error = "";
+                    if (response.body().getMensaje() != null) {
+                        error = response.body().getMensaje();
+                        showErrorMessage(error);
+
+                        SessionPrefs.get(MiPerfilActivity.this).modificarUsuario(usuarioMod);
                     } else {
-
+                        showErrorMessage(error);
+                        return;
                     }
 
 
                 }
-                String error="";
-                if(response.body().getMensaje()!=null) {
-                    error = response.body().getMensaje();
-                    showErrorMessage(error);
 
-                    SessionPrefs.get(MiPerfilActivity.this).modificarUsuario(usuarioMod);
-                }else{
-                    showErrorMessage(error);
-                    return;
+                @Override
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+                    //showLoadingIndicator(false);
+                    Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                    showErrorMessage("Comprueba tu conexión a Internet");
                 }
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                //showLoadingIndicator(false);
-                Log.d("logindb", "Petición rechazada:" + t.getMessage());
-                showErrorMessage("Comprueba tu conexión a Internet");
-            }
-        });
+            });
+        }
+        return true;
     }
 
     private void mostrarUsuario(ApiResponseUsuario usuarioServer) {
