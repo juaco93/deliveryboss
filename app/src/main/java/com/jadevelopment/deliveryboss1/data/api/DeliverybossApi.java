@@ -7,6 +7,7 @@ import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseDirecciones;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseMantenimiento;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseOrdenes;
 import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseProductos;
+import com.jadevelopment.deliveryboss1.data.api.model.ApiResponseUsuario;
 import com.jadevelopment.deliveryboss1.data.api.model.Calificacion;
 import com.jadevelopment.deliveryboss1.data.api.model.CiudadSugerida;
 import com.jadevelopment.deliveryboss1.data.api.model.EmpresaSugerida;
@@ -49,7 +50,16 @@ public interface  DeliverybossApi {
     @POST("usuarios/registro")
     Call<ApiResponse> registroNormal(@Body UsuarioRegisterBody usuarioRegisterBody);
 
-    @POST("usuarios/registrationId")
+    @GET("usuarios/{idusuario}")
+    Call<ApiResponseUsuario> obtenerUsuarioPorId(@Header("Authorization") String authorization,
+                                                 @Path(value = "idusuario", encoded = true) String idusuario);
+
+    @PUT("usuarios/{idusuario}")
+    Call<ApiResponse> modificarUsuario(@Header("Authorization") String authorization,
+                                       @Body Usuario usuario,
+                                       @Path(value = "idusuario", encoded = true) String idusuario);
+
+    @PUT("usuarios/{idusuario}")
     Call<ApiResponse> registrarRegId(@Body regIdBody regIdBody);
 
     @GET("empresas/")

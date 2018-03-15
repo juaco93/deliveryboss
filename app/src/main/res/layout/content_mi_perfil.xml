@@ -8,80 +8,6 @@
     tools:context="com.jadevelopment.deliveryboss1.ui.MiPerfilActivity"
     tools:showIn="@layout/activity_mi_perfil">
 
-    <!--
-
-    <TextView
-        android:id="@+id/txtPerfilNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Arias Simone, Joaquin"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/imgPerfilFoto"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:id="@+id/imgPerfilFoto"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        app:srcCompat="@drawable/sin_imagen" />
-
-    <TextView
-        android:id="@+id/txtPerfilEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="joaquin_rcm@hotmail.com"
-        android:textSize="18sp"
-        android:layout_below="@+id/txtPerfilNombre"
-        android:layout_centerHorizontal="true" />
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cvLogout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="25dp"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/colorBotonRubro"
-        app:cardCornerRadius="@dimen/corner_radius_seleccion_rubro"
-        app:cardElevation="3dp"
-        android:layout_below="@+id/txtPerfilEmail"
-        android:layout_centerHorizontal="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="8dp"
-            android:paddingEnd="16dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="80dp"
-                android:text="Cerrar sesión"
-                android:textAlignment="center"
-                android:textColor="@color/colorTextoBotonRubro"
-                android:textSize="19dp" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    -->
     <RelativeLayout
         android:id="@+id/mi_perfil_form"
         android:layout_width="match_parent"
@@ -89,14 +15,15 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         android:weightSum="1">
 
         <ImageView
             android:id="@+id/imgPerfilFoto"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             app:srcCompat="@drawable/sin_imagen" />
@@ -112,6 +39,7 @@
                 android:id="@+id/txtPerfilNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="Nombre"
                 android:inputType="textCapSentences"
                 android:maxLines="1" />
@@ -129,23 +57,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Apellido"
+                android:enabled="false"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/lbEmail"
+            android:id="@+id/lbPerfilTelefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lbApellido"
             app:passwordToggleEnabled="false">
 
             <EditText
+                android:id="@+id/txtPerfilTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lbEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbPerfilTelefono"
+            app:passwordToggleEnabled="false">
+
+            <EditText
                 android:id="@+id/txtPerfilEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="E-mail"
+                android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
@@ -166,36 +114,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:hint="Fecha nacimiento"
-                    android:inputType="text"
-                    android:textAllCaps="false" />
+                    android:inputType="date"
+                    android:focusable="false"
+                    />
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/lbGenero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlFechaNacimiento">
 
-            <EditText
-                android:id="@+id/txtPerfilGenero"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Género"
-                android:inputType="textEmailAddress"
-                android:maxLines="1" />
-
-        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnCerrarSesion"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/altura_boton"
-            android:layout_below="@id/lbGenero"
+            android:layout_below="@id/rlFechaNacimiento"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/colorBotonNaranja"
             android:text="Cerrar Sesión"

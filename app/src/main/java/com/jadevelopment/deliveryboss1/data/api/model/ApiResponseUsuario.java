@@ -1,12 +1,11 @@
 package com.jadevelopment.deliveryboss1.data.api.model;
 
 /**
- * Created by Joaquin on 23/6/2017.
+ * Created by Joaquin on 13/03/2018.
  */
 
-public class Usuario {
-    String idusuario;
-    String token;
+public class ApiResponseUsuario {
+
     String imagen;
     String nombre;
     String apellido;
@@ -15,9 +14,7 @@ public class Usuario {
     String sexo_idsexo;
     String fecha_nacimiento;
 
-    public Usuario(String idusuario, String token, String imagen, String nombre, String apellido, String telefono, String e_mail, String sexo_idsexo, String fecha_nacimiento) {
-        this.idusuario = idusuario;
-        this.token = token;
+    public ApiResponseUsuario(String imagen, String nombre, String apellido, String telefono, String e_mail, String sexo_idsexo, String fecha_nacimiento) {
         this.imagen = imagen;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -25,22 +22,6 @@ public class Usuario {
         this.e_mail = e_mail;
         this.sexo_idsexo = sexo_idsexo;
         this.fecha_nacimiento = fecha_nacimiento;
-    }
-
-    public String getIdusuario() {
-        return idusuario;
-    }
-
-    public void setIdusuario(String idusuario) {
-        this.idusuario = idusuario;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getImagen() {
