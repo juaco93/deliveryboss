@@ -248,7 +248,7 @@ public class MiPerfilActivity extends AppCompatActivity {
         String sexo_idsexo =sexo;
         String fecha_nacimiento = perfilFechaNacimiento.getText().toString();
 
-        final Usuario usuarioMod = new Usuario(idusuario,"",imagen,nombre,apellido,telefono,e_mail,sexo_idsexo,fecha_nacimiento);
+        final Usuario usuarioMod = new Usuario("","",imagen,nombre,apellido,telefono,e_mail,sexo_idsexo,fecha_nacimiento);
 
         Gson gson = new Gson();
         String jsonInString = gson.toJson(usuarioMod);
