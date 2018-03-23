@@ -58,14 +58,6 @@
             android:layout_below="@+id/txtDireccionNumero"
             android:text="B° 25 de Mayo Sur" />
 
-        <TextView
-            android:id="@+id/txtDireccionTelefono"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtDireccionNombreCalle"
-            android:layout_alignStart="@+id/txtDireccionNombreCalle"
-            android:layout_below="@+id/txtDireccionBarrio"
-            android:text="3804-347301" />
 
         <TextView
             android:id="@+id/txtDireccionCiudad"
@@ -73,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/txtDireccionNombreCalle"
             android:layout_alignStart="@+id/txtDireccionNombreCalle"
-            android:layout_below="@+id/txtDireccionTelefono"
+            android:layout_below="@+id/txtDireccionBarrio"
             android:text="La Rioja" />
 
         <View
