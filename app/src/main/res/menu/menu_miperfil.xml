@@ -5,5 +5,10 @@
         android:id="@+id/action_modificar_datos"
         android:icon="@drawable/ic_action_edit_2"
         android:title="Modificar datos"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_cerrar_sesion"
+        android:title="Cerrar sesión"
+        app:showAsAction="never"/>
 </menu>

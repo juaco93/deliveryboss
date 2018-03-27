@@ -64,8 +64,6 @@ public class MiPerfilActivity extends AppCompatActivity {
     private TextInputLayout mFloatLabelFechaNacimiento;
 
 
-    Button cvCerrarSesion;
-
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
     ApiResponseUsuario serverUsuario;
@@ -92,7 +90,6 @@ public class MiPerfilActivity extends AppCompatActivity {
         perfilTelefono = (EditText) findViewById(R.id.txtPerfilTelefono) ;
         perfilEmail = (EditText) findViewById(R.id.txtPerfilEmail);
         perfilFechaNacimiento = (EditText) findViewById(R.id.txtPerfilFechaNacimiento);
-        cvCerrarSesion = (Button) findViewById(R.id.btnCerrarSesion);
 
         mFloatLabelNombre = (TextInputLayout) findViewById(R.id.lbPerfilNombre);
         mFloatLabelApellido = (TextInputLayout) findViewById(R.id.lbPerfilApellido);
@@ -124,13 +121,6 @@ public class MiPerfilActivity extends AppCompatActivity {
         });
 
 
-        cvCerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionPrefs.get(getApplicationContext()).logOut();
-                checkUserSession();
-            }
-        });
 
         // Inicializar GSON
         Gson gson =
@@ -169,6 +159,10 @@ public class MiPerfilActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, SeleccionarCiudad.class);
                     startActivity(intent);
                 }
+                return true;
+            case R.id.action_cerrar_sesion:
+                SessionPrefs.get(getApplicationContext()).logOut();
+                checkUserSession();
                 return true;
             case R.id.action_modificar_datos:
                     if (!modificar) {

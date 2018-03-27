@@ -427,6 +427,7 @@ public class CarritoActivity extends AppCompatActivity {
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
         String idempresa = empresa.getIdempresa();
         String nombreEmpresa = empresa.getNombre_empresa();
+        String precioDelivery = empresa.getPrecio_delivery();
 
         // Tratamiento especial del "Paga con"
         String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
@@ -438,7 +439,7 @@ public class CarritoActivity extends AppCompatActivity {
         String total = String.valueOf(importeTotal);
 
         // Creacion del Objeto "Orden"
-        Orden orden = new Orden("","","","",idusuario,idempresa,stDireccion,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
+        Orden orden = new Orden("","","","","",idusuario,idempresa,stDireccion,precioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
 
 
         // Realizar petición HTTP

@@ -120,20 +120,5 @@
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
-
-
-
-        <Button
-            android:id="@+id/btnCerrarSesion"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/altura_boton"
-            android:layout_below="@id/rlFechaNacimiento"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/colorBotonNaranja"
-            android:text="Cerrar Sesión"
-            android:textAllCaps="false"
-            android:textColor="@color/colorTextoBoton"
-            android:textSize="@dimen/size_texto_boton" />
     </RelativeLayout>
 </RelativeLayout>

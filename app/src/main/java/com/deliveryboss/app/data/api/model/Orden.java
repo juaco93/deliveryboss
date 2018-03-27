@@ -15,6 +15,7 @@ public class Orden {
     String usuario_idusuario;
     String empresa_idempresa;
     String usuario_direccion_idusuario_direccion;
+    String precio_delivery;
     String importe_total;
     String paga_con;
     String nota;
@@ -25,7 +26,8 @@ public class Orden {
     String calificado;
     List<Orden_detalle> orden_detalle;
 
-    public Orden(String fecha_hora, String fecha_hora_estado, String info_estado, String estado, String usuario_idusuario, String empresa_idempresa, String usuario_direccion_idusuario_direccion, String importe_total, String paga_con, String nota, String tipo_entrega_idtipo_entrega, String orden_estado_idorden_estado, String nombre_empresa, String telefono, String calificado, List<Orden_detalle> orden_detalle) {
+    public Orden(String idorden, String fecha_hora, String fecha_hora_estado, String info_estado, String estado, String usuario_idusuario, String empresa_idempresa, String usuario_direccion_idusuario_direccion, String precio_delivery, String importe_total, String paga_con, String nota, String tipo_entrega_idtipo_entrega, String orden_estado_idorden_estado, String nombre_empresa, String telefono, String calificado, List<Orden_detalle> orden_detalle) {
+        this.idorden = idorden;
         this.fecha_hora = fecha_hora;
         this.fecha_hora_estado = fecha_hora_estado;
         this.info_estado = info_estado;
@@ -33,6 +35,7 @@ public class Orden {
         this.usuario_idusuario = usuario_idusuario;
         this.empresa_idempresa = empresa_idempresa;
         this.usuario_direccion_idusuario_direccion = usuario_direccion_idusuario_direccion;
+        this.precio_delivery = precio_delivery;
         this.importe_total = importe_total;
         this.paga_con = paga_con;
         this.nota = nota;
@@ -108,6 +111,14 @@ public class Orden {
         this.usuario_direccion_idusuario_direccion = usuario_direccion_idusuario_direccion;
     }
 
+    public String getPrecio_delivery() {
+        return precio_delivery;
+    }
+
+    public void setPrecio_delivery(String precio_delivery) {
+        this.precio_delivery = precio_delivery;
+    }
+
     public String getImporte_total() {
         return importe_total;
     }
@@ -179,5 +190,4 @@ public class Orden {
     public void setOrden_detalle(List<Orden_detalle> orden_detalle) {
         this.orden_detalle = orden_detalle;
     }
-
 }
