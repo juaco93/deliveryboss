@@ -152,7 +152,7 @@ public class InfoEmpresaFragment extends Fragment{
             limpiarHorarios();
             Intent intentRecibido = getActivity().getIntent();
             empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
-            mostrarHorarios();
+            //mostrarHorarios();
 
 
             ////// CARD DELIVERY //////////
@@ -252,7 +252,7 @@ public class InfoEmpresaFragment extends Fragment{
             return v;
         }
 
-
+/*
         private void mostrarHorarios(){
             SimpleDateFormat sdf = new SimpleDateFormat("EEE");
             String diaActual = sdf.format(new Date());
@@ -336,11 +336,11 @@ public class InfoEmpresaFragment extends Fragment{
                             if(turno2.equals("0:01 a 0:01")) holder.horarios.setText("HOY "+turno1);
                             if(turno1.equals("0:00 a 0:00")) holder.horarios.setText("ABIERTO LAS 24HS");
                             //abierto=true;
-                        }*/
+                        }
                     }
                 }
             }
-        }
+        }*/
 
     private void limpiarHorarios(){
         lunes.setTypeface(null, Typeface.NORMAL);

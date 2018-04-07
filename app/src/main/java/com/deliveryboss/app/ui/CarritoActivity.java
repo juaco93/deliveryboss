@@ -478,6 +478,7 @@ public class CarritoActivity extends AppCompatActivity {
                 showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
                 startActivity(intent);
+                EventBus.getDefault().post(new MessageEvent("10", "Se envio la orden exitosamente."));
 
             }
 

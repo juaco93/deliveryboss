@@ -88,9 +88,43 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         Log.d("dia", diaActual);
 
         Boolean abierto= false;
-        String turno1 = "";
-        String turno2 = "";
+        String turno1desde = "";
+        String turno2desde = "";
+        String turno1hasta = "";
+        String turno2hasta = "";
 
+        int cantidad=empresa.getEmpresa_horario().size();
+        for(int i=0;i<cantidad;i++){
+            if(diaActual.equals(empresa.getEmpresa_horario().get(i).getDia())){
+                // OBTENEMOS LOS TURNOS DEL DIA
+                turno1desde=empresa.getEmpresa_horario().get(i).getTurno1_desde();
+                turno2desde=empresa.getEmpresa_horario().get(i).getTurno2_desde();
+                turno1hasta=empresa.getEmpresa_horario().get(i).getTurno1_hasta();
+                turno2hasta=empresa.getEmpresa_horario().get(i).getTurno2_hasta();
+
+                // SI TIENE LOS DOS TURNOS
+                if(turno1desde!=null && turno2desde!=null) {
+                    holder.horarios.setText("HOY de "+turno1desde+" a " +turno1hasta+" Y de "+turno2desde+" a "+turno2hasta);
+                    abierto=true;
+                }
+
+
+                // SI TIENE SOLO TURNO 1
+                if(turno1desde!=null && turno2desde==null){
+                    holder.horarios.setText("HOY de "+turno1desde+" a " +turno1hasta);
+                    abierto=true;
+                }
+
+                // SI TIENE SOLO TURNO 2
+                if(turno2desde!=null && turno1desde==null){
+                    holder.horarios.setText("HOY de "+turno2desde+" a " +turno2hasta);
+                    abierto=true;
+                }
+            }
+        }
+        if(!abierto)holder.horarios.setText("HOY CERRADO");
+
+        /*
         if(empresa.getHorario()!=null) {
             String[] dias = empresa.getHorario().split(",");
             for (String dia : dias) {
@@ -111,9 +145,9 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
                     }
                 }
             }
-        }
+        }*/
 
-        if(!abierto)holder.horarios.setText("HOY CERRADO");
+
 
 
         //Carga de los logos de las empresas con Picasso

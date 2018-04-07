@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -33,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,6 +49,10 @@ import com.deliveryboss.app.data.api.model.ApiResponseEmpresas;
 import com.deliveryboss.app.data.api.DeliverybossApi;
 import com.deliveryboss.app.data.util.NotificationUtils;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -644,5 +650,38 @@ public class PrincipalActivity extends AppCompatActivity {
         }
         tiempoPrimerClick = System.currentTimeMillis();
     }
+
+
+    public void showOrdenEnaviadaDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        OrdenEnviadaFragment newFragment = new OrdenEnviadaFragment();
+        Bundle args = new Bundle();
+        newFragment.show(fragmentManager.beginTransaction(), "¡Orden enviada!");
+
+    }
+
+
+    /// CODIGO DE EVENTBUS /////
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        //if(event.getIdevento().equals("10")){
+            showOrdenEnaviadaDialog();
+        //}
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /// FIN EVENTBUS ///
 
 }

@@ -366,7 +366,7 @@ public class InfoMenuFragment extends Fragment {
 
         String turno1 = "";
         String turno2 = "";
-
+/*
         if(empresa.getHorario()!=null) {
             String[] dias = empresa.getHorario().split(",");
             for (String dia : dias) {
@@ -387,7 +387,7 @@ public class InfoMenuFragment extends Fragment {
                     }
                 }
             }
-        }
+        }*/
     }
 
 }

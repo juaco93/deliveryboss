@@ -1,5 +1,7 @@
 package com.deliveryboss.app.data.api.model;
 
+import java.util.List;
+
 /**
  * Created by Joaquin on 24/6/2017.
  */
@@ -22,7 +24,7 @@ public class EmpresasBody {
     String empresa_rubro;
     String tipo_entrega_idtipo_entrega;
     String subrubro;
-    String horario;
+    List<empresa_horario> empresa_horario;
     String calificacion_general;
     String cantidad_calificacion;
     String calificacion1;
@@ -30,7 +32,8 @@ public class EmpresasBody {
     String calificacion3;
     String ciudad;
 
-    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, String horario, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
+
+    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
         this.idempresa = idempresa;
         this.logo = logo;
         this.nombre_empresa = nombre_empresa;
@@ -48,7 +51,7 @@ public class EmpresasBody {
         this.empresa_rubro = empresa_rubro;
         this.tipo_entrega_idtipo_entrega = tipo_entrega_idtipo_entrega;
         this.subrubro = subrubro;
-        this.horario = horario;
+        this.empresa_horario = empresa_horario;
         this.calificacion_general = calificacion_general;
         this.cantidad_calificacion = cantidad_calificacion;
         this.calificacion1 = calificacion1;
@@ -193,12 +196,12 @@ public class EmpresasBody {
         this.subrubro = subrubro;
     }
 
-    public String getHorario() {
-        return horario;
+    public List<com.deliveryboss.app.data.api.model.empresa_horario> getEmpresa_horario() {
+        return empresa_horario;
     }
 
-    public void setHorario(String horario) {
-        this.horario = horario;
+    public void setEmpresa_horario(List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario) {
+        this.empresa_horario = empresa_horario;
     }
 
     public String getCalificacion_general() {
