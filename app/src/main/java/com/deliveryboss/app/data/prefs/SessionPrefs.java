@@ -111,15 +111,17 @@ public class SessionPrefs {
         }
     }
 
-    public void saveDireccion(String iddireccion, String idciudad, String calle, String numero, String latitud, String longitud){
+    public void saveDireccion(String iddireccion, String idciudad, String ciudad,String calle, String numero, String latitud, String longitud){
         if(iddireccion!=null){
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putString(DIRECCION_ID, iddireccion);
             editor.putString(DIRECCION_IDCIUDAD, idciudad);
+            editor.putString(PREF_USUARIO_CIUDAD,ciudad);
             editor.putString(DIRECCION_CALLE, calle);
             editor.putString(DIRECCION_NUMERO, numero);
             editor.putString(DIRECCION_LATITUD, latitud);
             editor.putString(DIRECCION_LONGITUD, longitud);
+
             editor.apply();
         }
     }
