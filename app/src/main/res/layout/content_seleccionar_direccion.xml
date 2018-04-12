@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.deliveryboss.app.ui.SeleccionarDireccion">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="100dp"
+            app:srcCompat="@drawable/logo_login"
+            />
+
+
+        <Spinner
+            android:id="@+id/spSeleccionarDireccion"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/spinner_background"
+            android:spinnerMode="dialog"
+            android:textAlignment="center"
+            android:textSize="19sp"
+            android:textColor="@color/colorComida"
+            />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/btnSeleccionarDireccionContinuar"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/colorBotonRubro"
+            app:cardCornerRadius="@dimen/corner_radius_seleccion_rubro"
+            app:cardElevation="3dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_toEndOf="@+id/imgComida"
+                    android:layout_toRightOf="@+id/imgComida"
+                    android:text="Continuar"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextoBotonRubro"
+                    android:textSize="19sp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:gravity="right"
+            android:text="¿Tu dirección no está en la lista?"
+            android:textColor="@color/colorTextoBotonRubro"
+            />
+
+        <Button
+            android:id="@+id/btnSeleccionarDireccionAgregar"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/altura_boton"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/boton_nuevo"
+            android:text="Agregar dirección"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextoBoton"
+            android:textSize="@dimen/size_texto_boton" />
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

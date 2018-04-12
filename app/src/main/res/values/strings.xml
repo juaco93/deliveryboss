@@ -76,4 +76,5 @@
     <string name="title_activity_ciudad_no_disponible">Ciudad no disponible</string>
     <string name="title_activity_mi_perfil">Mi perfil</string>
     <string name="prompt_seleccionar_ciudad">Seleccioná tu ciudad</string>
+    <string name="title_activity_seleccionar_direccion">SeleccionarDireccion</string>
 </resources>

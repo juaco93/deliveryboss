@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.deliveryboss.app.data.api.model.MessageEvent;
+import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -79,6 +80,8 @@ public class PrincipalActivity extends AppCompatActivity {
     String rubroIntent;
     String nombreApp = "deliveryboss en ";
     SearchView searchView;
+    //Usuario_direccion direccionUsuario;
+    Usuario_direccion usuarioDireccion;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -189,7 +192,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
         mListaEmpresas = (RecyclerView) findViewById(R.id.list_empresas);
-        mEmpresasAdapter = new EmpresasAdapter(this, new ArrayList<EmpresasBody>(0));
+        mEmpresasAdapter = new EmpresasAdapter(this, new ArrayList<EmpresasBody>(0),usuarioDireccion);
         mEmpresasAdapter.setOnItemClickListener(new EmpresasAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(EmpresasBody clickedEmpresa) {
@@ -345,10 +348,20 @@ public class PrincipalActivity extends AppCompatActivity {
         authorization = SessionPrefs.get(this).getPrefUsuarioToken();
         String ciudad = SessionPrefs.get(this).getPrefUsuarioIdCiudad();
         String nombreCiudad = SessionPrefs.get(this).getPrefUsuarioCiudad();
-        Log.d("logindb", "Recuperando Empresas de: " + nombreCiudad);
+
+        String idUsuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
+        String usuarioIdciudad = SessionPrefs.get(this).getPrefUsuarioDireccionIdCiudad();
+        String usuarioIddireccion = SessionPrefs.get(this).getPrefUsuarioIdDireccion();
+        String usuarioLatitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
+        String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLongitud();
+
+        usuarioDireccion = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,"","","","","","",usuarioLatitud,usuarioLongitud);
+
+        //Log.d("logindb", "Recuperando Empresas de: " + nombreCiudad);
+        Log.d("logindb", "Direccion Usuario: " + (new Gson()).toJson(usuarioDireccion));
 
         // Realizar petición HTTP
-        Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,ciudad, rubro);
+        Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, rubro);
         call.enqueue(new Callback<ApiResponseEmpresas>() {
             @Override
             public void onResponse(Call<ApiResponseEmpresas> call,
@@ -484,7 +497,7 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void mostrarEmpresas(List<EmpresasBody> empresasServer) {
-        mEmpresasAdapter.swapItems(empresasServer);
+        mEmpresasAdapter.swapItems(empresasServer,usuarioDireccion);
         mListaEmpresas.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
     }
@@ -522,7 +535,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 filteredList.add(serverEmpresas.get(i));
             }
         }
-        mEmpresasAdapter.swapItems(filteredList);
+        mEmpresasAdapter.swapItems(filteredList,usuarioDireccion);
 
     }
 
@@ -574,8 +587,8 @@ public class PrincipalActivity extends AppCompatActivity {
                             case R.id.nav_direcciones:
                                 startActivity(new Intent(PrincipalActivity.this, MisDireccionesActivity.class));
                                 break;
-                            case R.id.nav_ciudad:
-                                startActivity(new Intent(PrincipalActivity.this, SeleccionarCiudad.class));
+                            case R.id.nav_cambiar_direccion:
+                                startActivity(new Intent(PrincipalActivity.this, SeleccionarDireccion.class));
                                 break;
                             case R.id.nav_sugerirempresa:
                                 startActivity(new Intent(PrincipalActivity.this, SugerirEmpresa.class));

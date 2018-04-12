@@ -25,6 +25,7 @@ public class EmpresasBody {
     String tipo_entrega_idtipo_entrega;
     String subrubro;
     List<empresa_horario> empresa_horario;
+    List<empresa_delivery> empresa_delivery;
     String calificacion_general;
     String cantidad_calificacion;
     String calificacion1;
@@ -33,7 +34,7 @@ public class EmpresasBody {
     String ciudad;
 
 
-    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
+    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, List<com.deliveryboss.app.data.api.model.empresa_delivery> empresa_delivery, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
         this.idempresa = idempresa;
         this.logo = logo;
         this.nombre_empresa = nombre_empresa;
@@ -52,6 +53,7 @@ public class EmpresasBody {
         this.tipo_entrega_idtipo_entrega = tipo_entrega_idtipo_entrega;
         this.subrubro = subrubro;
         this.empresa_horario = empresa_horario;
+        this.empresa_delivery = empresa_delivery;
         this.calificacion_general = calificacion_general;
         this.cantidad_calificacion = cantidad_calificacion;
         this.calificacion1 = calificacion1;
@@ -202,6 +204,14 @@ public class EmpresasBody {
 
     public void setEmpresa_horario(List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario) {
         this.empresa_horario = empresa_horario;
+    }
+
+    public List<com.deliveryboss.app.data.api.model.empresa_delivery> getEmpresa_delivery() {
+        return empresa_delivery;
+    }
+
+    public void setEmpresa_delivery(List<com.deliveryboss.app.data.api.model.empresa_delivery> empresa_delivery) {
+        this.empresa_delivery = empresa_delivery;
     }
 
     public String getCalificacion_general() {

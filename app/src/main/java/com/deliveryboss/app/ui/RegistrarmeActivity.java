@@ -533,7 +533,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
     }
 
     private void showPrincipalScreen() {
-        startActivity(new Intent(this, SeleccionarCiudad.class));
+        startActivity(new Intent(this, SeleccionarDireccion.class));
         finish();
     }
 

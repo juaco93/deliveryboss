@@ -33,9 +33,9 @@
             android:title="Más">
             <menu>
                 <item
-                    android:id="@+id/nav_ciudad"
+                    android:id="@+id/nav_cambiar_direccion"
                     android:icon="@drawable/ic_direcciones"
-                    android:title="Elegir otra ciudad" />
+                    android:title="Elegir otra dirección" />
                 <item
                     android:id="@+id/nav_sugerirempresa"
                     android:icon="@drawable/ic_registrarempresa"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -44,6 +45,7 @@ public class InfoEmpresaFragment extends Fragment{
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
     List<Calificacion> serverCalificaciones;
+    Usuario_direccion direccionUsuario;
     private FloatingActionButton mSharedFab;
 
     TextView lunes;
@@ -152,6 +154,7 @@ public class InfoEmpresaFragment extends Fragment{
             limpiarHorarios();
             Intent intentRecibido = getActivity().getIntent();
             empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
+            direccionUsuario = (new Gson()).fromJson((intentRecibido.getStringExtra("direccionJson")),Usuario_direccion.class);
             //mostrarHorarios();
 
 

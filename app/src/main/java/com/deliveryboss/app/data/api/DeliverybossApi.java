@@ -4,6 +4,7 @@ import com.deliveryboss.app.data.api.model.ApiResponse;
 import com.deliveryboss.app.data.api.model.ApiResponseCalificaciones;
 import com.deliveryboss.app.data.api.model.ApiResponseCiudades;
 import com.deliveryboss.app.data.api.model.ApiResponseDirecciones;
+import com.deliveryboss.app.data.api.model.ApiResponseEmpresa_delivery;
 import com.deliveryboss.app.data.api.model.ApiResponseMantenimiento;
 import com.deliveryboss.app.data.api.model.ApiResponseOrdenes;
 import com.deliveryboss.app.data.api.model.ApiResponseProductos;
@@ -133,6 +134,12 @@ public interface  DeliverybossApi {
     // METODO PARA OBTENER CIUDADES
     @GET("ciudades/")
     Call<ApiResponseCiudades> obtenerCiudades(@Header("Authorization") String authorization
+    );
+
+    // METODO PARA OBTENER RANGOS Y PRECIOS DE DELIVERY
+    @GET("empresas_delivery/{idempresa}")
+    Call<ApiResponseEmpresa_delivery> obtenerEmpresa_delivery(@Header("Authorization") String authorization,
+                                                                @Path(value = "idempresa", encoded = true) String idempresa
     );
 
     // METODO PARA OBTENER MODOS (mantenimiento, normal, etc)

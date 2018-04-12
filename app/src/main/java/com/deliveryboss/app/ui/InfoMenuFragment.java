@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -33,9 +34,7 @@ import com.deliveryboss.app.data.api.model.Producto;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -126,14 +125,15 @@ public class InfoMenuFragment extends Fragment {
 
         Intent intentRecibido = getActivity().getIntent();
         empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
-        Log.d("gson",empresa.getIdempresa());
-        Log.d("gson",empresa.getNombre_empresa());
+
+        //Log.d("gson",empresa.getIdempresa());
+        //Log.d("gson",empresa.getNombre_empresa());
 
         obtenerProductos("");
 
 
         // Chequeamos si el local esta abierto para permitir el uso del carrito (o no)
-        chequearLocalAbierto();
+        abierto = Utilidades.ChequearLocalAbiertoHoy(empresa);
 
         // Inflate the layout for this fragment
         return v;
@@ -356,38 +356,5 @@ public class InfoMenuFragment extends Fragment {
         }
     }
 
-    public void chequearLocalAbierto(){
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-        String diaActual = sdf.format(new Date());
-
-        Log.d("dia", diaActual);
-
-        abierto=false;
-
-        String turno1 = "";
-        String turno2 = "";
-/*
-        if(empresa.getHorario()!=null) {
-            String[] dias = empresa.getHorario().split(",");
-            for (String dia : dias) {
-                if (dia != null) {
-                    String[] secciones = dia.split("-");
-
-                    String iddia = secciones[0];
-                    if(secciones[1]!=null) turno1 = secciones[1];
-                    if(secciones[2]!=null) turno2 = secciones[2];
-
-                    Log.d("dia", "turno1: " + turno1 + "turno2" + turno2);
-
-                    if(diaActual.equals(iddia)){
-                        //if(!turno1.equals("") && !turno2.equals("")) holder.horarios.setText("HOY "+turno1 +" Y "+turno2);
-                        //if(turno2.equals("0:01 a 0:01")) holder.horarios.setText("HOY "+turno1);
-                        //if(turno1.equals("0:00 a 0:00")) holder.horarios.setText("HOY ABIERTO LAS 24 HS");
-                        abierto=true;
-                    }
-                }
-            }
-        }*/
-    }
 
 }

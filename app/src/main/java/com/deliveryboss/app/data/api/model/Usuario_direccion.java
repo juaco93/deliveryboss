@@ -55,14 +55,6 @@ public class Usuario_direccion {
         this.ciudad_idciudad = ciudad_idciudad;
     }
 
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
     public String getCalle() {
         return calle;
     }
@@ -117,5 +109,13 @@ public class Usuario_direccion {
 
     public void setLongitud(String longitud) {
         this.longitud = longitud;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 }

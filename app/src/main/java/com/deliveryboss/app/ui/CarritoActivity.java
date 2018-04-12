@@ -28,6 +28,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.model.ApiResponseEmpresa_delivery;
+import com.deliveryboss.app.data.api.model.empresa_delivery;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
@@ -44,6 +47,7 @@ import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
+import com.google.maps.android.SphericalUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -72,7 +76,11 @@ public class CarritoActivity extends AppCompatActivity {
     private DeliverybossApi mDeliverybossApi;
     private View mEmptyStateContainer;
     private TextView txtEmptyContainer;
+    // TODO: cambiar el request al server, puesto que ya tenemos la direccion del usuario
     List<Usuario_direccion> serverDirecciones;
+    Usuario_direccion direccionUsuario;
+    //
+    List<empresa_delivery> serverDelivery;
     String authorization;
     String stDireccion;
     Boolean abierto_hoy = false;
@@ -88,11 +96,12 @@ public class CarritoActivity extends AppCompatActivity {
     EditText nota;
     EditText pagaCon;
     Button btnConfirmarOrden;
-    Button btnAgregarDireccion;
+    //Button btnAgregarDireccion;
     EmpresasBody empresa;
     Float importeTotal;
     String tipoEnvio = "1";
     String idDireccionUsuario = "";
+    Float precioDelivery;
     int c;
     int[] elem_a_borrar;
 
@@ -113,13 +122,13 @@ public class CarritoActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTipoEntrega.setAdapter(adapter);
         spDireccion = (Spinner) findViewById(R.id.spDireccion);
-        btnAgregarDireccion = (Button) findViewById(R.id.btnCarritoAgregarDireccion);
-        btnAgregarDireccion.setOnClickListener(new View.OnClickListener() {
+        //btnAgregarDireccion = (Button) findViewById(R.id.btnCarritoAgregarDireccion);
+        /*btnAgregarDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog("");
             }
-        });
+        });*/
 
         txtCarritoImporteDelivery = (TextView) findViewById(R.id.txtCarritoImporteDelivery);
         txtTotal = (TextView) findViewById(R.id.txtCarritoImporteTotal);
@@ -135,8 +144,19 @@ public class CarritoActivity extends AppCompatActivity {
         ///// INICIALIZACION DE VARIABLES
         String listaOrdenes = getIntent().getExtras().getString("ordenes_detalle");
         String empresaJSON = getIntent().getExtras().getString("empresa");
+        String direccionJSON = getIntent().getExtras().getString("direccionJson");
         abierto_hoy = getIntent().getExtras().getBoolean("abierto_hoy");
         empresa = new Gson().fromJson(empresaJSON, EmpresasBody.class);
+        String idUsuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
+        String usuarioIdciudad = SessionPrefs.get(this).getPrefUsuarioDireccionIdCiudad();
+        String usuarioIddireccion = SessionPrefs.get(this).getPrefUsuarioIdDireccion();
+        String usuarioCalle = SessionPrefs.get(this).getPrefUsuarioDireccionCalle();
+        String usuarioNumero = SessionPrefs.get(this).getPrefUsuarioDireccionNumero();
+        String usuarioLatitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
+        String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
+        direccionUsuario = new Usuario_direccion(idUsuario,usuarioIdciudad,"","",usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
+
+        Log.d("direcciones","Direccion recibida desde el menu "+direccionJSON);
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
         importeTotal = sumarTotal(0.00f);
@@ -173,7 +193,7 @@ public class CarritoActivity extends AppCompatActivity {
                 }
                 //DELIVERY
                 if(position==1){
-                    Float precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
+                    precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     importeTotal = sumarTotal(Float.valueOf(empresa.getPrecio_delivery()));
                     String subtotSt = String.format("%.2f", importeTotal);
@@ -185,7 +205,7 @@ public class CarritoActivity extends AppCompatActivity {
                 }
                 //RETIRO EN LOCAL
                 if(position==2){
-                    Float precioDelivery = 0.00f;
+                    precioDelivery = 0.00f;
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     btnConfirmarOrden.setEnabled(true);
                     importeTotal = sumarTotal(0.00f);
@@ -214,6 +234,11 @@ public class CarritoActivity extends AppCompatActivity {
                 //Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
                 if(position>0)stDireccion = serverDirecciones.get(position-1).getIdusuario_direccion();
                 chequearDireccion();
+                /*if(position>0){
+                    precioDelivery = calcularPrecioDelivery(serverDirecciones.get(position-1),serverDelivery.get(0));
+                    txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
+                }*/
+
                 //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
                // Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
                 Log.d("direcciones", "id de direccion elegida: " + stDireccion);
@@ -399,6 +424,8 @@ public class CarritoActivity extends AppCompatActivity {
 
         // Chequeamos que haya seleccionado el tipo de entrega
         chequearTipoEntrega();
+
+
     }
 
 
@@ -427,7 +454,9 @@ public class CarritoActivity extends AppCompatActivity {
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
         String idempresa = empresa.getIdempresa();
         String nombreEmpresa = empresa.getNombre_empresa();
-        String precioDelivery = empresa.getPrecio_delivery();
+        String stPrecioDelivery = precioDelivery.toString();
+
+        String direccionLocal = direccionUsuario.getIdusuario_direccion();
 
         // Tratamiento especial del "Paga con"
         String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
@@ -439,7 +468,7 @@ public class CarritoActivity extends AppCompatActivity {
         String total = String.valueOf(importeTotal);
 
         // Creacion del Objeto "Orden"
-        Orden orden = new Orden("","","","","",idusuario,idempresa,stDireccion,precioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
+        Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
 
 
         // Realizar petición HTTP
@@ -597,6 +626,7 @@ public class CarritoActivity extends AppCompatActivity {
 
 
     private void obtenerDirecciones(){
+        /*
         authorization = SessionPrefs.get(getApplicationContext()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getApplicationContext()).getPrefUsuarioIdUsuario();
         Log.d("direcciones", "Recuperando Direcciones desde el Server");
@@ -616,21 +646,10 @@ public class CarritoActivity extends AppCompatActivity {
                             .equals("json")) {
 
                         Log.d("direcciones", response.errorBody().toString());
-                        //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
-
-                        //error = apiError.getMessage();
-                        //Log.d(TAG, apiError.getDeveloperMessage());
                     } else {
                         Log.d("direcciones", response.errorBody().toString());
-                        /*try {
-                            // Reportar causas de error no relacionado con la API
-                            Log.d(TAG, response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
                     }
-                    //showLoadingIndicator(false);
-                    //showErrorMessage(error);
+
                     Log.d("direcciones", response.message());
                     Log.d("direcciones", response.raw().toString());
                     return;
@@ -656,26 +675,15 @@ public class CarritoActivity extends AppCompatActivity {
                 //showErrorMessage("Error de comunicación");
             }
         });
+        */
+        mostrarDirecciones(direccionUsuario);
     }
 
-    private void mostrarDirecciones(List<Usuario_direccion> direccionesServer) {
+    private void mostrarDirecciones(Usuario_direccion direccion) {
         Log.d("direcciones", "Entramos a mostrar direcciones ");
 
-       // String[] items = new String[direccionesServer.size()];
-        String[] items = new String[direccionesServer.size()+1];
-
-
-        int c=1;
-        items[0] = "Elegí tu dirección";
-        //Traversing through the whole list to get all the names
-        for(int i=0; i<direccionesServer.size(); i++){
-            //Storing names to string array
-
-            items[c] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
-            c++;
-
-          //items[i] = direccionesServer.get(i).getCalle() + " " + direccionesServer.get(i).getNumero();
-        }
+        String[] items = new String[1];
+        items[0] = direccion.getCalle() + " " + direccion.getNumero();
 
         //Spinner spinner = (Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter;
@@ -684,6 +692,7 @@ public class CarritoActivity extends AppCompatActivity {
 
         //setting adapter to spinner
         spDireccion.setAdapter(adapter);
+        spDireccion.setEnabled(false);
 
     }
 
@@ -705,6 +714,7 @@ public class CarritoActivity extends AppCompatActivity {
     }
 
 
+/*
     public void showDialog(String direccion) {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         ModificarDireccionFragment newFragment = new ModificarDireccionFragment();
@@ -717,7 +727,7 @@ public class CarritoActivity extends AppCompatActivity {
         //newFragment.setTargetActivity(this,FRAGMENTO_AGREGAR_DIRECCION);
         newFragment.show(fragmentManager.beginTransaction(), "Agregar direccion");
 
-    }
+    }*/
 
 
     // TODO: Al parecer, no se esta usando la funcion onactivityresult, chequear eventos de EventBus
@@ -915,4 +925,14 @@ public class CarritoActivity extends AppCompatActivity {
                     .show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, DetalleEmpresa.class);
+        intent.putExtra("carrito",(new Gson()).toJson(ordenesDetalleLocal));
+        intent.putExtra("empresaJson",(new Gson()).toJson(empresa));
+        startActivity(intent);
+    }
+
+
 }

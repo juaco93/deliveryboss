@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.deliveryboss.app.data.api.model.Usuario;
+import com.deliveryboss.app.data.api.model.Usuario_direccion;
 
 /**
  * Created by Joaquin on 23/6/2017.
@@ -26,6 +27,13 @@ public class SessionPrefs {
     public static final String PREF_USUARIO_IMAGEN = "PREF_USUARIO_IMAGEN";
     public static final String PREF_USUARIO_IDCIUDAD = "PREF_USUARIO_IDCIUDAD";
     public static final String PREF_USUARIO_CIUDAD = "PREF_USUARIO_CIUDAD";
+    public static final String DIRECCION_ID = "DIRECCION_ID";
+    public static final String DIRECCION_IDCIUDAD = "DIRECCION_IDCIUDAD";
+    public static final String DIRECCION_CALLE = "DIRECCION_CALLE";
+    public static final String DIRECCION_NUMERO = "DIRECCION_NUMERO";
+    public static final String DIRECCION_LATITUD = "DIRECCION_LATITUD";
+    public static final String DIRECCION_LONGITUD = "DIRECCION_LONGITUD";
+
 
     private static SessionPrefs INSTANCE;
     private final SharedPreferences mPrefs;
@@ -103,6 +111,19 @@ public class SessionPrefs {
         }
     }
 
+    public void saveDireccion(String iddireccion, String idciudad, String calle, String numero, String latitud, String longitud){
+        if(iddireccion!=null){
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putString(DIRECCION_ID, iddireccion);
+            editor.putString(DIRECCION_IDCIUDAD, idciudad);
+            editor.putString(DIRECCION_CALLE, calle);
+            editor.putString(DIRECCION_NUMERO, numero);
+            editor.putString(DIRECCION_LATITUD, latitud);
+            editor.putString(DIRECCION_LONGITUD, longitud);
+            editor.apply();
+        }
+    }
+
 
     public void logOut(){
         mIsLoggedIn = false;
@@ -151,6 +172,26 @@ public class SessionPrefs {
     }
     public String getPrefUsuarioRegId(){
         return mPrefs.getString(PREF_REGID, null);
+    }
+
+    // PREFS DE UBICACION //
+    public String getPrefUsuarioIdDireccion(){
+        return mPrefs.getString(DIRECCION_ID, null);
+    }
+    public String getPrefUsuarioDireccionIdCiudad(){
+        return mPrefs.getString(DIRECCION_IDCIUDAD, null);
+    }
+    public String getPrefUsuarioDireccionCalle(){
+        return mPrefs.getString(DIRECCION_CALLE, null);
+    }
+    public String getPrefUsuarioDireccionNumero(){
+        return mPrefs.getString(DIRECCION_NUMERO, null);
+    }
+    public String getPrefUsuarioDireccionLatitud(){
+        return mPrefs.getString(DIRECCION_LATITUD, null);
+    }
+    public String getPrefUsuarioDireccionLongitud(){
+        return mPrefs.getString(DIRECCION_LONGITUD, null);
     }
 
 }

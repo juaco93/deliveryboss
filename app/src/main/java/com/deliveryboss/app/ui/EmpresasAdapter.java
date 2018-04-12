@@ -9,11 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.Delivery;
+import com.deliveryboss.app.data.api.model.DeliveryRequest;
+import com.deliveryboss.app.data.api.model.Usuario_direccion;
+import com.deliveryboss.app.data.util.Utilidades;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +44,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         EmpresasBody empresa = mItems.get(position);
+
         //View statusIndicator = holder.statusIndicator;
 
         // estado: se colorea indicador según el estado
@@ -79,8 +85,30 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             String rubroSep = empresa.getSubrubro().replace(",", ", ");
             holder.rubro_elegido.setText(rubroSep);
         }
-        holder.tiempo_delivery.setText(empresa.getTiempo_minimo_entrega() + "-" + empresa.getTiempo_maximo_entrega() + " minutos");
-        holder.compra_minima.setText("Compra minima: $" + empresa.getCompra_minima());
+        //holder.tiempo_delivery.setText(empresa.getTiempo_minimo_entrega() + "-" + empresa.getTiempo_maximo_entrega() + " minutos");
+        //holder.compra_minima.setText("Compra minima: $" + empresa.getCompra_minima());
+
+        DeliveryRequest mDeliveryRequest;
+        Delivery objeto;
+
+        mDeliveryRequest = Utilidades.calcularPrecioDelivery(mDireccionUsuario,empresa);
+        objeto = mDeliveryRequest.getDatos();
+
+        // Si el calculo de distancias es exitoso
+        if(mDeliveryRequest.getEstado()==1){
+            holder.tiempo_delivery.setText("Distancia: "+formatearDistancia(objeto.getDistancia()));
+            holder.compra_minima.setText("Precio Delivery $"+objeto.getPrecio().toString());
+        }else{
+            if(mDeliveryRequest.getEstado()==2){
+                holder.tiempo_delivery.setText("Fuera rango");
+                holder.compra_minima.setText("Fuera rango");
+            }
+            if(mDeliveryRequest.getEstado()==4){
+                holder.tiempo_delivery.setText("No se calc");
+                holder.compra_minima.setText("No se calc");
+            }
+        }
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE");
         String diaActual = sdf.format(new Date());
@@ -124,32 +152,6 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         }
         if(!abierto)holder.horarios.setText("HOY CERRADO");
 
-        /*
-        if(empresa.getHorario()!=null) {
-            String[] dias = empresa.getHorario().split(",");
-            for (String dia : dias) {
-                if (dia != null) {
-                    String[] secciones = dia.split("-");
-
-                    String iddia = secciones[0];
-                    if(secciones[1]!=null) turno1 = secciones[1];
-                    if(secciones[2]!=null) turno2 = secciones[2];
-
-                    Log.d("dia", "turno1: " + turno1 + "turno2" + turno2);
-
-                    if(diaActual.equals(iddia)){
-                        if(!turno1.equals("") && !turno2.equals("")) holder.horarios.setText("HOY "+turno1 +" Y "+turno2);
-                        if(turno2.equals("0:01 a 0:01")) holder.horarios.setText("HOY "+turno1);
-                        if(turno1.equals("0:00 a 0:00")) holder.horarios.setText("HOY ABIERTO LAS 24 HS");
-                        abierto=true;
-                    }
-                }
-            }
-        }*/
-
-
-
-
         //Carga de los logos de las empresas con Picasso
         Picasso
                 .with(context)
@@ -164,11 +166,13 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     }
 
     private List<EmpresasBody> mItems;
+    private Usuario_direccion mDireccionUsuario;
     private Context mContext;
 
-    public EmpresasAdapter(Context context, List<EmpresasBody> items) {
+    public EmpresasAdapter(Context context, List<EmpresasBody> items, Usuario_direccion direccionUsuario) {
         mItems = items;
         mContext = context;
+        mDireccionUsuario = direccionUsuario;
     }
 
     private OnItemClickListener mOnItemClickListener;
@@ -228,13 +232,21 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         }
     }
 
-    public void swapItems(List<EmpresasBody> empresas) {
+    public void swapItems(List<EmpresasBody> empresas, Usuario_direccion direccionUsuario) {
         if (empresas == null) {
             mItems = new ArrayList<>(0);
         } else {
             mItems = empresas;
+            mDireccionUsuario= direccionUsuario;
         }
         notifyDataSetChanged();
+    }
+
+    private String formatearDistancia(Double distancia){
+        DecimalFormat df = new DecimalFormat("#.#");
+        Double distanciaEnKm = distancia/1000;
+        String stDistancia = df.format(distanciaEnKm) + "km";
+        return  stDistancia;
     }
 
 
