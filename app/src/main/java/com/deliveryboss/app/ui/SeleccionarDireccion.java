@@ -22,6 +22,7 @@ import com.deliveryboss.app.data.api.model.ApiResponseDirecciones;
 import com.deliveryboss.app.data.api.model.Ciudad;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
+import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,7 +47,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
 
     String stDireccion;
     String authorization;
-    Button btnSelCiudadSugerir;
+    Button btnAgregarDireccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +57,33 @@ public class SeleccionarDireccion extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         spDirecciones = (Spinner) findViewById(R.id.spSeleccionarDireccion);
+        btnAgregarDireccion = (Button) findViewById(R.id.btnSeleccionarDireccionAgregar);
+        btnAgregarDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SeleccionarDireccion.this,MisDireccionesActivity.class);
+                startActivity(intent);
+            }
+        });
         btnContinuar = (CardView) findViewById(R.id.btnSeleccionarDireccionContinuar);
         btnContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(spDirecciones.getSelectedItem().toString()!="Seleccioná tu dirección"){
-                    //Intent intent = new Intent(SeleccionarDireccion.this, PrincipalActivity.class);
-                    Intent intent = new Intent(SeleccionarDireccion.this, PrincipalActivity.class);
-                    // Guardar usuario en preferencias
-                    SessionPrefs.get(SeleccionarDireccion.this).saveDireccion(direccionElegida.getIdusuario_direccion(),direccionElegida.getCiudad_idciudad(),direccionElegida.getCiudad(),direccionElegida.getCalle(),direccionElegida.getNumero(),direccionElegida.getLatitud(),direccionElegida.getLongitud());
-                    startActivity(intent);
-                    finish();
+                if(!spDirecciones.getSelectedItem().equals("Seleccioná tu dirección")){
+                    if(spDirecciones.getSelectedItem().equals("No tenés direcciones guardadas")){
+                        Intent intent = new Intent(SeleccionarDireccion.this, MisDireccionesActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Intent intent = new Intent(SeleccionarDireccion.this, PrincipalActivity.class);
+                        // Guardar usuario en preferencias
+                        //SessionPrefs.get(SeleccionarDireccion.this).saveDireccion(direccionElegida.getIdusuario_direccion(), direccionElegida.getCiudad_idciudad(), direccionElegida.getCiudad(), direccionElegida.getCalle(), direccionElegida.getNumero(), direccionElegida.getLatitud(), direccionElegida.getLongitud());
+                        Utilidades.setearDireccionPorDefecto(SeleccionarDireccion.this,(new Gson()).toJson(direccionElegida));
+                        startActivity(intent);
+                        finish();
+                    }
                 }else{
-                    Toast.makeText(SeleccionarDireccion.this, "Por favor, seleccioná tu ciudad antes de continuar", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SeleccionarDireccion.this, "Por favor, seleccioná tu dirección antes de continuar", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -173,7 +188,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
 
 
         int c=1;
-        items[0] = "Elegí tu dirección";
+        items[0] = "Seleccioná tu dirección";
         //Traversing through the whole list to get all the names
         for(int i=0; i<direccionesServer.size(); i++){
             //Storing names to string array

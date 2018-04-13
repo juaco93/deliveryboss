@@ -1,5 +1,6 @@
 package com.deliveryboss.app.data.util;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.deliveryboss.app.data.api.model.Delivery;
@@ -7,7 +8,10 @@ import com.deliveryboss.app.data.api.model.DeliveryRequest;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.api.model.empresa_delivery;
+import com.deliveryboss.app.data.prefs.SessionPrefs;
+import com.deliveryboss.app.ui.MisDireccionesActivity;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.google.maps.android.SphericalUtil;
 
 import java.text.SimpleDateFormat;
@@ -122,5 +126,12 @@ public class Utilidades {
 
         return respuesta;
 
+    }
+
+    public static void setearDireccionPorDefecto(Context context, String direccion){
+        if(direccion!=null){
+            Usuario_direccion direccionUsuario = (new Gson()).fromJson(direccion,Usuario_direccion.class);
+            SessionPrefs.get(context).saveDireccion(direccionUsuario.getIdusuario_direccion(), direccionUsuario.getCiudad_idciudad(), direccionUsuario.getCiudad(), direccionUsuario.getCalle(), direccionUsuario.getNumero(), direccionUsuario.getLatitud(), direccionUsuario.getLongitud());
+        }
     }
 }

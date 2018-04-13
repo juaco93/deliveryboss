@@ -86,7 +86,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             holder.rubro_elegido.setText(rubroSep);
         }
         //holder.tiempo_delivery.setText(empresa.getTiempo_minimo_entrega() + "-" + empresa.getTiempo_maximo_entrega() + " minutos");
-        //holder.compra_minima.setText("Compra minima: $" + empresa.getCompra_minima());
+        holder.compra_minima.setText("Compra minima: $" + empresa.getCompra_minima());
 
         DeliveryRequest mDeliveryRequest;
         Delivery objeto;
@@ -97,15 +97,21 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         // Si el calculo de distancias es exitoso
         if(mDeliveryRequest.getEstado()==1){
             holder.tiempo_delivery.setText("Distancia: "+formatearDistancia(objeto.getDistancia()));
-            holder.compra_minima.setText("Precio Delivery $"+objeto.getPrecio().toString());
+            String precio = "";
+            if(objeto.getPrecio()<=0){
+                precio = "Delivery ¡GRATIS! ";
+            }else{
+                precio="Precio Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
+            }
+            holder.precioDelivery.setText(precio);
         }else{
             if(mDeliveryRequest.getEstado()==2){
-                holder.tiempo_delivery.setText("Fuera rango");
-                holder.compra_minima.setText("Fuera rango");
+                holder.tiempo_delivery.setText("");
+                holder.precioDelivery.setText("No hay delivery a tu zona"+" ");
             }
             if(mDeliveryRequest.getEstado()==4){
                 holder.tiempo_delivery.setText("No se calc");
-                holder.compra_minima.setText("No se calc");
+                holder.precioDelivery.setText("No se calc"+" ");
             }
         }
 

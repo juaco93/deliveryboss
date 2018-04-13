@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
@@ -49,6 +50,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
 
 
     List<Usuario_direccion> serverDirecciones;
+    Usuario_direccion direccionGuardada;
     String authorization;
     Context context;
 
@@ -68,8 +70,10 @@ public class MisDireccionesActivity extends AppCompatActivity {
             }
         });
 
+        obtenerDireccionGuardada();
+
         mListaDirecciones = (RecyclerView) findViewById(R.id.list_direcciones);
-        mDireccionesAdapter = new DireccionesAdapter(this, new ArrayList<Usuario_direccion>(0));
+        mDireccionesAdapter = new DireccionesAdapter(this, new ArrayList<Usuario_direccion>(0),direccionGuardada);
 
         mListaDirecciones.setAdapter(mDireccionesAdapter);
         mEmptyStateContainer = findViewById(R.id.empty_state_containerDirecciones);
@@ -158,7 +162,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
                 Log.d("gson", "todo bien, recibido: " + response.body().getDatos().toString());
                 if (serverDirecciones.size() > 0) {
                     // Mostrar lista de ordenes
-                    mostrarDirecciones(serverDirecciones);
+                    mostrarDirecciones(serverDirecciones, direccionGuardada);
                     showLoadingIndicator(false);
                 } else {
                     // Mostrar empty state
@@ -177,9 +181,9 @@ public class MisDireccionesActivity extends AppCompatActivity {
         });
     }
 
-    private void mostrarDirecciones(List<Usuario_direccion> direccionesServer) {
+    private void mostrarDirecciones(List<Usuario_direccion> direccionesServer, Usuario_direccion mDireccionGuardada) {
         Log.d("gson", "Entramos a mostrar ordenes ");
-        mDireccionesAdapter.swapItems(direccionesServer);
+        mDireccionesAdapter.swapItems(direccionesServer,mDireccionGuardada);
         mListaDirecciones.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
     }
@@ -187,7 +191,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
     private void mostrarDireccionesEmpty() {
         mListaDirecciones.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        txtEmptyContainer.setText("¡Todavia no agregaste ninguna dirección!");
+        txtEmptyContainer.setText("¡Todavia no agregaste ninguna dirección! Agregá una haciendo click en +");
     }
 
 
@@ -209,13 +213,20 @@ public class MisDireccionesActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        // Si es 2, es insercion de nueva direccion
         if(event.getIdevento().equals("2")){
             obtenerDirecciones();
+        // Si es 3, es modificacion de direccion existente
         }else if(event.getIdevento().equals("3")){
             obtenerDirecciones();
+        // Si es 4, es eliminacion de direccion existente
         }else if(event.getIdevento().equals("4")){
             obtenerDirecciones();
-        }
+        // Si es 5, es cambio de direccion por defecto
+        }else if(event.getIdevento().equals("5")){
+            obtenerDireccionGuardada();
+            obtenerDirecciones();
+    }
 
     }
 
@@ -240,5 +251,17 @@ public class MisDireccionesActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
     }
+
+    private void obtenerDireccionGuardada(){
+        String idDireccion = SessionPrefs.get(this).getPrefUsuarioIdDireccion();
+        String idUsuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
+        String idCiudad = SessionPrefs.get(this).getPrefUsuarioIdCiudad();
+        String ciudad = SessionPrefs.get(this).getPrefUsuarioCiudad();
+        String calle = SessionPrefs.get(this).getPrefUsuarioDireccionCalle();
+        String numero = SessionPrefs.get(this).getPrefUsuarioDireccionNumero();
+
+        direccionGuardada = new Usuario_direccion(idDireccion,idUsuario,idCiudad,ciudad,calle,numero,"","","","","");
+    }
+
 
 }

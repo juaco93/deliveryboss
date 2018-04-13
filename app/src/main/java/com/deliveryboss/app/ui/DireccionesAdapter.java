@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
@@ -57,6 +59,26 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
         holder.habitacion.setText("Piso/depto: "+direccion.getHabitacion());
         holder.barrio.setText("Barrio: "+direccion.getBarrio());
         holder.ciudad.setText("Ciudad: "+direccion.getCiudad());
+
+        // Seteo del checkbox
+        //Log.d("adapterDireccion","Dir guardada ID-->"+mDireccionGuardada.getIdusuario_direccion()+" Dir de sv ID-->"+direccion.getIdusuario_direccion());
+        if(mDireccionGuardada.getIdusuario_direccion().equals(direccion.getIdusuario_direccion())){
+            holder.direccionPorDefecto.setChecked(true);
+        }else{
+            holder.direccionPorDefecto.setChecked(false);
+        }
+
+        // OnClickListener del checkbox
+        holder.direccionPorDefecto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utilidades.setearDireccionPorDefecto(context,(new Gson()).toJson(direccion));
+                EventBus.getDefault().post(new MessageEvent("5","Se cambio la direccion por defecto"));
+                notifyDataSetChanged();
+                Toast.makeText(context,"Cambiaste tu dirección por defecto",Toast.LENGTH_LONG).show();
+            }
+        });
+
         holder.eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,11 +130,13 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
     }
 
     private List<Usuario_direccion> mItems;
+    private Usuario_direccion mDireccionGuardada;
     private Context mContext;
 
-    public DireccionesAdapter(Context context, List<Usuario_direccion> items) {
+    public DireccionesAdapter(Context context, List<Usuario_direccion> items, Usuario_direccion direccionUsuario) {
         mItems = items;
         mContext = context;
+        mDireccionGuardada = direccionUsuario;
     }
 
     private OnItemClickListener mOnItemClickListener;
@@ -138,6 +162,7 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
         public TextView ciudad;
         public TextView modificar;
         public TextView eliminar;
+        public CheckBox direccionPorDefecto;
 
 
         public ViewHolder(View itemView) {
@@ -149,6 +174,7 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
             ciudad = (TextView) itemView.findViewById(R.id.txtDireccionCiudad);
             modificar = (TextView) itemView.findViewById(R.id.txtDireccionModificar);
             eliminar = (TextView) itemView.findViewById(R.id.txtDireccionEliminar);
+            direccionPorDefecto = (CheckBox) itemView.findViewById(R.id.cbDireccionPorDefecto);
         }
 
         @Override
@@ -160,11 +186,12 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
         }
     }
 
-    public void swapItems(List<Usuario_direccion> direcciones) {
+    public void swapItems(List<Usuario_direccion> direcciones, Usuario_direccion direccionUsuario) {
         if (direcciones == null) {
             mItems = new ArrayList<>(0);
         } else {
             mItems = direcciones;
+            mDireccionGuardada = direccionUsuario;
         }
         notifyDataSetChanged();
     }

@@ -90,6 +90,8 @@ public class ModificarDireccionFragment extends DialogFragment {
     MapView mMapView;
     private GoogleMap googleMap;
 
+    Usuario_direccion nuevaDireccion;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -243,7 +245,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }else {
 
             // Creacion del Objeto "Direccion"
-            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stReferencia, latRecibida, longRecibida);
+            nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stReferencia, latRecibida, longRecibida);
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.insertarDireccionUsuario(authorization, idusuario, nuevaDireccion);
@@ -281,7 +283,8 @@ public class ModificarDireccionFragment extends DialogFragment {
                     Log.d("insertarDireccion", "RAW: " + response.raw().toString());
                     showError(response.body().getMensaje());
                     dismiss();
-                    EventBus.getDefault().post(new MessageEvent("2", "Se inserto nueva direccion."));
+                    String direccionJson = new Gson().toJson(nuevaDireccion);
+                    EventBus.getDefault().post(new MessageEvent("2", direccionJson));
 
                 }
 
@@ -317,7 +320,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }else {
 
             // Creacion del Objeto "Direccion"
-            Usuario_direccion nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio,stReferencia, latRecibida, longRecibida);
+            nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion, stBarrio,stReferencia, latRecibida, longRecibida);
 
             Gson gson = new Gson();
             String dire = gson.toJson(nuevaDireccion);
@@ -358,7 +361,9 @@ public class ModificarDireccionFragment extends DialogFragment {
 
                     Log.d("insertarDireccion", "RAW: " + response.raw().toString());
                     showError(response.body().getMensaje());
-                    EventBus.getDefault().post(new MessageEvent("3", "Se modifico una direccion."));
+
+                    String direccionJson = new Gson().toJson(nuevaDireccion);
+                    EventBus.getDefault().post(new MessageEvent("3",direccionJson));
                     dismiss();
 
                 }
