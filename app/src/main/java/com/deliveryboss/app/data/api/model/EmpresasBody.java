@@ -16,7 +16,6 @@ public class EmpresasBody {
     String tiempo_minimo_entrega;
     String tiempo_maximo_entrega;
     String zona_delivery;
-    String precio_delivery;
     String compra_minima;
     String telefono_empresa;
     String oculto;
@@ -34,7 +33,7 @@ public class EmpresasBody {
     String ciudad;
 
 
-    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String precio_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, List<com.deliveryboss.app.data.api.model.empresa_delivery> empresa_delivery, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
+    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, List<com.deliveryboss.app.data.api.model.empresa_delivery> empresa_delivery, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
         this.idempresa = idempresa;
         this.logo = logo;
         this.nombre_empresa = nombre_empresa;
@@ -44,7 +43,6 @@ public class EmpresasBody {
         this.tiempo_minimo_entrega = tiempo_minimo_entrega;
         this.tiempo_maximo_entrega = tiempo_maximo_entrega;
         this.zona_delivery = zona_delivery;
-        this.precio_delivery = precio_delivery;
         this.compra_minima = compra_minima;
         this.telefono_empresa = telefono_empresa;
         this.oculto = oculto;
@@ -132,14 +130,6 @@ public class EmpresasBody {
 
     public void setZona_delivery(String zona_delivery) {
         this.zona_delivery = zona_delivery;
-    }
-
-    public String getPrecio_delivery() {
-        return precio_delivery;
-    }
-
-    public void setPrecio_delivery(String precio_delivery) {
-        this.precio_delivery = precio_delivery;
     }
 
     public String getCompra_minima() {

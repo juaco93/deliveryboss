@@ -3,6 +3,7 @@ package com.deliveryboss.app.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -29,17 +30,19 @@ public class OrdenEnviadaFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_orden_enviada, null);
 
         // Get your views by using view.findViewById() here and do your listeners.
-        //ciudad = (EditText) view.findViewById(R.id.txtDireccionEditCiudad);
-
         builder.setMessage("")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ir a mis ordenes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Send the positive button event back to the host activity
-                        //mListener.onDialogPositiveClick(AgregarTelefonoFragment.this);
-                        //
-                        //EventBus.getDefault().post(new MessageEvent("9", "Se habilita modificar el telefono"));
+                        Intent intent = new Intent(getActivity(),MisOrdenesActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
                     }
                 });
+
 
         // Set the dialog layout
         builder.setView(view);

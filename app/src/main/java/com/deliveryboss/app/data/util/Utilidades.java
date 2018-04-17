@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.maps.android.SphericalUtil;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -133,5 +134,12 @@ public class Utilidades {
             Usuario_direccion direccionUsuario = (new Gson()).fromJson(direccion,Usuario_direccion.class);
             SessionPrefs.get(context).saveDireccion(direccionUsuario.getIdusuario_direccion(), direccionUsuario.getCiudad_idciudad(), direccionUsuario.getCiudad(), direccionUsuario.getCalle(), direccionUsuario.getNumero(), direccionUsuario.getLatitud(), direccionUsuario.getLongitud());
         }
+    }
+
+    public static String formatearDistancia(Double distancia){
+        DecimalFormat df = new DecimalFormat("#.#");
+        Double distanciaEnKm = distancia/1000;
+        String stDistancia = df.format(distanciaEnKm) + "km";
+        return  stDistancia;
     }
 }

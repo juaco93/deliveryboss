@@ -122,6 +122,16 @@ public class PrincipalActivity extends AppCompatActivity {
         userName = (TextView) headerView.findViewById(R.id.userName);
         userEmail = (TextView) headerView.findViewById(R.id.userEmail);
 
+        // Chequeo de variables provenientes de CarritoActivity
+        String estado = getIntent().getStringExtra("estado");
+        String mensaje = getIntent().getStringExtra("mensaje");
+        if(estado!=null){
+            if(estado.equals("1")){
+                Log.d("ordenEnviada","Mostramos el dialog de orden enviada");
+                showOrdenEnviadaDialog();
+            }
+        }
+
         if (navigationView != null) {
             setupDrawerContent(navigationView);
             // Añadir carácteristicas
@@ -665,36 +675,9 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
 
-    public void showOrdenEnaviadaDialog() {
+    public void showOrdenEnviadaDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         OrdenEnviadaFragment newFragment = new OrdenEnviadaFragment();
-        Bundle args = new Bundle();
         newFragment.show(fragmentManager.beginTransaction(), "¡Orden enviada!");
-
     }
-
-
-    /// CODIGO DE EVENTBUS /////
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
-        //if(event.getIdevento().equals("10")){
-            showOrdenEnaviadaDialog();
-        //}
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    /// FIN EVENTBUS ///
-
 }

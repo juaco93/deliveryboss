@@ -29,30 +29,35 @@
         android:layout_centerHorizontal="false"
         android:layout_centerInParent="false"
         android:layout_centerVertical="false"
-        android:layout_margin="10dp"
-        android:text="Ahora deberás esperar a que el local confirme tu orden."
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text='Ahora deberás esperar a que el local confirme tu orden. Podés ver el estado de tu orden en "Mis Ordenes"'
         android:textAlignment="center"></TextView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/imgOrdenEnviada"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:elevation="12dp"
-        app:cardCornerRadius="40dp"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/colorMercado"
+        android:elevation="12dp"
         android:innerRadius="0dp"
         android:shape="ring"
 
-        android:thicknessRatio="1.9">
+        android:thicknessRatio="1.9"
+        app:cardCornerRadius="40dp">
+
         <ImageView
-            android:layout_height="80dp"
-            android:layout_width="match_parent"
             android:id="@+id/imageView1"
-            android:src="@drawable/ic_action_okay"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
-        </ImageView>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_action_okay"></ImageView>
     </android.support.v7.widget.CardView>
 
 

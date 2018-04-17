@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.Delivery;
+import com.deliveryboss.app.data.api.model.DeliveryRequest;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
+import com.deliveryboss.app.data.util.Utilidades;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,6 +33,7 @@ import com.deliveryboss.app.data.api.model.Calificacion;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +50,7 @@ public class InfoEmpresaFragment extends Fragment{
     private DeliverybossApi mDeliverybossApi;
     List<Calificacion> serverCalificaciones;
     Usuario_direccion direccionUsuario;
+    DeliveryRequest calcularPrecioDelivery;
     private FloatingActionButton mSharedFab;
 
     TextView lunes;
@@ -154,22 +159,41 @@ public class InfoEmpresaFragment extends Fragment{
             limpiarHorarios();
             Intent intentRecibido = getActivity().getIntent();
             empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
-            direccionUsuario = (new Gson()).fromJson((intentRecibido.getStringExtra("direccionJson")),Usuario_direccion.class);
+            String idUsuario = SessionPrefs.get(getContext()).getPrefUsuarioIdUsuario();
+            String usuarioIdciudad = SessionPrefs.get(getContext()).getPrefUsuarioDireccionIdCiudad();
+            String usuarioIddireccion = SessionPrefs.get(getContext()).getPrefUsuarioIdDireccion();
+            String usuarioCiudad = SessionPrefs.get(getContext()).getPrefUsuarioCiudad();
+            String usuarioCalle = SessionPrefs.get(getContext()).getPrefUsuarioDireccionCalle();
+            String usuarioNumero = SessionPrefs.get(getContext()).getPrefUsuarioDireccionNumero();
+            String usuarioLatitud = SessionPrefs.get(getContext()).getPrefUsuarioDireccionLatitud();
+            String usuarioLongitud = SessionPrefs.get(getContext()).getPrefUsuarioDireccionLongitud();
+            direccionUsuario = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,usuarioCiudad,usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
+
+            calcularPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
             //mostrarHorarios();
 
 
             ////// CARD DELIVERY //////////
-            switch(empresa.getPrecio_delivery()){
-                case "-1":
-                    precioDelivery.setText("Sólo retiro en el local");
-                    break;
-                case "0":
-                    precioDelivery.setText("¡Delivery GRATIS!");
-                    break;
-                default:
-                    precioDelivery.setText("Precio: $" + empresa.getPrecio_delivery());
-                    break;
+            // Si el calculo de distancias es exitoso
+            if(calcularPrecioDelivery.getEstado()==1){
+                Delivery objeto = calcularPrecioDelivery.getDatos();
+                precioDelivery.setText("Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
+                String precio = "";
+                if(objeto.getPrecio()<=0){
+                    precio = "Delivery ¡GRATIS! ";
+                }else{
+                    precio="Precio Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
+                }
+                precioDelivery.setText(precio);
+            }else{
+                if(calcularPrecioDelivery.getEstado()==2){
+                    precioDelivery.setText("No hay delivery a tu zona"+" ");
+                }
+                if(calcularPrecioDelivery.getEstado()==4){
+                    precioDelivery.setText("No tenes definida la ubicación");
+                }
             }
+
             tiempoDelivery.setText("Demora usual: " + empresa.getTiempo_minimo_entrega()+"-"+empresa.getTiempo_maximo_entrega()+" minutos.");
             compraMinima.setText("Compra mínima: $" + empresa.getCompra_minima());
 

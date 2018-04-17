@@ -29,7 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.deliveryboss.app.data.api.model.ApiResponseEmpresa_delivery;
+import com.deliveryboss.app.data.api.model.DeliveryRequest;
 import com.deliveryboss.app.data.api.model.empresa_delivery;
+import com.deliveryboss.app.data.util.Utilidades;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -105,6 +107,8 @@ public class CarritoActivity extends AppCompatActivity {
     int c;
     int[] elem_a_borrar;
 
+    DeliveryRequest obtenerPrecioDelivery;
+
     private static final int FRAGMENTO_AGREGAR_DIRECCION = 2;
 
 
@@ -150,13 +154,15 @@ public class CarritoActivity extends AppCompatActivity {
         String idUsuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
         String usuarioIdciudad = SessionPrefs.get(this).getPrefUsuarioDireccionIdCiudad();
         String usuarioIddireccion = SessionPrefs.get(this).getPrefUsuarioIdDireccion();
+        String usuarioCiudad = SessionPrefs.get(this).getPrefUsuarioCiudad();
         String usuarioCalle = SessionPrefs.get(this).getPrefUsuarioDireccionCalle();
         String usuarioNumero = SessionPrefs.get(this).getPrefUsuarioDireccionNumero();
         String usuarioLatitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
-        String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
-        direccionUsuario = new Usuario_direccion(idUsuario,usuarioIdciudad,"","",usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
+        String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLongitud();
+        direccionUsuario = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,usuarioCiudad,usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
+        Log.d("chequeo","Direccion usuario -->"+direccionUsuario.getLatitud()+","+direccionUsuario.getLongitud());
 
-        Log.d("direcciones","Direccion recibida desde el menu "+direccionJSON);
+
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
         importeTotal = sumarTotal(0.00f);
@@ -193,9 +199,12 @@ public class CarritoActivity extends AppCompatActivity {
                 }
                 //DELIVERY
                 if(position==1){
-                    precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
+                    //precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
+                    obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
+                    precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
+                    Log.d("chequeo","Precio calculado en carrito--> $"+precioDelivery.toString());
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
-                    importeTotal = sumarTotal(Float.valueOf(empresa.getPrecio_delivery()));
+                    importeTotal = sumarTotal(Float.valueOf(precioDelivery));
                     String subtotSt = String.format("%.2f", importeTotal);
                     txtTotal.setText("$"+String.valueOf(subtotSt));
                     tipoEnvio = "1";
@@ -506,6 +515,8 @@ public class CarritoActivity extends AppCompatActivity {
                 Log.d("insertarOrden", "RAW: " + response.raw().toString());
                 showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
+                intent.putExtra("estado","1");
+                intent.putExtra("mensaje","Orden enviada correctamente!");
                 startActivity(intent);
                 EventBus.getDefault().post(new MessageEvent("10", "Se envio la orden exitosamente."));
 
@@ -816,7 +827,7 @@ public class CarritoActivity extends AppCompatActivity {
 
         // RECALCULO DEL TOTAL
         if(tipoEnvio.equals("1")){
-            importeTotal = sumarTotal(Float.valueOf(empresa.getPrecio_delivery()));
+            importeTotal = sumarTotal(Float.valueOf(precioDelivery));
             String subtotSt = String.format("%.2f", importeTotal);
             txtTotal.setText("$"+String.valueOf(subtotSt));
         }else if (tipoEnvio.equals("2")){

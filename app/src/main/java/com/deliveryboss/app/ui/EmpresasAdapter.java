@@ -48,6 +48,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         //View statusIndicator = holder.statusIndicator;
 
         // estado: se colorea indicador según el estado
+        /*
             switch (empresa.getTipo_entrega_idtipo_entrega()) {
                 case "1":
                     // Si el tipo_entrega es 1
@@ -64,6 +65,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
                     if(!empresa.getPrecio_delivery().equals("0")) holder.precioDelivery.setText("Delivery: $"+empresa.getPrecio_delivery() + "  ");
                     break;
             }
+            */
 
         holder.nombreEmpresa.setText(empresa.getNombre_empresa());
 
@@ -96,7 +98,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
         // Si el calculo de distancias es exitoso
         if(mDeliveryRequest.getEstado()==1){
-            holder.tiempo_delivery.setText("Distancia: "+formatearDistancia(objeto.getDistancia()));
+            holder.tiempo_delivery.setText("Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
             String precio = "";
             if(objeto.getPrecio()<=0){
                 precio = "Delivery ¡GRATIS! ";
@@ -248,12 +250,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    private String formatearDistancia(Double distancia){
-        DecimalFormat df = new DecimalFormat("#.#");
-        Double distanciaEnKm = distancia/1000;
-        String stDistancia = df.format(distanciaEnKm) + "km";
-        return  stDistancia;
-    }
+
 
 
 
