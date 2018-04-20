@@ -217,7 +217,18 @@ public class InfoEmpresaFragment extends Fragment{
                 lbCalificacion3.setText("0.0");
                 lbCantidadCalificacion.setText("(0)");
             }
-            lbRubroElegido.setText(empresa.getSubrubro().replace(","," ~ "));
+            //lbRubroElegido.setText(empresa.getSubrubro().replace(","," ~ "));
+            if(empresa.getEmpresa_subrubro()!=null){
+                if(empresa.getEmpresa_subrubro().get(0).getSubrubro1()!=null){
+                    lbRubroElegido.setText(empresa.getEmpresa_subrubro().get(0).getSubrubro1());
+                }
+                if(empresa.getEmpresa_subrubro().get(0).getSubrubro2()!=null){
+                    lbRubroElegido.append(", "+empresa.getEmpresa_subrubro().get(0).getSubrubro2());
+                }
+                if(empresa.getEmpresa_subrubro().get(0).getSubrubro3()!=null){
+                    lbRubroElegido.append(", "+empresa.getEmpresa_subrubro().get(0).getSubrubro3());
+                }
+            }
             /*detalleCalificacion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

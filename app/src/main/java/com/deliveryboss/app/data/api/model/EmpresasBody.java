@@ -22,7 +22,7 @@ public class EmpresasBody {
     String cerrado;
     String empresa_rubro;
     String tipo_entrega_idtipo_entrega;
-    String subrubro;
+    List<empresa_subrubro> empresa_subrubro;
     List<empresa_horario> empresa_horario;
     List<empresa_delivery> empresa_delivery;
     String calificacion_general;
@@ -32,8 +32,7 @@ public class EmpresasBody {
     String calificacion3;
     String ciudad;
 
-
-    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, String subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, List<com.deliveryboss.app.data.api.model.empresa_delivery> empresa_delivery, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
+    public EmpresasBody(String idempresa, String logo, String nombre_empresa, String direccion, String latitud, String longitud, String tiempo_minimo_entrega, String tiempo_maximo_entrega, String zona_delivery, String compra_minima, String telefono_empresa, String oculto, String cerrado, String empresa_rubro, String tipo_entrega_idtipo_entrega, List<com.deliveryboss.app.data.api.model.empresa_subrubro> empresa_subrubro, List<com.deliveryboss.app.data.api.model.empresa_horario> empresa_horario, List<com.deliveryboss.app.data.api.model.empresa_delivery> empresa_delivery, String calificacion_general, String cantidad_calificacion, String calificacion1, String calificacion2, String calificacion3, String ciudad) {
         this.idempresa = idempresa;
         this.logo = logo;
         this.nombre_empresa = nombre_empresa;
@@ -49,7 +48,7 @@ public class EmpresasBody {
         this.cerrado = cerrado;
         this.empresa_rubro = empresa_rubro;
         this.tipo_entrega_idtipo_entrega = tipo_entrega_idtipo_entrega;
-        this.subrubro = subrubro;
+        this.empresa_subrubro = empresa_subrubro;
         this.empresa_horario = empresa_horario;
         this.empresa_delivery = empresa_delivery;
         this.calificacion_general = calificacion_general;
@@ -180,12 +179,12 @@ public class EmpresasBody {
         this.tipo_entrega_idtipo_entrega = tipo_entrega_idtipo_entrega;
     }
 
-    public String getSubrubro() {
-        return subrubro;
+    public List<com.deliveryboss.app.data.api.model.empresa_subrubro> getEmpresa_subrubro() {
+        return empresa_subrubro;
     }
 
-    public void setSubrubro(String subrubro) {
-        this.subrubro = subrubro;
+    public void setEmpresa_subrubro(List<com.deliveryboss.app.data.api.model.empresa_subrubro> empresa_subrubro) {
+        this.empresa_subrubro = empresa_subrubro;
     }
 
     public List<com.deliveryboss.app.data.api.model.empresa_horario> getEmpresa_horario() {

@@ -157,7 +157,8 @@
         <activity
             android:name=".ui.SeleccionarCiudad"
             android:label="@string/title_activity_seleccionar_ciudad"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.FiltroEmpresasActivity"></activity>
     </application>
 
 </manifest>

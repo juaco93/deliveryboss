@@ -1,5 +1,7 @@
 package com.deliveryboss.app.ui;
 
+import android.animation.Animator;
+import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,6 +12,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -22,15 +26,18 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +63,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -84,6 +93,10 @@ public class PrincipalActivity extends AppCompatActivity {
     Usuario_direccion usuarioDireccion;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private RelativeLayout layoutContent;
+    private RelativeLayout layoutButtons;
+    private boolean isOpen = false;
+
 
     // CODIGO DEL NAV DRAWER
     private DrawerLayout drawerLayout;
@@ -115,6 +128,7 @@ public class PrincipalActivity extends AppCompatActivity {
         checkUserSession();
         setToolbar(); // Setear Toolbar como action bar
 
+        layoutContent = (RelativeLayout) findViewById(R.id.contenido_principal);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
@@ -342,12 +356,16 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        View v = getCurrentFocus();
         switch (id){
             case android.R.id.home:
                 //Intent intent = new Intent(this,SeleccionRubro.class);
                 //startActivity(intent);
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.action_sort:
+                //setearAnimaciones();
+                abrirFiltro(v);
         }
 
         return super.onOptionsItemSelected(item);
@@ -510,6 +528,8 @@ public class PrincipalActivity extends AppCompatActivity {
         mEmpresasAdapter.swapItems(empresasServer,usuarioDireccion);
         mListaEmpresas.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
+
+        //ordenarListaPorParametro("calificacion");
     }
 
     private void mostrarEmpresasEmpty() {
@@ -535,11 +555,24 @@ public class PrincipalActivity extends AppCompatActivity {
         query = query.toString().toLowerCase();
 
         final List<EmpresasBody> filteredList = new ArrayList<>();
+        String rubrosConcat ="";
 
         for (int i = 0; i < serverEmpresas.size(); i++) {
 
+            if(serverEmpresas.get(i).getEmpresa_subrubro()!=null){
+                if(serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro1()!=null){
+                    rubrosConcat= (serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro1());
+                }
+                if(serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro2()!=null){
+                    rubrosConcat +=(", "+serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro2());
+                }
+                if(serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro3()!=null){
+                    rubrosConcat +=(", "+serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro3());
+                }
+            }
+
             final String nombre = serverEmpresas.get(i).getNombre_empresa().toLowerCase();
-            final String rubro = serverEmpresas.get(i).getSubrubro().toLowerCase();
+            final String rubro = rubrosConcat.toLowerCase();
             if (nombre.contains(query)|| rubro.contains(query)) {
 
                 filteredList.add(serverEmpresas.get(i));
@@ -679,5 +712,68 @@ public class PrincipalActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         OrdenEnviadaFragment newFragment = new OrdenEnviadaFragment();
         newFragment.show(fragmentManager.beginTransaction(), "¡Orden enviada!");
+    }
+
+
+    /*private void ordenarListaPorParametro(String param){
+        switch (param){
+            case "nombre":
+                    serverEmpresas.sort(new Comparator<EmpresasBody>() {
+                        @Override
+                        public int compare(EmpresasBody lhs, EmpresasBody rhs) {
+                            char l = Character.toUpperCase(lhs.getNombre_empresa().charAt(0));
+
+                            if (l < 'A' || l > 'Z')
+                                l += 'Z';
+                            char r = Character.toUpperCase(rhs.getNombre_empresa().charAt(0));
+                            if (r < 'A' || r > 'Z')
+                                r += 'Z';
+                            String s1 = l + lhs.getNombre_empresa().substring(1);
+                            String s2 = r + rhs.getNombre_empresa().substring(1);
+                            return s1.compareTo(s2);
+                        }
+                    });
+            case "calificacion":
+                serverEmpresas.sort(new Comparator<EmpresasBody>() {
+                    @Override
+                    public int compare(EmpresasBody lhs, EmpresasBody rhs) {
+                        String s1 = lhs.getCalificacion_general();
+                        String s2 = rhs.getCalificacion_general();
+                        return s1.compareTo(s2);
+                    }
+                });
+        }
+    }*/
+
+    public void filtrarListaPorParametro(String query, String filtro){
+        query = query.toString().toLowerCase();
+
+        final List<EmpresasBody> filteredList = new ArrayList<>();
+
+        for (int i = 0; i < serverEmpresas.size(); i++) {
+
+            final String nombre = serverEmpresas.get(i).getNombre_empresa().toLowerCase();
+            //final String rubro = serverEmpresas.get(i).getSubrubro().toLowerCase();
+            if (nombre.contains(query)) {
+
+                filteredList.add(serverEmpresas.get(i));
+            }
+        }
+        mEmpresasAdapter.swapItems(filteredList,usuarioDireccion);
+
+    }
+
+    private void abrirFiltro(View view){
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(this, view, "transition");
+        int revealX = (int) (view.getX() + view.getWidth() / 2);
+        int revealY = (int) (view.getY() + view.getHeight() / 2);
+
+        Intent intent = new Intent(this, FiltroEmpresasActivity.class);
+        intent.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_X, revealX);
+        intent.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_Y, revealY);
+
+        ActivityCompat.startActivity(this, intent, options.toBundle());
+
     }
 }
