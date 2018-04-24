@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
+import com.deliveryboss.app.data.util.Utilidades;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -67,6 +68,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -144,6 +146,12 @@ public class PrincipalActivity extends AppCompatActivity {
                 Log.d("ordenEnviada","Mostramos el dialog de orden enviada");
                 showOrdenEnviadaDialog();
             }
+        }
+
+        // Intent proveniente de FiltroEmpresasActivity
+        Intent intentFiltros = getIntent();
+        if(intentFiltros.getStringExtra("Delivery en mi zona")!=null){
+            filtrarListaPorParametro("",intentFiltros.getStringExtra("Delivery en mi zona"));
         }
 
         if (navigationView != null) {
@@ -356,7 +364,6 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        View v = getCurrentFocus();
         switch (id){
             case android.R.id.home:
                 //Intent intent = new Intent(this,SeleccionRubro.class);
@@ -365,7 +372,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 return true;
             case R.id.action_sort:
                 //setearAnimaciones();
-                abrirFiltro(v);
+                abrirFiltro();
         }
 
         return super.onOptionsItemSelected(item);
@@ -752,9 +759,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
         for (int i = 0; i < serverEmpresas.size(); i++) {
 
-            final String nombre = serverEmpresas.get(i).getNombre_empresa().toLowerCase();
+
+            //final String nombre = Utilidades.ChequearLocalAbiertoHoy(serverEmpresas.get(i));
             //final String rubro = serverEmpresas.get(i).getSubrubro().toLowerCase();
-            if (nombre.contains(query)) {
+            if (Utilidades.ChequearLocalAbiertoHoy(serverEmpresas.get(i))) {
 
                 filteredList.add(serverEmpresas.get(i));
             }
@@ -763,11 +771,16 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
-    private void abrirFiltro(View view){
+    private void abrirFiltro(){
+        View view = findViewById(R.id.action_sort);
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(this, view, "transition");
-        int revealX = (int) (view.getX() + view.getWidth() / 2);
-        int revealY = (int) (view.getY() + view.getHeight() / 2);
+
+
+        int revealX = (int) (view.getRight()+view.getLeft()+view.getWidth()+view.getTop());
+        int revealY = (int) (view.getTop() + view.getBottom()) / 2;
+
+        //Log.d("juaco1993","View x:"+ revealX+" y:"+revealY);
 
         Intent intent = new Intent(this, FiltroEmpresasActivity.class);
         intent.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_X, revealX);

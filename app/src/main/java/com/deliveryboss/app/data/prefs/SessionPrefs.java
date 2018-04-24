@@ -140,6 +140,12 @@ public class SessionPrefs {
         editor.putString(PREF_USUARIO_ULTIMA_DIRECCION, null);
         editor.putString(PREF_USUARIO_IMAGEN, null);
         editor.putString(PREF_USUARIO_IDCIUDAD, null);
+        editor.putString(DIRECCION_ID, null);
+        editor.putString(DIRECCION_IDCIUDAD, null);
+        editor.putString(DIRECCION_CALLE, null);
+        editor.putString(DIRECCION_NUMERO, null);
+        editor.putString(DIRECCION_LATITUD, null);
+        editor.putString(DIRECCION_LONGITUD, null);
         editor.apply();
     }
 

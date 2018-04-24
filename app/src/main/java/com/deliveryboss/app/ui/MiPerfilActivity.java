@@ -151,12 +151,12 @@ public class MiPerfilActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case android.R.id.home:
-                String ciudad = SessionPrefs.get(this).getPrefUsuarioIdCiudad();
+                String ciudad = SessionPrefs.get(this).getPrefUsuarioDireccionIdCiudad();
                 if(ciudad!=null){
                     Intent intent = new Intent(this, PrincipalActivity.class);
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(this, SeleccionarCiudad.class);
+                    Intent intent = new Intent(this, SeleccionarDireccion.class);
                     startActivity(intent);
                 }
                 return true;

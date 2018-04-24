@@ -29,52 +29,48 @@
 
         <TextView
             android:id="@+id/txtFiltroCercania"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/lbFiltroOrdenarPor"
             android:layout_marginBottom="15dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:background="@drawable/rounded_corner"
             android:text="Cercanía"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corner"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
         <TextView
             android:id="@+id/txtFiltroCalificacion"
-            android:layout_below="@+id/lbFiltroOrdenarPor"
-            android:layout_toRightOf="@id/txtFiltroCercania"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbFiltroOrdenarPor"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/txtFiltroCercania"
+            android:background="@drawable/rounded_corner"
             android:text="Calificación"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corner"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
         <TextView
             android:id="@+id/txtFiltroNombreAZ"
-            android:layout_below="@+id/txtFiltroCercania"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtFiltroCercania"
+            android:background="@drawable/rounded_corner"
             android:text="Nombre A-Z"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corner"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
         <TextView
             android:id="@+id/txtFiltroNombreZA"
-            android:layout_below="@+id/txtFiltroCercania"
-            android:layout_toRightOf="@id/txtFiltroNombreAZ"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtFiltroCercania"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/txtFiltroNombreAZ"
+            android:background="@drawable/rounded_corner"
             android:text="Nombre Z-A"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corner"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
         <TextView
             android:id="@+id/lbFiltroFiltrarPor"
@@ -91,28 +87,26 @@
 
         <TextView
             android:id="@+id/txtFiltroDeliveryEnMiZona"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/lbFiltroFiltrarPor"
             android:layout_marginBottom="15dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:background="@drawable/rounded_corner"
             android:text="Delivery en mi zona"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corner"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
         <TextView
             android:id="@+id/txtFiltroAbiertoHoy"
-            android:layout_below="@+id/lbFiltroFiltrarPor"
-            android:layout_toRightOf="@id/txtFiltroDeliveryEnMiZona"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbFiltroFiltrarPor"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/txtFiltroDeliveryEnMiZona"
+            android:background="@drawable/rounded_corner"
             android:text="Abierto hoy"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corner"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="14sp"></TextView>
 
 
         <TextView
