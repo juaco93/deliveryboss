@@ -89,17 +89,23 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             holder.rubro_elegido.setText(rubroSep);
         }*/
         if(empresa.getEmpresa_subrubro()!=null){
+            String texto="";
             if(empresa.getEmpresa_subrubro().get(0).getSubrubro1()!=null){
-                holder.rubro_elegido.setText(empresa.getEmpresa_subrubro().get(0).getSubrubro1());
+                texto=empresa.getEmpresa_subrubro().get(0).getSubrubro1();
             }
             if(empresa.getEmpresa_subrubro().get(0).getSubrubro2()!=null){
-                holder.rubro_elegido.append(", "+empresa.getEmpresa_subrubro().get(0).getSubrubro2());
+                texto+=", "+empresa.getEmpresa_subrubro().get(0).getSubrubro2();
             }
             if(empresa.getEmpresa_subrubro().get(0).getSubrubro3()!=null){
-                holder.rubro_elegido.append(", "+empresa.getEmpresa_subrubro().get(0).getSubrubro3());
+                texto+=", "+empresa.getEmpresa_subrubro().get(0).getSubrubro3();
             }
 
-            if(holder.rubro_elegido.getText().toString().length()>34)holder.rubro_elegido.setText(holder.rubro_elegido.getText().toString().substring(0,31)+"...");
+            if(texto.length()>32) {
+                String textoCorto = texto.substring(0, 28) + "...";
+                holder.rubro_elegido.setText(textoCorto);
+            }else{
+                holder.rubro_elegido.setText(texto);
+            }
         }
 
         //holder.tiempo_delivery.setText(empresa.getTiempo_minimo_entrega() + "-" + empresa.getTiempo_maximo_entrega() + " minutos");
@@ -264,9 +270,4 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         }
         notifyDataSetChanged();
     }
-
-
-
-
-
 }

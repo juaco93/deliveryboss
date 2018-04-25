@@ -117,7 +117,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/rounded_corner_white"
             android:padding="10dp"
-            android:text="Aplicar filtro"
+            android:text="Aceptar"
             android:textAlignment="center"
             android:textColor="@color/colorComida"
             android:textSize="18sp"

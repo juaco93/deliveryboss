@@ -41,6 +41,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.model.DeliveryRequest;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.util.Utilidades;
@@ -77,6 +78,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PrincipalActivity extends AppCompatActivity {
     private static final int STATUS_FILTER_DEFAULT_VALUE = 0;
+    public static final int EXTRA_REQUEST_FILTRO = 3;
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
     String authorization;
@@ -93,6 +95,7 @@ public class PrincipalActivity extends AppCompatActivity {
     SearchView searchView;
     //Usuario_direccion direccionUsuario;
     Usuario_direccion usuarioDireccion;
+    Intent intentFiltro;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout layoutContent;
@@ -146,12 +149,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 Log.d("ordenEnviada","Mostramos el dialog de orden enviada");
                 showOrdenEnviadaDialog();
             }
-        }
-
-        // Intent proveniente de FiltroEmpresasActivity
-        Intent intentFiltros = getIntent();
-        if(intentFiltros.getStringExtra("Delivery en mi zona")!=null){
-            filtrarListaPorParametro("",intentFiltros.getStringExtra("Delivery en mi zona"));
         }
 
         if (navigationView != null) {
@@ -220,6 +217,8 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         checkUserSession();
+
+        intentFiltro = new Intent(this, FiltroEmpresasActivity.class);
 
 
 
@@ -649,7 +648,7 @@ public class PrincipalActivity extends AppCompatActivity {
                             /*case R.id.nav_log_out:
                                 SessionPrefs.get(getApplicationContext()).logOut();
                                 checkUserSession();
-                                break;*/
+                                                      break;*/
 
                         }
 
@@ -752,22 +751,80 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }*/
 
-    public void filtrarListaPorParametro(String query, String filtro){
-        query = query.toString().toLowerCase();
+    public void filtrarListaPorParametro(String filtro){
+        filtro = filtro.toString().toLowerCase();
+        Log.d("juaco1993","Filtrando por: "+filtro);
 
         final List<EmpresasBody> filteredList = new ArrayList<>();
 
-        for (int i = 0; i < serverEmpresas.size(); i++) {
-
-
-            //final String nombre = Utilidades.ChequearLocalAbiertoHoy(serverEmpresas.get(i));
-            //final String rubro = serverEmpresas.get(i).getSubrubro().toLowerCase();
-            if (Utilidades.ChequearLocalAbiertoHoy(serverEmpresas.get(i))) {
-
-                filteredList.add(serverEmpresas.get(i));
+        if(filtro.equals("ambos")) {
+            for (int i = 0; i < serverEmpresas.size(); i++) {
+                DeliveryRequest request = Utilidades.calcularPrecioDelivery(usuarioDireccion,serverEmpresas.get(i));
+                if (Utilidades.ChequearLocalAbiertoHoy(serverEmpresas.get(i)) && request.getEstado()==1) {
+                    filteredList.add(serverEmpresas.get(i));
+                }
             }
         }
+
+        if(filtro.equals("abierto_hoy")) {
+            for (int i = 0; i < serverEmpresas.size(); i++) {
+                if (Utilidades.ChequearLocalAbiertoHoy(serverEmpresas.get(i))) {
+                    filteredList.add(serverEmpresas.get(i));
+                }
+            }
+        }
+
+        if(filtro.equals("delivery_mi_zona")) {
+            for (int i = 0; i < serverEmpresas.size(); i++) {
+                DeliveryRequest request = Utilidades.calcularPrecioDelivery(usuarioDireccion,serverEmpresas.get(i));
+                Log.d("juaco1993","estado: "+request.getEstado().toString()+", msj: "+request.getMensaje());
+                if (request.getEstado()==1) {
+                    filteredList.add(serverEmpresas.get(i));
+                }
+            }
+        }
+
         mEmpresasAdapter.swapItems(filteredList,usuarioDireccion);
+    }
+
+    public void ordenarListaPorParametro(String ordenamiento){
+
+        if(ordenamiento.equals("AZ")) {
+            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+                @Override
+                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
+                    return empresa1.getNombre_empresa().compareToIgnoreCase(empresa2.getNombre_empresa());
+                }
+            });
+        }
+
+        if(ordenamiento.equals("ZA")) {
+            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+                @Override
+                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
+                    return empresa2.getNombre_empresa().compareToIgnoreCase(empresa1.getNombre_empresa());
+                }
+            });
+        }
+
+        if(ordenamiento.equals("Calificacion")) {
+            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+                @Override
+                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
+                    return empresa2.getCalificacion_general().compareToIgnoreCase(empresa1.getCalificacion_general());
+                }
+            });
+        }
+
+        if(ordenamiento.equals("Cercanía")) {
+            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+                @Override
+                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
+                    //filtrarListaPorParametro("delivery_mi_zona");
+                    return Utilidades.calcularPrecioDelivery(usuarioDireccion,empresa1).getDatos().getDistancia().compareTo( Utilidades.calcularPrecioDelivery(usuarioDireccion,empresa2).getDatos().getDistancia());
+                }
+            });
+        }
 
     }
 
@@ -776,17 +833,78 @@ public class PrincipalActivity extends AppCompatActivity {
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(this, view, "transition");
 
-
         int revealX = (int) (view.getRight()+view.getLeft()+view.getWidth()+view.getTop());
         int revealY = (int) (view.getTop() + view.getBottom()) / 2;
 
         //Log.d("juaco1993","View x:"+ revealX+" y:"+revealY);
 
-        Intent intent = new Intent(this, FiltroEmpresasActivity.class);
-        intent.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_X, revealX);
-        intent.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_Y, revealY);
 
-        ActivityCompat.startActivity(this, intent, options.toBundle());
+        intentFiltro.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_X, revealX);
+        intentFiltro.putExtra(FiltroEmpresasActivity.EXTRA_CIRCULAR_REVEAL_Y, revealY);
 
+        ActivityCompat.startActivityForResult(this, intentFiltro,EXTRA_REQUEST_FILTRO, options.toBundle());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        if(resultCode==FiltroEmpresasActivity.RESULT_CODE_OK){
+            /// ORDENAMIENTO (UNICO) /////
+            if(data.getBooleanExtra("Nombre A-Z",false)){
+                ordenarListaPorParametro("AZ");
+                intentFiltro.putExtra("Nombre A-Z",true);
+            }else{
+                intentFiltro.putExtra("Nombre A-Z",false);
+            }
+
+            if(data.getBooleanExtra("Nombre Z-A",false)){
+                ordenarListaPorParametro("ZA");
+                intentFiltro.putExtra("Nombre Z-A",true);
+            }else{
+                intentFiltro.putExtra("Nombre Z-A",false);
+            }
+
+            if(data.getBooleanExtra("Calificación",false)){
+                ordenarListaPorParametro("Calificacion");
+                intentFiltro.putExtra("Calificación",true);
+            }else{
+                intentFiltro.putExtra("Calificación",false);
+            }
+
+            if(data.getBooleanExtra("Cercanía",false)){
+                ordenarListaPorParametro("Cercanía");
+                intentFiltro.putExtra("Cercanía",true);
+            }else{
+                intentFiltro.putExtra("Cercanía",false);
+            }
+
+
+
+            ///// FILTROS (ACUMULATIVOS) ///////
+            if(data.getBooleanExtra("Abierto hoy",false) && data.getBooleanExtra("Delivery en mi zona",false)){
+                filtrarListaPorParametro("ambos");
+                intentFiltro.putExtra("Abierto hoy",true);
+                intentFiltro.putExtra("Delivery en mi zona",true);
+            }else{
+                if(!data.getBooleanExtra("Abierto hoy",false) && !data.getBooleanExtra("Delivery en mi zona",false)){
+                    mostrarEmpresas(serverEmpresas);
+                }
+                if(data.getBooleanExtra("Abierto hoy",false)){
+                    intentFiltro.putExtra("Abierto hoy",true);
+                    filtrarListaPorParametro("abierto_hoy");
+                }else{
+                    intentFiltro.putExtra("Abierto hoy",false);
+                }
+                if(data.getBooleanExtra("Delivery en mi zona",false)){
+                    filtrarListaPorParametro("delivery_mi_zona");
+                    intentFiltro.putExtra("Delivery en mi zona",true);
+                }else{
+                    intentFiltro.putExtra("Delivery en mi zona",false);
+                }
+            }
+
+        }
+
+        Log.d("juaco1993","Datos intent filtro abierto hoy>"+data.getBooleanExtra("Abierto hoy",false));
     }
 }

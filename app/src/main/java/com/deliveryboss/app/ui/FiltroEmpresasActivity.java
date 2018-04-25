@@ -16,8 +16,13 @@ import android.widget.TextView;
 
 import com.deliveryboss.app.R;
 
+import org.w3c.dom.Text;
+
 
 public class FiltroEmpresasActivity extends AppCompatActivity {
+
+    public static final int RESULT_CODE_OK = 1;
+    public static final int RESULT_CODE_BACK = 2;
 
     public static final String EXTRA_CIRCULAR_REVEAL_X = "EXTRA_CIRCULAR_REVEAL_X";
     public static final String EXTRA_CIRCULAR_REVEAL_Y = "EXTRA_CIRCULAR_REVEAL_Y";
@@ -38,8 +43,6 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
 
     String[] filtros;
     Intent intentDeRegreso;
-
-
 
     View rootLayout;
 
@@ -68,16 +71,49 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
             }
         });
 
-        inicializarFiltro(filtroCercania);
-        inicializarFiltro(filtroCalificacion);
-        inicializarFiltro(filtroAZ);
-        inicializarFiltro(filtroZA);
+        inicializarOrdenamiento(filtroCercania);
+        inicializarOrdenamiento(filtroCalificacion);
+        inicializarOrdenamiento(filtroAZ);
+        inicializarOrdenamiento(filtroZA);
         inicializarFiltro(filtroAbiertoHoy);
         inicializarFiltro(filtroDeliveryEnMiZona);
 
 
 
         final Intent intent = getIntent();
+
+        // Inicializacion segun datos de previo filtrado //
+        if(intent.getBooleanExtra("Abierto hoy",false)) {
+            marcarBotonPresionado(filtroAbiertoHoy);
+        }else{
+            blanquearBoton(filtroAbiertoHoy);
+        }
+        if(intent.getBooleanExtra("Delivery en mi zona",false)){
+            marcarBotonPresionado(filtroDeliveryEnMiZona);
+        }else{
+            blanquearBoton(filtroDeliveryEnMiZona);
+        }
+        if(intent.getBooleanExtra("Nombre A-Z",false)){
+            marcarBotonPresionado(filtroAZ);
+        }else{
+            blanquearBoton(filtroAZ);
+        }
+        if(intent.getBooleanExtra("Nombre Z-A",false)){
+            marcarBotonPresionado(filtroZA);
+        }else{
+            blanquearBoton(filtroZA);
+        }
+        if(intent.getBooleanExtra("Calificación",false)){
+            marcarBotonPresionado(filtroCalificacion);
+        }else{
+            blanquearBoton(filtroCalificacion);
+        }
+        if(intent.getBooleanExtra("Cercanía",false)){
+            marcarBotonPresionado(filtroCercania);
+        }else{
+            blanquearBoton(filtroCercania);
+        }
+
 
         rootLayout = findViewById(R.id.root_layout);
 
@@ -141,12 +177,11 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     rootLayout.setVisibility(View.INVISIBLE);
+                    setResult(RESULT_CODE_OK,intentDeRegreso);
                     finish();
                     //startActivity(intentDeRegreso);
                 }
             });
-
-
             circularReveal.start();
         }
     }
@@ -157,20 +192,54 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d("juaco1993","Click en filtro>"+texto.getText().toString());
                 if(texto.getBackground().getConstantState()==getResources().getDrawable(R.drawable.rounded_corner).getConstantState()){
-                    texto.setTextColor(getResources().getColor(R.color.colorComida));
-                    texto.setBackground(getResources().getDrawable(R.drawable.rounded_corner_white));
-                    intentDeRegreso.putExtra(texto.getText().toString(),true);
+                    marcarBotonPresionado(texto);
                 }else{
-                    texto.setTextColor(getResources().getColor(R.color.cardview_light_background));
-                    texto.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
-                    intentDeRegreso.putExtra(texto.getText().toString(),false);
+                    blanquearBoton(texto);
                 }
-
             }
         });
     }
 
+    private void inicializarOrdenamiento(final TextView texto){
+        texto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("juaco1993","Click en ordenamiento>"+texto.getText().toString());
+                if(texto.getBackground().getConstantState()==getResources().getDrawable(R.drawable.rounded_corner).getConstantState()){
+                    blanquearSeleccionesRadio();
+
+                    marcarBotonPresionado(texto);
+                }
+            }
+        });
+    }
+
+    private void blanquearSeleccionesRadio(){
+        blanquearBoton(filtroCercania);
+        blanquearBoton(filtroCalificacion);
+        blanquearBoton(filtroAZ);
+        blanquearBoton(filtroZA);
+    }
+
+    private void marcarBotonPresionado(TextView texto){
+        texto.setTextColor(getResources().getColor(R.color.colorComida));
+        texto.setBackground(getResources().getDrawable(R.drawable.rounded_corner_white));
+        intentDeRegreso.putExtra(texto.getText().toString(),true);
+    }
+
+    private void blanquearBoton(TextView texto){
+        texto.setTextColor(getResources().getColor(R.color.cardview_light_background));
+        texto.setBackground(getResources().getDrawable(R.drawable.rounded_corner));
+        intentDeRegreso.putExtra(texto.getText().toString(),false);
+    }
+
     private void irAPantallaPrincipal(){
         unRevealActivity();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CODE_BACK,intentDeRegreso);
+        super.onBackPressed();
     }
 }
