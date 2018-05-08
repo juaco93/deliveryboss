@@ -121,4 +121,18 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnPerfilAceptar"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/cvNota"
+        android:backgroundTint="@color/colorComida"
+        android:text="Aceptar"
+        android:textColor="@color/cardview_light_background"
+ />
 </RelativeLayout>

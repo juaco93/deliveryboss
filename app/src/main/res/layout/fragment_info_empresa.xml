@@ -279,7 +279,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/cvHorarios"
         android:layout_width="fill_parent"
-        android:layout_height="240dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/cvUbicacion"
@@ -300,7 +300,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginRight="10dp"
             android:paddingLeft="5dp"
             android:paddingTop="44dp"
@@ -324,7 +324,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>
@@ -347,7 +347,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>
@@ -370,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>
@@ -393,7 +393,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>
@@ -416,7 +416,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>
@@ -439,7 +439,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>
@@ -462,7 +462,30 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:padding="5px"
-                    android:text="cerrado"
+                    android:text="Cerrado"
+                    android:textAlignment="viewEnd"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/lbFeriados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5px"
+                    android:text="  Feriados"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtFeriados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:padding="5px"
+                    android:text="Cerrado"
                     android:textAlignment="viewEnd"
                     android:textSize="14sp" />
             </TableRow>

@@ -56,6 +56,7 @@ public class MiPerfilActivity extends AppCompatActivity {
     EditText perfilTelefono;
     EditText perfilEmail;
     EditText perfilFechaNacimiento;
+    Button perfilAceptar;
 
     private TextInputLayout mFloatLabelNombre;
     private TextInputLayout mFloatLabelApellido;
@@ -90,12 +91,30 @@ public class MiPerfilActivity extends AppCompatActivity {
         perfilTelefono = (EditText) findViewById(R.id.txtPerfilTelefono) ;
         perfilEmail = (EditText) findViewById(R.id.txtPerfilEmail);
         perfilFechaNacimiento = (EditText) findViewById(R.id.txtPerfilFechaNacimiento);
+        perfilAceptar = (Button) findViewById(R.id.btnPerfilAceptar);
 
         mFloatLabelNombre = (TextInputLayout) findViewById(R.id.lbPerfilNombre);
         mFloatLabelApellido = (TextInputLayout) findViewById(R.id.lbPerfilApellido);
         mFloatLabelTelefono = (TextInputLayout) findViewById(R.id.lbPerfilTelefono);
         mFloatLabelEmail = (TextInputLayout) findViewById(R.id.lbPerfilEmail);
         mFloatLabelFechaNacimiento = (TextInputLayout) findViewById(R.id.lbPerfilFechaNacimiento);
+
+        perfilAceptar.setVisibility(View.VISIBLE);
+        perfilAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!chequearCampos()){
+                    String ciudad = SessionPrefs.get(getApplicationContext()).getPrefUsuarioDireccionIdCiudad();
+                    if(ciudad!=null){
+                        Intent intent = new Intent(getApplicationContext(), PrincipalActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(getApplicationContext(), SeleccionarDireccion.class);
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -206,7 +225,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             Intent intent = new Intent(this, PrincipalActivity.class);
             startActivity(intent);
         }else{
-            Intent intent = new Intent(this, SeleccionarCiudad.class);
+            Intent intent = new Intent(this, SeleccionarDireccion.class);
             startActivity(intent);
         }
     }
@@ -281,45 +300,13 @@ public class MiPerfilActivity extends AppCompatActivity {
         String sexo_idsexo =sexo;
         String fecha_nacimiento = perfilFechaNacimiento.getText().toString();
 
-        final boolean[] cancel = {false};
-        View focusView = null;
-
-        // Nombre
-        if (TextUtils.isEmpty(nombre)) {
-            Log.d("registro","Esta vacio nombre: "+ nombre+" <-");
-            perfilNombre.setError(getString(R.string.error_field_required));
-            mFloatLabelNombre.setError(getString(R.string.error_field_required));
-            focusView = perfilNombre;
-            cancel[0] = true;
-        }
-        // Apellido
-        if (TextUtils.isEmpty(apellido)) {
-            perfilApellido.setError(getString(R.string.error_field_required));
-            mFloatLabelApellido.setError(getString(R.string.error_field_required));
-            focusView = perfilApellido;
-            cancel[0] = true;
-        }
-
-        // Telefono
-        if (TextUtils.isEmpty(telefono)) {
-            perfilTelefono.setError(getString(R.string.error_field_required));
-            mFloatLabelTelefono.setError(getString(R.string.error_field_required));
-            focusView = perfilTelefono;
-            cancel[0] = true;
-        }
 
 
-        // Email
-        if (TextUtils.isEmpty(e_mail)) {
-            perfilEmail.setError(getString(R.string.error_field_required));
-            mFloatLabelEmail.setError(getString(R.string.error_field_required));
-            focusView = perfilEmail;
-            cancel[0] = true;
-        }
+        boolean cancel = chequearCampos();
 
 
-        if (cancel[0]) {
-            focusView.requestFocus();
+        if (cancel) {
+            //focusView.requestFocus();
             return false;
         } else {
 
@@ -429,6 +416,45 @@ public class MiPerfilActivity extends AppCompatActivity {
 
     }
 
+    private boolean chequearCampos(){
+        boolean cancel = false;
+        View focusView = null;
+        // Nombre
+        if (TextUtils.isEmpty(perfilNombre.getText())) {
+            Log.d("registro","Esta vacio nombre<-");
+            perfilNombre.setError(getString(R.string.error_field_required));
+            mFloatLabelNombre.setError(getString(R.string.error_field_required));
+            focusView = perfilNombre;
+            cancel = true;
+        }
+        // Apellido
+        if (TextUtils.isEmpty(perfilApellido.getText())) {
+            perfilApellido.setError(getString(R.string.error_field_required));
+            mFloatLabelApellido.setError(getString(R.string.error_field_required));
+            focusView = perfilApellido;
+            cancel = true;
+        }
+
+        // Telefono
+        if (TextUtils.isEmpty(perfilTelefono.getText())) {
+            perfilTelefono.setError(getString(R.string.error_field_required));
+            mFloatLabelTelefono.setError(getString(R.string.error_field_required));
+            focusView = perfilTelefono;
+            cancel = true;
+        }
+
+
+        // Email
+        if (TextUtils.isEmpty(perfilEmail.getText())) {
+            perfilEmail.setError(getString(R.string.error_field_required));
+            mFloatLabelEmail.setError(getString(R.string.error_field_required));
+            focusView = perfilEmail;
+            cancel = true;
+        }
+
+        return cancel;
+    }
+
 
 
     /// CODIGO DE EVENTBUS /////
@@ -444,6 +470,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             //perfilEmail.setEnabled(true);
             perfilFechaNacimiento.setEnabled(true);
             perfilTelefono.requestFocus();
+            perfilAceptar.setVisibility(View.VISIBLE);
         }
     }
 

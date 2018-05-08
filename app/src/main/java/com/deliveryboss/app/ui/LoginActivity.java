@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -40,6 +41,7 @@ import com.deliveryboss.app.data.app.Config;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 import java.text.SimpleDateFormat;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 

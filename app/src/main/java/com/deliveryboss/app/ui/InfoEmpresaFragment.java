@@ -60,6 +60,7 @@ public class InfoEmpresaFragment extends Fragment{
     TextView viernes;
     TextView sabado;
     TextView domingo;
+    TextView feriados;
     TextView precioDelivery;
     TextView tiempoDelivery;
     TextView lbCalificacion;
@@ -127,6 +128,7 @@ public class InfoEmpresaFragment extends Fragment{
             viernes = (TextView) v.findViewById(R.id.txtViernes);
             sabado = (TextView) v.findViewById(R.id.txtSabado);
             domingo = (TextView) v.findViewById(R.id.txtDomingo);
+            feriados = v.findViewById(R.id.txtFeriados);
 
             lblunes = (TextView) v.findViewById(R.id.lbLunes);
             lbmartes = (TextView) v.findViewById(R.id.lbMartes);
@@ -170,7 +172,7 @@ public class InfoEmpresaFragment extends Fragment{
             direccionUsuario = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,usuarioCiudad,usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
 
             calcularPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
-            //mostrarHorarios();
+            mostrarHorarios();
 
 
             ////// CARD DELIVERY //////////
@@ -289,6 +291,99 @@ public class InfoEmpresaFragment extends Fragment{
 
             return v;
         }
+
+        private void mostrarHorarios(){
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+            String diaActual = sdf.format(new Date());
+
+            Log.d("dia", diaActual);
+
+            Boolean abierto= false;
+            String turno1desde = "";
+            String turno2desde = "";
+            String turno1hasta = "";
+            String turno2hasta = "";
+
+            int cantidad=empresa.getEmpresa_horario().size();
+            for(int i=0;i<cantidad;i++){
+
+                // OBTENEMOS LOS TURNOS DEL DIA
+                turno1desde=empresa.getEmpresa_horario().get(i).getTurno1_desde();
+                turno2desde=empresa.getEmpresa_horario().get(i).getTurno2_desde();
+                turno1hasta=empresa.getEmpresa_horario().get(i).getTurno1_hasta();
+                turno2hasta=empresa.getEmpresa_horario().get(i).getTurno2_hasta();
+                String mensaje = "Cerrado";
+
+                if(turno1desde!=null && turno1hasta!=null && turno2desde!=null & turno2hasta!=null){
+                    mensaje = turno1desde +" a " + turno1hasta + " y " +turno2desde+  " a "+ turno2hasta;
+                }else{
+                    if(turno1desde!=null && turno1hasta!=null)mensaje = turno1desde +" a " + turno1hasta;
+                    if(turno2desde!=null && turno2hasta!=null)mensaje = turno2desde +" a " + turno2hasta;
+                }
+
+
+                switch (empresa.getEmpresa_horario().get(i).getDia()){
+                    case "lun.":
+                        lunes.setText(mensaje);
+                        break;
+                    case "mar.":
+                        martes.setText(mensaje);
+                        break;
+                    case "mié.":
+                        miercoles.setText(mensaje);
+                        break;
+                    case "jue.":
+                        jueves.setText(mensaje);
+                        break;
+                    case "vie.":
+                        viernes.setText(mensaje);
+                        break;
+                    case "sáb.":
+                        sabado.setText(mensaje);
+                        break;
+                    case "dom.":
+                        domingo.setText(mensaje);
+                        break;
+                    case "Feriados":
+                        feriados.setText(mensaje);
+                        break;
+                }
+            }
+
+
+
+            switch (diaActual){
+                case "lun.":
+                    lunes.setTypeface(null, Typeface.BOLD);
+                    lblunes.setTypeface(null, Typeface.BOLD);
+                    break;
+                case "mar.":
+                    martes.setTypeface(null, Typeface.BOLD);
+                    lbmartes.setTypeface(null, Typeface.BOLD);
+                    break;
+                case "mié.":
+                    miercoles.setTypeface(null, Typeface.BOLD);
+                    lbmiercoles.setTypeface(null, Typeface.BOLD);
+                    break;
+                case "jue.":
+                    jueves.setTypeface(null, Typeface.BOLD);
+                    lbjueves.setTypeface(null, Typeface.BOLD);
+                    break;
+                case "vie.":
+                    viernes.setTypeface(null, Typeface.BOLD);
+                    lbviernes.setTypeface(null, Typeface.BOLD);
+                    break;
+                case "sáb.":
+                    sabado.setTypeface(null, Typeface.BOLD);
+                    lbsabado.setTypeface(null, Typeface.BOLD);
+                    break;
+                case "dom.":
+                    domingo.setTypeface(null, Typeface.BOLD);
+                    lbdomingo.setTypeface(null, Typeface.BOLD);
+                    break;
+            }
+        }
+
 
 /*
         private void mostrarHorarios(){

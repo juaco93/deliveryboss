@@ -62,10 +62,12 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
 
         // Seteo del checkbox
         //Log.d("adapterDireccion","Dir guardada ID-->"+mDireccionGuardada.getIdusuario_direccion()+" Dir de sv ID-->"+direccion.getIdusuario_direccion());
-        if(mDireccionGuardada.getIdusuario_direccion().equals(direccion.getIdusuario_direccion())){
-            holder.direccionPorDefecto.setChecked(true);
-        }else{
-            holder.direccionPorDefecto.setChecked(false);
+        if(mDireccionGuardada!=null) {
+            if (mDireccionGuardada.getIdusuario_direccion().equals(direccion.getIdusuario_direccion())) {
+                holder.direccionPorDefecto.setChecked(true);
+            } else {
+                holder.direccionPorDefecto.setChecked(false);
+            }
         }
 
         // OnClickListener del checkbox

@@ -165,7 +165,7 @@ public class CarritoActivity extends AppCompatActivity {
 
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
-        importeTotal = sumarTotal(0.00f);
+        importeTotal = sumarTotal();
         nombreEmpresa.setText(empresa.getNombre_empresa());
 
         //// RETROFIT
@@ -188,23 +188,26 @@ public class CarritoActivity extends AppCompatActivity {
         // Crear conexión a la API de Deliveryboss
         mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
 
+        // Variables de delivery
+        obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
+        precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
+
 
         //// SUMA DEL DELIVERY (SI APLICA)
         spTipoEntrega.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Opcion "Elegí el tipo de entrega"
+               // Opcion "Elegí el tipo de entrega"
                 if(position==0){
                     chequearTipoEntrega();
+                    importeTotal = sumarTotal();
                 }
                 //DELIVERY
                 if(position==1){
                     //precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
-                    obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
-                    precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
                     Log.d("chequeo","Precio calculado en carrito--> $"+precioDelivery.toString());
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
-                    importeTotal = sumarTotal(Float.valueOf(precioDelivery));
+                    importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
                     txtTotal.setText("$"+String.valueOf(subtotSt));
                     tipoEnvio = "1";
@@ -217,7 +220,7 @@ public class CarritoActivity extends AppCompatActivity {
                     precioDelivery = 0.00f;
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     btnConfirmarOrden.setEnabled(true);
-                    importeTotal = sumarTotal(0.00f);
+                    importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
                     txtTotal.setText("$"+String.valueOf(subtotSt));
                     tipoEnvio = "2";
@@ -444,14 +447,13 @@ public class CarritoActivity extends AppCompatActivity {
         mListaCarrito.setVisibility(View.VISIBLE);
     }
 
-    private float sumarTotal(Float delivery){
+    private float sumarTotal(){
         Float total = 0.00f;
         for (int i=0; i<ordenesDetalleLocal.size(); i++) {
             total += Float.valueOf(ordenesDetalleLocal.get(i).getOrden_detalle_subtotal());
         }
-        if(delivery!=0.00f){
-            total += delivery;
-        }
+
+        if(precioDelivery!=null)total+=precioDelivery;
 
         return total;
     }
@@ -827,11 +829,11 @@ public class CarritoActivity extends AppCompatActivity {
 
         // RECALCULO DEL TOTAL
         if(tipoEnvio.equals("1")){
-            importeTotal = sumarTotal(Float.valueOf(precioDelivery));
+            importeTotal = sumarTotal();
             String subtotSt = String.format("%.2f", importeTotal);
             txtTotal.setText("$"+String.valueOf(subtotSt));
         }else if (tipoEnvio.equals("2")){
-            importeTotal = sumarTotal(0.00f);
+            importeTotal = sumarTotal();
             String subtotSt = String.format("%.2f", importeTotal);
             txtTotal.setText("$"+String.valueOf(subtotSt));
         }
