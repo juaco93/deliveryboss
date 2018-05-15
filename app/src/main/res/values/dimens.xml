@@ -28,6 +28,10 @@
     <dimen name="contact_chip_left_padding">8dp</dimen>
     <dimen name="contact_chip_right_padding">12dp</dimen>
 
+
+    <!-- Dimensiones del FAB del carrito -->
+    <dimen name="margenes_fab">10dp</dimen>
+
     <dimen name="padding_top">8dp</dimen>
 </resources>
 

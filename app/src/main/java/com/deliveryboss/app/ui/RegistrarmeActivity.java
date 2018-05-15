@@ -425,6 +425,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                         } else {
                             Gson gson = new Gson();
                             ApiResponse mensaje = null;
+
                             try {
                                 mensaje = gson.fromJson(response.errorBody().string(), ApiResponse.class);
                             } catch (IOException e) {
@@ -434,7 +435,9 @@ public class RegistrarmeActivity extends AppCompatActivity {
                                 error[0] = "Su email ya se encuentra registrado";
                                 yaExiste[0] =true;
                             }
+                            Log.d("logindb", "Mensaje: " + mensaje.getMensaje() + " Estado>"+mensaje.getEstado());
                         }
+
                         showLoginError(error[0]);
                         return;
                     }

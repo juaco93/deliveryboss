@@ -18,4 +18,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- Styles para el FAB del Carrito -->
+    <style name="Etiquetas">
+        <item name="android:background">@drawable/background_label_fab</item>
+        <item name="android:textColor">@color/blanco</item>
+    </style>
+
 </resources>

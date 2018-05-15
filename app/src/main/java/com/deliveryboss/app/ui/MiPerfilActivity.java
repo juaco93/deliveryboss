@@ -106,9 +106,11 @@ public class MiPerfilActivity extends AppCompatActivity {
                 if(!chequearCampos()){
                     String ciudad = SessionPrefs.get(getApplicationContext()).getPrefUsuarioDireccionIdCiudad();
                     if(ciudad!=null){
+                        modificarUsuario();
                         Intent intent = new Intent(getApplicationContext(), PrincipalActivity.class);
                         startActivity(intent);
                     }else{
+                        modificarUsuario();
                         Intent intent = new Intent(getApplicationContext(), SeleccionarDireccion.class);
                         startActivity(intent);
                     }

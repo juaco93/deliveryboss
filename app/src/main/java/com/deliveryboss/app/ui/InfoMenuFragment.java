@@ -1,11 +1,11 @@
 package com.deliveryboss.app.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.deliveryboss.app.data.util.Utilidades;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -62,7 +64,11 @@ public class InfoMenuFragment extends Fragment {
     List<Orden_detalle> ordenesDetalleLocal = new ArrayList<>();
     Boolean abierto= false;
 
-    private FloatingActionButton mSharedFab;
+    // FAB //
+    com.getbase.floatingactionbutton.FloatingActionButton button;
+    com.getbase.floatingactionbutton.FloatingActionButton buttonA;
+
+    private com.getbase.floatingactionbutton.FloatingActionsMenu mSharedFab;
     boolean visible;
     ViewGroup transitionsContainer;
 
@@ -77,11 +83,13 @@ public class InfoMenuFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_info_menu, container, false);
+        View vDeta = inflater.inflate(R.layout.activity_detalle_empresa,container,false);
 
         transitionsContainer = (ViewGroup) v.findViewById(R.id.contenedor_transiciones);
 
@@ -103,11 +111,44 @@ public class InfoMenuFragment extends Fragment {
         mListaProductos.setAdapter(mProductosAdapter);
         mEmptyStateContainer = v.findViewById(R.id.empty_state_containerMenu);
 
+        /////// FAB CARRITO ///////////
+        button = (com.getbase.floatingactionbutton.FloatingActionButton) v.findViewById(R.id.action_b);
+        button.setSize(com.getbase.floatingactionbutton.FloatingActionButton.SIZE_NORMAL);
+        button.setColorNormalResId(R.color.colorComida);
+        button.setColorPressedResId(R.color.colorAccent);
+        button.setIcon(R.drawable.cajita_sola);
+        button.setStrokeVisible(false);
+        button.setTitle("Ir al carrito");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),CarritoActivity.class);
+                intent.putExtra("ordenes_detalle",(new Gson()).toJson(ordenesDetalleLocal));
+                intent.putExtra("empresa", (new Gson()).toJson(empresa));
+                intent.putExtra("abierto_hoy",abierto);
+                startActivity(intent);
+            }
+        });
+
+        buttonA = (com.getbase.floatingactionbutton.FloatingActionButton) v.findViewById(R.id.action_a);
+        buttonA.setSize(com.getbase.floatingactionbutton.FloatingActionButton.SIZE_NORMAL);
+        buttonA.setColorNormalResId(R.color.colorComida);
+        buttonA.setColorPressedResId(R.color.colorAccent);
+        buttonA.setIcon(R.drawable.ic_money);
+        buttonA.setStrokeVisible(false);
+        buttonA.setTitle("Monto");
+
+        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) v.findViewById(R.id.multiple_actions);
+
+        /////// FAB CARRITO ///////////
+
+
         // Obtener intent en caso de que regrese de la actividad Carrito (para no perder lo que estaba en el carrito)
         String carrito = getActivity().getIntent().getExtras().getString("carrito");
         if(carrito!=null){
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(carrito, listType);
+        buttonA.setTitle("$"+String.valueOf(sumarTotal()));
         }
 
         // Inicializar GSON
@@ -308,6 +349,9 @@ public class InfoMenuFragment extends Fragment {
                     }else{
                         ordenesDetalleLocal.add(detalle);
                         Toast.makeText(context,"Agregaste: " + detalle.getCantidad()+" "+detalle.getProducto_nombre()+" a tu orden!",Toast.LENGTH_LONG).show();
+
+
+                        buttonA.setTitle("$"+String.valueOf(sumarTotal()));
                     }
 
                     // Animacion del Fab del Carrito
@@ -333,7 +377,7 @@ public class InfoMenuFragment extends Fragment {
         mSharedFab = null; // To avoid keeping/leaking the reference of the FAB
     }
 
-    public void shareFab(FloatingActionButton fab) {
+    public void shareFab(com.getbase.floatingactionbutton.FloatingActionsMenu fab) {
         if (fab == null) { // When the FAB is shared to another Fragment
             if (mSharedFab != null) {
                 mSharedFab.setOnClickListener(null);
@@ -342,7 +386,8 @@ public class InfoMenuFragment extends Fragment {
         }
         else {
             mSharedFab = fab;
-            mSharedFab.setImageResource(R.drawable.cajita_sola);
+            //mSharedFab.setImageResource(R.drawable.cajita_sola);
+
             mSharedFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -354,6 +399,16 @@ public class InfoMenuFragment extends Fragment {
                 }
             });
         }
+    }
+
+
+    private float sumarTotal(){
+        Float total = 0.00f;
+        for (int i=0; i<ordenesDetalleLocal.size(); i++) {
+            total += Float.valueOf(ordenesDetalleLocal.get(i).getOrden_detalle_subtotal());
+        }
+
+       return total;
     }
 
 

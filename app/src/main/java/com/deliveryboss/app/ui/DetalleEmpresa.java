@@ -15,9 +15,11 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
@@ -39,7 +41,7 @@ public class DetalleEmpresa extends AppCompatActivity{
     InfoEmpresaFragment fragmentInfoEmpresa = new InfoEmpresaFragment();
     InfoCalificacionesFragment fragmentCalificaciones = new InfoCalificacionesFragment();
 
-    FloatingActionButton mSharedFab;
+    com.getbase.floatingactionbutton.FloatingActionsMenu mSharedFab;
 
     private int[] tabIcons = {
             R.mipmap.ic_list,
@@ -57,7 +59,7 @@ public class DetalleEmpresa extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSharedFab = (FloatingActionButton) findViewById(R.id.shared_fab);
+        mSharedFab = findViewById(R.id.multiple_actions);
 
         Intent intentRecibido = getIntent();
         empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
@@ -84,15 +86,15 @@ public class DetalleEmpresa extends AppCompatActivity{
             public void onPageScrollStateChanged(int state) {
                 switch (state) {
                     case ViewPager.SCROLL_STATE_DRAGGING:
-                        mSharedFab.hide(); // Hide animation
+                        //mSharedFab.hide(); // Hide animation
                         break;
                     case ViewPager.SCROLL_STATE_IDLE:
                         switch (viewPager.getCurrentItem()) {
                             case 0:
                                 fragmentCalificaciones.shareFab(null); // Remove FAB from fragment
                                 fragmentInfoEmpresa.shareFab(null);
-                                fragmentMenu.shareFab(mSharedFab); // Share FAB to new displayed fragment
-                                mSharedFab.show();
+                                //fragmentMenu.shareFab(mSharedFab); // Share FAB to new displayed fragment
+                                //mSharedFab.show();
                                 break;
                             case 1:
                                 fragmentMenu.shareFab(null); // Remove FAB from fragment
@@ -127,9 +129,6 @@ public class DetalleEmpresa extends AppCompatActivity{
         setupTabIcons();
 
         setearColores();
-
-
-
     }
 
 

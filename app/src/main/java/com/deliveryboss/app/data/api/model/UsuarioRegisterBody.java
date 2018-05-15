@@ -13,9 +13,9 @@ public class UsuarioRegisterBody {
     String fecha_nacimiento;
     String usuario_tipo_idusuario_tipo;
     String sexo_idsexo;
-    String usuario_empresa_estado_idusuario_empresa_estado;
+    String usuario_estado_idusuario_estado;
 
-    public UsuarioRegisterBody(String nombre, String apellido, String e_mail, String telefono, String contrasena, String fecha_nacimiento, String usuario_tipo_idusuario_tipo, String sexo_idsexo, String usuario_empresa_estado_idusuario_empresa_estado) {
+    public UsuarioRegisterBody(String nombre, String apellido, String e_mail, String telefono, String contrasena, String fecha_nacimiento, String usuario_tipo_idusuario_tipo, String sexo_idsexo, String usuario_estado_idusuario_estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.e_mail = e_mail;
@@ -24,7 +24,7 @@ public class UsuarioRegisterBody {
         this.fecha_nacimiento = fecha_nacimiento;
         this.usuario_tipo_idusuario_tipo = usuario_tipo_idusuario_tipo;
         this.sexo_idsexo = sexo_idsexo;
-        this.usuario_empresa_estado_idusuario_empresa_estado = usuario_empresa_estado_idusuario_empresa_estado;
+        this.usuario_estado_idusuario_estado = usuario_estado_idusuario_estado;
     }
 
     public String getNombre() {
@@ -91,11 +91,11 @@ public class UsuarioRegisterBody {
         this.sexo_idsexo = sexo_idsexo;
     }
 
-    public String getUsuario_empresa_estado_idusuario_empresa_estado() {
-        return usuario_empresa_estado_idusuario_empresa_estado;
+    public String getUsuario_estado_idusuario_estado() {
+        return usuario_estado_idusuario_estado;
     }
 
-    public void setUsuario_empresa_estado_idusuario_empresa_estado(String usuario_empresa_estado_idusuario_empresa_estado) {
-        this.usuario_empresa_estado_idusuario_empresa_estado = usuario_empresa_estado_idusuario_empresa_estado;
+    public void setUsuario_estado_idusuario_estado(String usuario_estado_idusuario_estado) {
+        this.usuario_estado_idusuario_estado = usuario_estado_idusuario_estado;
     }
 }

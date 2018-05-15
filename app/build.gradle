@@ -52,6 +52,8 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.2.4'
     // Distancia delivery
     compile 'com.google.maps.android:android-maps-utils:0.4+'
+    // FAB con "Speed Dial"
+    compile 'com.getbase:floatingactionbutton:1.10.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

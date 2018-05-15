@@ -62,5 +62,11 @@
     <color name="nosotros4b">#7FE3C8</color>
     <color name="nosotros5a">#E0143D</color>
     <color name="nosotros5b">#E84B6A</color>
+
+
+    <!-- Colores para FAB Carrito -->
+    <color name="negro_semitransparente">#B2000000</color>
+    <color name="blanco">#fafafa</color>
+
 </resources>
 
