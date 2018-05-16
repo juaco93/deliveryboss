@@ -61,7 +61,7 @@
                 android:text="@string/empty_container_text" />
         </LinearLayout>
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
+        <toan.android.floatingactionmenu.FloatingActionsMenu
             android:id="@+id/multiple_actions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,14 +71,13 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            app:fab_labelStyle="@style/Etiquetas"
-            app:layout_anchor="@+id/viewpager"
-            app:layout_anchorGravity="right|bottom"
             app:fab_addButtonColorNormal="@color/colorComida"
             app:fab_addButtonColorPressed="@color/colorAccent"
-            >
+            app:fab_labelStyle="@style/Etiquetas"
+            app:fab_menuIcon="@drawable/icono_carrito_items"
+            app:layout_anchorGravity="right|bottom">
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
+            <toan.android.floatingactionmenu.FloatingActionButton
                 android:id="@+id/action_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +89,7 @@
                 fab:fab_colorNormal="@color/colorComida"
                 fab:fab_colorPressed="@color/blanco" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
+            <toan.android.floatingactionmenu.FloatingActionButton
                 android:id="@+id/action_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +99,7 @@
                 app:fab_title="Ir a carrito"
                 fab:fab_colorNormal="@color/colorComida"
                 fab:fab_colorPressed="@color/blanco" />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        </toan.android.floatingactionmenu.FloatingActionsMenu>
     </RelativeLayout>
 
 </RelativeLayout>

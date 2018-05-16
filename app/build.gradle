@@ -53,7 +53,8 @@ dependencies {
     // Distancia delivery
     compile 'com.google.maps.android:android-maps-utils:0.4+'
     // FAB con "Speed Dial"
-    compile 'com.getbase:floatingactionbutton:1.10.1'
+    //compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.github.toanvc:floatingactionmenu:0.8.9'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

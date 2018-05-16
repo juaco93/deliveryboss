@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,12 +21,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.model.BadgeDrawable;
 import com.deliveryboss.app.data.util.Utilidades;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +47,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import toan.android.floatingactionmenu.FloatingActionButton;
+import toan.android.floatingactionmenu.FloatingActionsMenu;
 
 import static android.content.Context.SEARCH_SERVICE;
 
@@ -65,10 +70,11 @@ public class InfoMenuFragment extends Fragment {
     Boolean abierto= false;
 
     // FAB //
-    com.getbase.floatingactionbutton.FloatingActionButton button;
-    com.getbase.floatingactionbutton.FloatingActionButton buttonA;
+    FloatingActionButton button;
+    FloatingActionButton buttonA;
+    FloatingActionsMenu menuMultipleActions;
 
-    private com.getbase.floatingactionbutton.FloatingActionsMenu mSharedFab;
+    private FloatingActionsMenu mSharedFab;
     boolean visible;
     ViewGroup transitionsContainer;
 
@@ -112,8 +118,8 @@ public class InfoMenuFragment extends Fragment {
         mEmptyStateContainer = v.findViewById(R.id.empty_state_containerMenu);
 
         /////// FAB CARRITO ///////////
-        button = (com.getbase.floatingactionbutton.FloatingActionButton) v.findViewById(R.id.action_b);
-        button.setSize(com.getbase.floatingactionbutton.FloatingActionButton.SIZE_NORMAL);
+        button = v.findViewById(R.id.action_b);
+        button.setSize(FloatingActionButton.SIZE_NORMAL);
         button.setColorNormalResId(R.color.colorComida);
         button.setColorPressedResId(R.color.colorAccent);
         button.setIcon(R.drawable.cajita_sola);
@@ -130,15 +136,22 @@ public class InfoMenuFragment extends Fragment {
             }
         });
 
-        buttonA = (com.getbase.floatingactionbutton.FloatingActionButton) v.findViewById(R.id.action_a);
-        buttonA.setSize(com.getbase.floatingactionbutton.FloatingActionButton.SIZE_NORMAL);
+        buttonA = v.findViewById(R.id.action_a);
+        buttonA.setSize(FloatingActionButton.SIZE_NORMAL);
         buttonA.setColorNormalResId(R.color.colorComida);
         buttonA.setColorPressedResId(R.color.colorAccent);
         buttonA.setIcon(R.drawable.ic_money);
         buttonA.setStrokeVisible(false);
         buttonA.setTitle("Monto");
 
-        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) v.findViewById(R.id.multiple_actions);
+        menuMultipleActions = v.findViewById(R.id.multiple_actions);
+       //menuMultipleActions.setIcon(getResources().getDrawable(R.drawable.icono_carrito_items));
+
+
+        LayerDrawable localLayerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.icono_carrito_items);
+
+        Drawable cartBadgeDrawable = localLayerDrawable.findDrawableByLayerId(R.id.ic_badge);
+        setBadgeCount(getContext(),localLayerDrawable,"3");
 
         /////// FAB CARRITO ///////////
 
@@ -377,7 +390,7 @@ public class InfoMenuFragment extends Fragment {
         mSharedFab = null; // To avoid keeping/leaking the reference of the FAB
     }
 
-    public void shareFab(com.getbase.floatingactionbutton.FloatingActionsMenu fab) {
+    public void shareFab(FloatingActionsMenu fab) {
         if (fab == null) { // When the FAB is shared to another Fragment
             if (mSharedFab != null) {
                 mSharedFab.setOnClickListener(null);
@@ -404,11 +417,51 @@ public class InfoMenuFragment extends Fragment {
 
     private float sumarTotal(){
         Float total = 0.00f;
-        for (int i=0; i<ordenesDetalleLocal.size(); i++) {
+        int cantidad= 0;
+        cantidad = ordenesDetalleLocal.size();
+        for (int i=0; i<cantidad; i++) {
             total += Float.valueOf(ordenesDetalleLocal.get(i).getOrden_detalle_subtotal());
         }
 
+        createCartBadge(cantidad);
        return total;
+    }
+
+    private void createCartBadge(int paramInt) {
+        if (Build.VERSION.SDK_INT <= 15) {
+            return;
+        }
+        LayerDrawable localLayerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.icono_carrito_items);
+        Drawable cartBadgeDrawable = localLayerDrawable
+                .findDrawableByLayerId(R.id.ic_badge);
+        BadgeDrawable badgeDrawable;
+        if ((cartBadgeDrawable != null)
+                && ((cartBadgeDrawable instanceof BadgeDrawable))
+                && (paramInt < 10)) {
+            badgeDrawable = (BadgeDrawable) cartBadgeDrawable;
+        } else {
+            badgeDrawable = new BadgeDrawable(getContext());
+        }
+        badgeDrawable.setCount(String.valueOf(paramInt));
+        localLayerDrawable.mutate();
+        localLayerDrawable.setDrawableByLayerId(R.id.ic_badge, badgeDrawable);
+        menuMultipleActions.setIcon(localLayerDrawable);
+    }
+
+    public static void setBadgeCount(Context context, LayerDrawable icon, String count) {
+        BadgeDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_badge);
+        if (reuse != null && reuse instanceof BadgeDrawable) {
+            badge = (BadgeDrawable) reuse;
+        } else {
+            badge = new BadgeDrawable(context);
+        }
+
+        badge.setCount(count);
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_badge, badge);
     }
 
 

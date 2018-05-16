@@ -19,13 +19,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import toan.android.floatingactionmenu.FloatingActionsMenu;
 
 
 public class DetalleEmpresa extends AppCompatActivity{
@@ -41,7 +42,7 @@ public class DetalleEmpresa extends AppCompatActivity{
     InfoEmpresaFragment fragmentInfoEmpresa = new InfoEmpresaFragment();
     InfoCalificacionesFragment fragmentCalificaciones = new InfoCalificacionesFragment();
 
-    com.getbase.floatingactionbutton.FloatingActionsMenu mSharedFab;
+    FloatingActionsMenu mSharedFab;
 
     private int[] tabIcons = {
             R.mipmap.ic_list,
