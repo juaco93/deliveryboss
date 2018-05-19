@@ -4,14 +4,17 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.icu.text.IDNA;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -71,7 +74,7 @@ public class InfoMenuFragment extends Fragment {
 
     // FAB //
     FloatingActionButton button;
-    FloatingActionButton buttonA;
+    //FloatingActionButton buttonA;
     FloatingActionsMenu menuMultipleActions;
 
     private FloatingActionsMenu mSharedFab;
@@ -136,6 +139,7 @@ public class InfoMenuFragment extends Fragment {
             }
         });
 
+        /*
         buttonA = v.findViewById(R.id.action_a);
         buttonA.setSize(FloatingActionButton.SIZE_NORMAL);
         buttonA.setColorNormalResId(R.color.colorComida);
@@ -143,6 +147,7 @@ public class InfoMenuFragment extends Fragment {
         buttonA.setIcon(R.drawable.ic_money);
         buttonA.setStrokeVisible(false);
         buttonA.setTitle("Monto");
+        */
 
         menuMultipleActions = v.findViewById(R.id.multiple_actions);
        //menuMultipleActions.setIcon(getResources().getDrawable(R.drawable.icono_carrito_items));
@@ -161,7 +166,8 @@ public class InfoMenuFragment extends Fragment {
         if(carrito!=null){
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(carrito, listType);
-        buttonA.setTitle("$"+String.valueOf(sumarTotal()));
+        //buttonA.setTitle("$"+String.valueOf(sumarTotal()));
+            button.setTitle("$"+String.valueOf(sumarTotal()));
         }
 
         // Inicializar GSON
@@ -189,8 +195,12 @@ public class InfoMenuFragment extends Fragment {
         // Chequeamos si el local esta abierto para permitir el uso del carrito (o no)
         abierto = Utilidades.ChequearLocalAbiertoHoy(empresa);
 
+        mostrarMensajeCerrado();
+
         // Inflate the layout for this fragment
         return v;
+
+
     }
 
     @Override
@@ -364,7 +374,8 @@ public class InfoMenuFragment extends Fragment {
                         Toast.makeText(context,"Agregaste: " + detalle.getCantidad()+" "+detalle.getProducto_nombre()+" a tu orden!",Toast.LENGTH_LONG).show();
 
 
-                        buttonA.setTitle("$"+String.valueOf(sumarTotal()));
+                        //buttonA.setTitle("$"+String.valueOf(sumarTotal()));
+                        button.setTitle("$"+String.valueOf(sumarTotal()));
                     }
 
                     // Animacion del Fab del Carrito
@@ -462,6 +473,38 @@ public class InfoMenuFragment extends Fragment {
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_badge, badge);
+    }
+
+    public void mostrarMensajeCerrado(){
+        if(abierto){
+
+        }else{
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new android.support.v7.app.AlertDialog.Builder(getContext());
+            } else {
+                builder = new AlertDialog.Builder(getContext());
+            }
+            builder.setTitle("¡Este local no abre hoy!")
+                    .setMessage("Lo sentimos, hoy no podrás realizar pedidos en este local. Aún así podés ver el menú y los precios.")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Volvemos a la activity detalle empresa
+
+                        }
+
+                    })
+                    .setNegativeButton("Volver", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(getContext(),PrincipalActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setIcon(R.drawable.ic_info)
+                    .setCancelable(false)
+                    .show();
+        }
     }
 
 

@@ -28,7 +28,7 @@ public class BadgeDrawable extends Drawable {
     private boolean mWillDraw;
 
     public BadgeDrawable(Context context) {
-        float mTextSize = context.getResources().getDimension(R.dimen.size_texto_boton);
+        float mTextSize = context.getResources().getDimension(R.dimen.texto_badge_carrito);
 
         mBadgePaint = new Paint();
         mBadgePaint.setColor(Color.RED);
@@ -40,8 +40,9 @@ public class BadgeDrawable extends Drawable {
         mBadgePaint1.setStyle(Paint.Style.FILL);
 
         mTextPaint = new Paint();
-        mTextPaint.setColor(Color.WHITE);
-        mTextPaint.setTypeface(Typeface.DEFAULT);
+        mTextPaint.setColor(Color.BLACK);
+        mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setAntiAlias(true);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -67,18 +68,19 @@ public class BadgeDrawable extends Drawable {
         //float centerX = (width - radius - 1) +5;
         //float centerY = radius -5;
 
-        float centerX = width/2;
-        float centerY = height/2;
+        // Centramos el texto en medio del carrito
+        float centerX = width*1.55f;
+        float centerY = height*1.22f;
 
         if(mCount.length() <= 2){
             // Draw badge circle.
             //canvas.drawCircle(centerX, centerY, (int)(radius+7.5), mBadgePaint1);
-            canvas.drawCircle(centerX, centerY, (int)(radius+5.5), mBadgePaint);
+            //canvas.drawCircle(centerX, centerY, (int)(radius+5.5), mBadgePaint);
 
         }
         else{
-            canvas.drawCircle(centerX, centerY, (int)(radius+8.5), mBadgePaint1);
-            canvas.drawCircle(centerX, centerY, (int)(radius+6.5), mBadgePaint);
+            //canvas.drawCircle(centerX, centerY, (int)(radius+8.5), mBadgePaint1);
+            //canvas.drawCircle(centerX, centerY, (int)(radius+6.5), mBadgePaint);
 //	        	canvas.drawRoundRect(radius, radius, radius, radius, 10, 10, mBadgePaint);
         }
         // Draw badge count text inside the circle.

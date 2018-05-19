@@ -31,7 +31,7 @@
 
     <!-- Dimensiones del FAB del carrito -->
     <dimen name="margenes_fab">10dp</dimen>
-
     <dimen name="padding_top">8dp</dimen>
+    <dimen name="texto_badge_carrito">16sp</dimen>
 </resources>
 
