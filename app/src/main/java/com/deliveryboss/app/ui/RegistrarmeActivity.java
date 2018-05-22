@@ -337,6 +337,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
             mFloatLabelNombre.setError(getString(R.string.error_field_required));
             focusView = txtNombre;
             cancel[0] = true;
+
         }
         // Apellido
         if (TextUtils.isEmpty(apellido)) {

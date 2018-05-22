@@ -76,7 +76,7 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
         Calendar limiteLlamada = Calendar.getInstance();
         Calendar limiteCalificacion = Calendar.getInstance();
         limiteCalificacion.setTime(fechaOrden);
-        limiteCalificacion.add(Calendar.HOUR,168);    //limite para calificar 168h = 2 semanas
+        limiteCalificacion.add(Calendar.HOUR,168);    //limite para calificar 168h = 1 semana
         limiteLlamada.setTime(fechaOrden);
         limiteLlamada.add(Calendar.HOUR, 24);         //agregamos 24h a partir de realizada la orden como nuestro "limite" para llamar
         Calendar ahora = Calendar.getInstance();
