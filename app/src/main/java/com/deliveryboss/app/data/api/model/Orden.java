@@ -25,8 +25,10 @@ public class Orden {
     String telefono;
     String calificado;
     List<Orden_detalle> orden_detalle;
+    String recibida;
+    String recibida_fecha_hora;
 
-    public Orden(String idorden, String fecha_hora, String fecha_hora_estado, String info_estado, String estado, String usuario_idusuario, String empresa_idempresa, String usuario_direccion_idusuario_direccion, String precio_delivery, String importe_total, String paga_con, String nota, String tipo_entrega_idtipo_entrega, String orden_estado_idorden_estado, String nombre_empresa, String telefono, String calificado, List<Orden_detalle> orden_detalle) {
+    public Orden(String idorden, String fecha_hora, String fecha_hora_estado, String info_estado, String estado, String usuario_idusuario, String empresa_idempresa, String usuario_direccion_idusuario_direccion, String precio_delivery, String importe_total, String paga_con, String nota, String tipo_entrega_idtipo_entrega, String orden_estado_idorden_estado, String nombre_empresa, String telefono, String calificado, List<Orden_detalle> orden_detalle, String recibida, String recibida_fecha_hora) {
         this.idorden = idorden;
         this.fecha_hora = fecha_hora;
         this.fecha_hora_estado = fecha_hora_estado;
@@ -45,6 +47,8 @@ public class Orden {
         this.telefono = telefono;
         this.calificado = calificado;
         this.orden_detalle = orden_detalle;
+        this.recibida = recibida;
+        this.recibida_fecha_hora = recibida_fecha_hora;
     }
 
     public String getIdorden() {
@@ -189,5 +193,21 @@ public class Orden {
 
     public void setOrden_detalle(List<Orden_detalle> orden_detalle) {
         this.orden_detalle = orden_detalle;
+    }
+
+    public String getRecibida() {
+        return recibida;
+    }
+
+    public void setRecibida(String recibida) {
+        this.recibida = recibida;
+    }
+
+    public String getRecibida_fecha_hora() {
+        return recibida_fecha_hora;
+    }
+
+    public void setRecibida_fecha_hora(String recibida_fecha_hora) {
+        this.recibida_fecha_hora = recibida_fecha_hora;
     }
 }

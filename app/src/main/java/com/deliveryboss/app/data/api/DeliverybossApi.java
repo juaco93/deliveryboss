@@ -104,6 +104,12 @@ public interface  DeliverybossApi {
                               @Body Orden orden
     );
 
+    @PUT("ordenes/{idorden}")
+    Call<ApiResponse> modificarOrden(@Header("Authorization") String authorization,
+                                    @Path(value = "idorden", encoded = true) String idorden,
+                                    @Body Orden orden
+    );
+
 
     ///// METODOS PARA DIRECCIONES
     @GET("direcciones/{idusuario}")
