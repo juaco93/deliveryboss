@@ -479,7 +479,7 @@ public class CarritoActivity extends AppCompatActivity {
         String total = String.valueOf(importeTotal);
 
         // Creacion del Objeto "Orden"
-        Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal);
+        Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal,"0","");
 
 
         // Realizar petición HTTP

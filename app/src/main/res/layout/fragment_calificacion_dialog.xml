@@ -17,31 +17,65 @@
             android:layout_marginTop="30dp"
             android:text="LOMITOS LA AVENIDA"
             android:textAllCaps="false"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lbLeyenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/rlCalificacionOrdenRecibida"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
+            android:text="¿Cómo la puntuarías?"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/rlCalificacionOrdenRecibida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/lbCalificacionNombreEmpresa"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:text="¡Calificá tu orden!"
-            android:textAllCaps="false"
-            android:textSize="18sp" />
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/lbLeyenda2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:paddingEnd="15dp"
+                android:paddingRight="15dp"
+                android:text="¿Recibiste tu orden?"
+                android:textAllCaps="false"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/tgCalificacionOrdenRecibida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/lbLeyenda2"
+                android:layout_toRightOf="@+id/lbLeyenda2" />
+
+        </RelativeLayout>
 
         <TableLayout
             android:id="@+id/tablaOrdenEstado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lbCalificacionNombreEmpresa"
+            android:layout_below="@+id/lbLeyenda"
+            android:layout_centerHorizontal="false"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="30dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="7dp"
             android:stretchColumns="1">
 
             <TableRow
