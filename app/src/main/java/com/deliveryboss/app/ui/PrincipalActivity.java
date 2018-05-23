@@ -689,7 +689,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public void compartirApp(){
         Intent sendText = new Intent();
         sendText.setAction(Intent.ACTION_SEND);
-        sendText.putExtra(Intent.EXTRA_TEXT, "Hola descarga deliveryboss, es muy recomendable --> https://play.google.com/store/apps/details?id=com.deliveryboss.app");
+        sendText.putExtra(Intent.EXTRA_TEXT, "Hola! con esta APP ya podemos ordenar comida online! --> https://play.google.com/store/apps/details?id=com.deliveryboss.app");
         sendText.setType("text/plain");
         startActivity(sendText);
     }
