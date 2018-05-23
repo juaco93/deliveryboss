@@ -189,7 +189,8 @@ public class CalificacionDialogFragment extends DialogFragment {
                                    Response<ApiResponse> response) {
                 if (!response.isSuccessful()) {
                     // Procesar error de API
-                    String error = "Ha ocurrido un error. Contacte al administrador";
+                    //String error = "Ha ocurrido un error. Contacte al administrador";
+                    String error = "Ocurrió un error. Contactanos a info@deliveryboss.com.ar";
                     if (response.errorBody()
                             .contentType()
                             .subtype()
@@ -254,7 +255,8 @@ public class CalificacionDialogFragment extends DialogFragment {
                                    Response<ApiResponse> response) {
                 if (!response.isSuccessful()) {
                     // Procesar error de API
-                    String error = "Ha ocurrido un error. Contacte al administrador";
+                    //String error = "Ha ocurrido un error. Contacte al administrador";
+                    String error = "Ocurrió un error. Contactanos a info@deliveryboss.com.ar";
                     if (response.errorBody()
                             .contentType()
                             .subtype()
@@ -275,7 +277,7 @@ public class CalificacionDialogFragment extends DialogFragment {
                     return;
                 }
                 Log.d("calificacion", "Respuesta del SV:" + response.body().getMensaje());
-                showErrorMessage(response.body().getMensaje());
+              //  showErrorMessage(response.body().getMensaje());
             }
 
             @Override
