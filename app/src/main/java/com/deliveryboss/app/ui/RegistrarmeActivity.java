@@ -265,7 +265,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                             //fotoPerfil.setImageDrawable(LoadImageFromWebOperations(urlFotoPerfil));
                             //Picasso.with(LoginActivity.this).load(urlFotoPerfil).into(fotoPerfil);
 
-                            //showPrincipalScreen();
+                            //mostrarPantallaPerfilUsuario();
                             //finish();
 
                             LoginManager.getInstance().logOut();
@@ -628,7 +628,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                 displayFirebaseRegId();
 
                 // Ir a la pantalla principal
-                //showPrincipalScreen();
+                mostrarPantallaPerfilUsuario();
 
             }
 

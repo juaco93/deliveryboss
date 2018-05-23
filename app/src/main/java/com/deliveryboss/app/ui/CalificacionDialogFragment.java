@@ -56,6 +56,7 @@ public class CalificacionDialogFragment extends DialogFragment {
     Orden orden;
     Float notaGeneral = 0.0f;
     private boolean ordenRecibida;
+    private boolean noSeleccionado;
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
     private Context mContext;
@@ -89,9 +90,16 @@ public class CalificacionDialogFragment extends DialogFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("logindb","posicion ordenRecibida: " + String.valueOf(position));
                 if(position==1){
+                    noSeleccionado=false;
                     ordenRecibida=true;
                 }else{
-                    ordenRecibida=false;
+                    if(position==2) {
+                        noSeleccionado=false;
+                        ordenRecibida = false;
+                    }
+                    if(position==0){
+                        noSeleccionado=true;
+                    }
                 }
             }
 
@@ -125,12 +133,16 @@ public class CalificacionDialogFragment extends DialogFragment {
         btnEnviarCalificacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(calificacion.getRating()>=1 && calificacion2.getRating()>=1 && calificacion3.getRating()>=1) {
-                    modificarEstadoOrden();
-                    enviarCalificacion();
-                    //dismiss();
-                    // Modificado a dismiss() a dissmissalowingstateloss() porque al venir de una notificacion tiraba excepcion luego de calificar
-                    CalificacionDialogFragment.this.dismissAllowingStateLoss();
+                if(chequearCalificacion()) {
+                    if(chequearRecibido()) {
+                        modificarEstadoOrden();
+                        enviarCalificacion();
+                        //dismiss();
+                        // Modificado a dismiss() a dissmissalowingstateloss() porque al venir de una notificacion tiraba excepcion luego de calificar
+                        CalificacionDialogFragment.this.dismissAllowingStateLoss();
+                    }else{
+                        showErrorMessage("¡Indicá si es que recibiste tu orden!");
+                    }
                 }else{
                     showErrorMessage("¡No podés calificar en 0!");
                 }
@@ -288,6 +300,26 @@ public class CalificacionDialogFragment extends DialogFragment {
             }
         });
     }
+
+    private boolean chequearCalificacion() {
+        Boolean correcto = false;
+        if (calificacion.getRating() >= 1 && calificacion2.getRating() >= 1 && calificacion3.getRating() >= 1) {
+            correcto = true;
+        }else correcto=false;
+        return correcto;
+    }
+
+    private boolean chequearRecibido(){
+        Boolean correcto = false;
+        if (noSeleccionado){
+            correcto = false;
+        }else correcto=true;
+        return correcto;
+    }
+
+
+
+
 
     private void calcularNotaGeneral(){
         notaGeneral = (calificacion.getRating() + calificacion2.getRating() + calificacion3.getRating())/3;
