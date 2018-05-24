@@ -75,6 +75,7 @@ public class Utilidades {
         LatLng usuario;
         Double distancia=0.0;
         float precio = 0.0f;
+        boolean enZonaDeCobertura = false;
 
         // Comprobamos que el usuario y la empresa tengan ambos definidos su ubicacion
         if(destino.getLatitud()!=null && destino.getLongitud()!=null && origen.getLatitud()!=null && origen.getLongitud()!=null && !destino.getLatitud().equals("") && !destino.getLongitud().equals("") && !origen.getLatitud().equals("") && !origen.getLongitud().equals("")){
@@ -90,43 +91,46 @@ public class Utilidades {
 
         // Chequeamos que el local tenga definidos los rangos de delivery
         if(origen.getEmpresa_delivery().size()>0){
-            // SI EL USUARIO ESTA FUERA DE LA ZONA DE COBERTURA
-            if(distancia>Double.parseDouble(origen.getEmpresa_delivery().get(0).getRadio4())){
-                Delivery objeto = new Delivery(0.0,0.0f);
-                DeliveryRequest respuesta = new DeliveryRequest(2,"El usuario esta fuera de la zona de cobertura del local",objeto);
-                return respuesta;
-            }
 
             // SI EL USUARIO SE ENCUENTRA EN LA ZONA 4
             if(distancia<=Double.parseDouble(origen.getEmpresa_delivery().get(0).getRadio4())){
                 precio = Float.parseFloat(origen.getEmpresa_delivery().get(0).getPrecio4());
+                enZonaDeCobertura=true;
             }
 
             // SI EL USUARIO SE ENCUENTRA EN LA ZONA 3
             if(distancia<=Double.parseDouble(origen.getEmpresa_delivery().get(0).getRadio3())){
                 precio = Float.parseFloat(origen.getEmpresa_delivery().get(0).getPrecio3());
+                enZonaDeCobertura=true;
             }
 
             // SI EL USUARIO SE ENCUENTRA EN LA ZONA 2
             if(distancia<=Double.parseDouble(origen.getEmpresa_delivery().get(0).getRadio2())){
                 precio = Float.parseFloat(origen.getEmpresa_delivery().get(0).getPrecio2());
+                enZonaDeCobertura=true;
             }
 
 
             // SI EL USUARIO SE ENCUENTRA EN LA ZONA 1
             if(distancia<=Double.parseDouble(origen.getEmpresa_delivery().get(0).getRadio1())){
                 precio = Float.parseFloat(origen.getEmpresa_delivery().get(0).getPrecio1());
+                enZonaDeCobertura=true;
             }
         }
 
         Log.d("deliveryUser","Distancia desde el usuario hasta el local--->"+distancia.toString());
         Log.d("deliveryUser","Precio a pagar--->"+precio);
 
-        Delivery objeto = new Delivery(distancia,precio);
-        DeliveryRequest respuesta = new DeliveryRequest(1,"Ok",objeto);
-
-        return respuesta;
-
+        // Chequeo de zona de cobertura y respuesta
+        if(enZonaDeCobertura){
+            Delivery objeto = new Delivery(distancia,precio);
+            DeliveryRequest respuesta = new DeliveryRequest(1,"Ok",objeto);
+            return respuesta;
+        }else{
+            Delivery objeto = new Delivery(0.0,0.0f);
+            DeliveryRequest respuesta = new DeliveryRequest(2,"El usuario esta fuera de la zona de cobertura del local",objeto);
+            return respuesta;
+        }
     }
 
     public static void setearDireccionPorDefecto(Context context, String direccion){

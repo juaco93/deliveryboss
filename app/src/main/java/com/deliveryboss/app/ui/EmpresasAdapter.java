@@ -124,7 +124,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             if(objeto.getPrecio()<=0){
                 precio = "Delivery ¡GRATIS! ";
             }else{
-                precio="Precio Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
+                precio="Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
             }
             holder.precioDelivery.setText(precio);
         }else{

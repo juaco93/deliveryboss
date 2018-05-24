@@ -42,6 +42,7 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
     String authorization;
+    private boolean esPrimeraDireccion;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,6 +64,7 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
         // Seteo del checkbox
         //Log.d("adapterDireccion","Dir guardada ID-->"+mDireccionGuardada.getIdusuario_direccion()+" Dir de sv ID-->"+direccion.getIdusuario_direccion());
         if(mDireccionGuardada.getIdusuario_direccion()!=null && direccion.getIdusuario_direccion()!=null) {
+            esPrimeraDireccion=false;
             if (mDireccionGuardada.getIdusuario_direccion().equals(direccion.getIdusuario_direccion())) {
                 holder.direccionPorDefecto.setChecked(true);
             } else {
@@ -70,8 +72,14 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
             }
         }else{
             if(direccion.getIdusuario_direccion()!=null){
+                esPrimeraDireccion=true;
                 holder.direccionPorDefecto.setChecked(true);
             }
+        }
+
+        // Seteo de direccion por defecto cuando es la primera
+        if(esPrimeraDireccion){
+            Utilidades.setearDireccionPorDefecto(context,(new Gson()).toJson(direccion));
         }
 
         // OnClickListener del checkbox
