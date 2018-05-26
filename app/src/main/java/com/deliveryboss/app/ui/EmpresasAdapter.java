@@ -121,16 +121,32 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         if(mDeliveryRequest.getEstado()==1){
             holder.tiempo_delivery.setText("Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
             String precio = "";
-            if(objeto.getPrecio()<=0){
-                precio = "Delivery ¡GRATIS! ";
-            }else{
-                precio="Precio Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
+
+         //   if (objeto.getPrecio().equals("0")) {
+            if(objeto.getPrecio()>0){
+                precio="Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
+                holder.precioDelivery.setText(precio);
             }
-            holder.precioDelivery.setText(precio);
+            else {
+                if(objeto.getPrecio()==0){
+                    precio = "Delivery ¡GRATIS! ";
+                    holder.precioDelivery.setText(precio);
+                }
+                else {
+                    holder.tiempo_delivery.setText("");
+                    holder.precioDelivery.setText("No realiza delivery en tu zona" + " ");
+                }
+            }
+            // preguntar si es mayor que 0... sino que no hay delivery en tu zona
+            // //
+   /*         else{
+                precio="Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
+            }*/
+//            holder.precioDelivery.setText(precio);
         }else{
             if(mDeliveryRequest.getEstado()==2){
                 holder.tiempo_delivery.setText("");
-                holder.precioDelivery.setText("No hay delivery a tu zona"+" ");
+                holder.precioDelivery.setText("No realiza delivery en tu zona"+" ");
             }
             if(mDeliveryRequest.getEstado()==4){
                 holder.tiempo_delivery.setText("No se calc");
