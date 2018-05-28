@@ -508,14 +508,14 @@ public class CarritoActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(mensaje.getEstado().equals("3"))error = "Tu orden no ha podido ser enviada. Revisá su conexión a internet";
+                        if(mensaje.getEstado().equals("3"))error = "Tu orden no fué enviada. Revisá su conexión a Internet";
                     }
                     showError(error);
                     return;
                 }
 
                 Log.d("insertarOrden", "RAW: " + response.raw().toString());
-                showError(response.body().getMensaje());
+               // showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
                 intent.putExtra("estado","1");
                 intent.putExtra("mensaje","Orden enviada correctamente!");
