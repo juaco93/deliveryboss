@@ -100,8 +100,8 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
                 texto+=", "+empresa.getEmpresa_subrubro().get(0).getSubrubro3();
             }
 
-            if(texto.length()>32) {
-                String textoCorto = texto.substring(0, 28) + "...";
+            if(texto.length()>33) {
+                String textoCorto = texto.substring(0, 29) + "...";
                 holder.rubro_elegido.setText(textoCorto);
             }else{
                 holder.rubro_elegido.setText(texto);
@@ -134,7 +134,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
                 }
                 else {
                     holder.tiempo_delivery.setText("");
-                    holder.precioDelivery.setText("No realiza delivery en tu zona" + " ");
+                    holder.precioDelivery.setText("No realiza delivery en tu ubicación" + " ");
                 }
             }
             // preguntar si es mayor que 0... sino que no hay delivery en tu zona
@@ -146,7 +146,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         }else{
             if(mDeliveryRequest.getEstado()==2){
                 holder.tiempo_delivery.setText("");
-                holder.precioDelivery.setText("No realiza delivery en tu zona"+" ");
+                holder.precioDelivery.setText("No realiza delivery en tu ubicación"+" ");
             }
             if(mDeliveryRequest.getEstado()==4){
                 holder.tiempo_delivery.setText("No se calc");
@@ -177,25 +177,25 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
                 // SI TIENE LOS DOS TURNOS
                 if(turno1desde!=null && turno2desde!=null) {
-                    holder.horarios.setText("HOY de "+turno1desde+" a " +turno1hasta+" Y de "+turno2desde+" a "+turno2hasta);
+                    holder.horarios.setText("Hoy de "+turno1desde+" a " +turno1hasta+" y de "+turno2desde+" a "+turno2hasta);
                     abierto=true;
                 }
 
 
                 // SI TIENE SOLO TURNO 1
                 if(turno1desde!=null && turno2desde==null){
-                    holder.horarios.setText("HOY de "+turno1desde+" a " +turno1hasta);
+                    holder.horarios.setText("Hoy de "+turno1desde+" a " +turno1hasta);
                     abierto=true;
                 }
 
                 // SI TIENE SOLO TURNO 2
                 if(turno2desde!=null && turno1desde==null){
-                    holder.horarios.setText("HOY de "+turno2desde+" a " +turno2hasta);
+                    holder.horarios.setText("Hoy de "+turno2desde+" a " +turno2hasta);
                     abierto=true;
                 }
             }
         }
-        if(!abierto)holder.horarios.setText("HOY CERRADO");
+        if(!abierto)holder.horarios.setText("Hoy Cerrado");
 
         //Carga de los logos de las empresas con Picasso
         Picasso

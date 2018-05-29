@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="150dp"
+    android:layout_height="152dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="3dp"
@@ -50,6 +50,7 @@
             android:layout_toEndOf="@+id/vertical_separator"
             android:layout_toRightOf="@+id/vertical_separator"
             android:paddingBottom="0dp"
+            android:textSize="15sp"
             tools:text="Lomitos La Avenida" />
 
         <TextView
@@ -123,6 +124,7 @@
             android:layout_alignStart="@+id/txtNombreEmpresa"
             android:layout_below="@+id/txtNombreEmpresa"
             android:paddingTop="21dp"
+            android:textSize="13sp"
             tools:text="Pizzas, Lomos, Empanadas" />
 
 
@@ -174,10 +176,9 @@
             android:layout_alignLeft="@+id/txtCompraMinima"
             android:layout_alignStart="@+id/txtCompraMinima"
             android:layout_below="@+id/txtCompraMinima"
-            android:layout_marginTop="2dp"
-            android:text="ABIERTO AHORA!"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="11sp" />
+            android:text="Hoy Cerrado"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:textSize="13sp" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
