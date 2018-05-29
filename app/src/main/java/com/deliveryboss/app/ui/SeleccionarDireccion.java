@@ -83,7 +83,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
                         finish();
                     }
                 }else{
-                        Toast.makeText(SeleccionarDireccion.this, "Por favor, seleccioná tu dirección antes de continuar", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SeleccionarDireccion.this, "Seleccioná tu dirección para continuar", Toast.LENGTH_LONG).show();
                 }
             }
         });

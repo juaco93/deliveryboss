@@ -385,7 +385,7 @@ public class CarritoActivity extends AppCompatActivity {
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             }else{
-                                showError("Por favor, ingresá el monto con el que vas a abonar");
+                                showError("Ingresá el monto con el que vas a pagar");
                             }
                         }
                     }
@@ -408,13 +408,13 @@ public class CarritoActivity extends AppCompatActivity {
                             AlertDialog dialog = builder.create();
                             dialog.show();
                         }else{
-                            showError("Por favor, ingresá el monto con el que vas a abonar");
+                            showError("Ingresá el monto con el que vas a pagar");
                         }
                     }
 
                 } // FIN IF chequearCompraMinima
                 else if(!chequearCompraMinima()){
-                    showError("No llegas al mínimo. Agregá mas productos al carrito!");
+                    showError("No llegas al mínimo de compra. Agregá mas productos al carrito");
 
                 } //Fin IF chequearDireccion
                 if(spDireccion.isEnabled() && !chequearDireccion()){
@@ -423,7 +423,7 @@ public class CarritoActivity extends AppCompatActivity {
 
                 } // Fin IF chequearTipoEntrega
                 else{
-                    showError("No seleccionaste el método de entrega!");
+                    showError("Elegí el tipo entrega");
                 }
             }
         });
@@ -538,7 +538,7 @@ public class CarritoActivity extends AppCompatActivity {
     private void mostrarCarritoEmpty() {
         mListaCarrito.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        txtEmptyContainer.setText("¡Aún no agregaste nada a tu orden!");
+        txtEmptyContainer.setText("¡Tu carrito está vacío!");
     }
 
     @Override

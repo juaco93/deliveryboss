@@ -35,7 +35,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text='Ahora deberás esperar a que el local confirme tu orden. Podés ver el estado de tu orden en "Mis Ordenes"'
+        android:text='En instantes el local confirmá tu orden. Podés ver el estado en "Mis Ordenes"'
         android:textAlignment="center"></TextView>
 
     <android.support.v7.widget.CardView
