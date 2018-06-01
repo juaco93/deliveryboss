@@ -16,6 +16,10 @@
         <item>Retiro en el local</item>
     </string-array>
 
+    <string-array name="tipo_entrega_solo_retiro">
+        <item>Retiro en el local</item>
+    </string-array>
+
     <string-array name="tipo_sugerencia">
         <item>Soy Cliente</item>
         <item>Soy de la Empresa</item>
@@ -83,4 +87,16 @@
     <string name="title_activity_mi_perfil">Mi perfil</string>
     <string name="prompt_seleccionar_ciudad">Seleccioná tu ciudad</string>
     <string name="title_activity_seleccionar_direccion">SeleccionarDireccion</string>
+
+    <!-- MENSAJES VARIOS DE LA APLICACION -->
+    <!-- ALERT DIALOGS -->
+    <string name="alertOrdenEnviada">En instantes el local confirmará tu orden. Podés ver el estado en "Mis Ordenes"</string>
+    <string name="alertRetiroLocalTitle">¡Este local no hace delivery a tu ubicación!</string>
+    <string name="alertRetiroLocalMsg">De igual forma podés realizar tu orden y pasar a retirarla por el local.</string>
+    <string name="alertLocalAbiertoTitle">¡Este local no abre hoy!</string>
+    <string name="alertLocalAbiertoMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Consultá los horarios en la pestaña Información para más detalles.</string>
+
+    <!-- ALERT DIALOGS -->
+
+
 </resources>

@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 //import android.view.ActionMode;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -86,6 +87,7 @@ public class CarritoActivity extends AppCompatActivity {
     String authorization;
     String stDireccion;
     Boolean abierto_hoy = false;
+    Boolean soloRetiroEnLocal = false;
 
     // Variables multiselect
     private ActionMode mActionMode;
@@ -106,6 +108,7 @@ public class CarritoActivity extends AppCompatActivity {
     Float precioDelivery;
     int c;
     int[] elem_a_borrar;
+    CardView cvDireccion;
 
     DeliveryRequest obtenerPrecioDelivery;
 
@@ -119,12 +122,6 @@ public class CarritoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarCarrito);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        spTipoEntrega = (Spinner) findViewById(R.id.spTipoEntrega);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.tipo_entrega, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spTipoEntrega.setAdapter(adapter);
         spDireccion = (Spinner) findViewById(R.id.spDireccion);
         //btnAgregarDireccion = (Button) findViewById(R.id.btnCarritoAgregarDireccion);
         /*btnAgregarDireccion.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +141,8 @@ public class CarritoActivity extends AppCompatActivity {
         txtEmptyContainer = (TextView) findViewById(R.id.txtEmptyContainerCarrito);
         mEmptyStateContainer = findViewById(R.id.empty_state_containerCarrito);
         mCarritoAdapter = new CarritoAdapter(this, new ArrayList<Orden_detalle>(0));
+        spTipoEntrega = (Spinner) findViewById(R.id.spTipoEntrega);
+        cvDireccion = (CardView) findViewById(R.id.cvDireccion);
 
         ///// INICIALIZACION DE VARIABLES
         String listaOrdenes = getIntent().getExtras().getString("ordenes_detalle");
@@ -190,8 +189,24 @@ public class CarritoActivity extends AppCompatActivity {
 
         // Variables de delivery
         obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
-        precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
-
+        if(obtenerPrecioDelivery!=null){
+            if(obtenerPrecioDelivery.getEstado()==1){
+                soloRetiroEnLocal = false;
+                precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                        R.array.tipo_entrega, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spTipoEntrega.setAdapter(adapter);
+            }else{
+                soloRetiroEnLocal = true;
+                precioDelivery = 0.0f;
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                        R.array.tipo_entrega_solo_retiro, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spTipoEntrega.setAdapter(adapter);
+            }
+        }
+        chequearSoloRetiro();
 
         //// SUMA DEL DELIVERY (SI APLICA)
         spTipoEntrega.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -199,12 +214,29 @@ public class CarritoActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                // Opcion "Elegí el tipo de entrega"
                 if(position==0){
-                    chequearTipoEntrega();
-                    importeTotal = sumarTotal();
+                    cvDireccion.setVisibility(View.GONE);
+                    if(spTipoEntrega.getSelectedItem().equals("Elegí el tipo de entrega")) {
+                        chequearTipoEntrega();
+                        importeTotal = sumarTotal();
+                    }
+                    if(spTipoEntrega.getSelectedItem().equals("Retiro en el local")){
+                        precioDelivery = 0.00f;
+                        txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
+                        btnConfirmarOrden.setEnabled(true);
+                        importeTotal = sumarTotal();
+                        String subtotSt = String.format("%.2f", importeTotal);
+                        txtTotal.setText("$"+String.valueOf(subtotSt));
+                        tipoEnvio = "2";
+                        idDireccionUsuario = null;
+                        spDireccion.setEnabled(false);
+
+                        chequearDireccion();
+                    }
                 }
                 //DELIVERY
                 if(position==1){
                     //precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
+                    cvDireccion.setVisibility(View.VISIBLE);
                     Log.d("chequeo","Precio calculado en carrito--> $"+precioDelivery.toString());
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     importeTotal = sumarTotal();
@@ -217,6 +249,7 @@ public class CarritoActivity extends AppCompatActivity {
                 }
                 //RETIRO EN LOCAL
                 if(position==2){
+                    cvDireccion.setVisibility(View.GONE);
                     precioDelivery = 0.00f;
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     btnConfirmarOrden.setEnabled(true);
@@ -922,8 +955,8 @@ public class CarritoActivity extends AppCompatActivity {
             } else {
                 builder = new AlertDialog.Builder(getBaseContext());
             }
-            builder.setTitle("¡Este local no abre hoy!")
-                    .setMessage("Lo sentimos, hoy no podrás realizar pedidos en este local. Consultá los horarios en la pestaña Información para más detalles.")
+            builder.setTitle(R.string.alertLocalAbiertoTitle)
+                    .setMessage(R.string.alertLocalAbiertoMsg)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Volvemos a la activity detalle empresa
@@ -936,6 +969,29 @@ public class CarritoActivity extends AppCompatActivity {
                     .setIcon(R.drawable.ic_info)
                     .setCancelable(false)
                     .show();
+        }
+    }
+
+    public void chequearSoloRetiro(){
+        if(soloRetiroEnLocal){
+            cvDireccion.setVisibility(View.GONE);
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new android.support.v7.app.AlertDialog.Builder(this);
+            } else {
+                builder = new AlertDialog.Builder(getBaseContext());
+            }
+            builder.setTitle(R.string.alertRetiroLocalTitle)
+                    .setMessage(R.string.alertRetiroLocalMsg)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(R.drawable.ic_location_dark)
+                    .setCancelable(false)
+                    .show();
+        }else{
+            cvDireccion.setVisibility(View.VISIBLE);
         }
     }
 

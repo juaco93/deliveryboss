@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="152dp"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="3dp"
@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingEnd="16dp"
         android:paddingLeft="8dp"
@@ -24,14 +24,14 @@
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:padding="1dp"
             android:background="@layout/imageview_border"
-            />
+            android:contentDescription="Logo de la @string/title_activity_detalle_empresa"
+            android:padding="1dp" />
 
         <View
             android:id="@+id/vertical_separator"
             android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="7dp"
             android:layout_marginStart="8dp"
@@ -132,10 +132,10 @@
             android:id="@+id/layoutDelivery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="0dp"
-            android:layout_below="@+id/txtRubroElegido"
             android:layout_alignLeft="@+id/txtRubroElegido"
-            android:layout_alignStart="@+id/txtRubroElegido">
+            android:layout_alignStart="@+id/txtRubroElegido"
+            android:layout_below="@+id/txtRubroElegido"
+            android:paddingTop="0dp">
 
             <TextView
                 android:id="@+id/txtPrecioDelivery"
@@ -161,13 +161,13 @@
             android:id="@+id/txtCompraMinima"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/layoutDelivery"
+            android:layout_alignStart="@+id/layoutDelivery"
+            android:layout_below="@+id/layoutDelivery"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="13sp"
-            tools:text="Compra minima: $100"
-            android:layout_below="@+id/layoutDelivery"
-            android:layout_alignLeft="@+id/layoutDelivery"
-            android:layout_alignStart="@+id/layoutDelivery" />
+            tools:text="Compra minima: $100" />
 
         <TextView
             android:id="@+id/txtHorarios"
