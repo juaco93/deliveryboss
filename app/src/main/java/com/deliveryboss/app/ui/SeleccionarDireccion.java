@@ -76,6 +76,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
                         finish();
                     }else {
                         Intent intent = new Intent(SeleccionarDireccion.this, PrincipalActivity.class);
+
                         // Guardar usuario en preferencias
                         //SessionPrefs.get(SeleccionarDireccion.this).saveDireccion(direccionElegida.getIdusuario_direccion(), direccionElegida.getCiudad_idciudad(), direccionElegida.getCiudad(), direccionElegida.getCalle(), direccionElegida.getNumero(), direccionElegida.getLatitud(), direccionElegida.getLongitud());
                         Utilidades.setearDireccionPorDefecto(SeleccionarDireccion.this,(new Gson()).toJson(direccionElegida));

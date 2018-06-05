@@ -20,6 +20,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -63,6 +64,7 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -131,7 +133,6 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(rootView);
 
         checkUserSession();
-        setToolbar(); // Setear Toolbar como action bar
 
         layoutContent = (RelativeLayout) findViewById(R.id.contenido_principal);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -174,6 +175,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
         }
 
+
+
+
         drawerTitle = getResources().getString(R.string.home_item);
         if (savedInstanceState == null) {
             // Seleccionar item
@@ -193,6 +197,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         rubroIntent = "1";
 
+        /*
         if(rubroIntent!=null) {
             if (rubroIntent.equals("1")) {
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorComida)));
@@ -215,6 +220,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 setearColorToolbar(getResources().getColor(R.color.colorTaxi));
             }
         }
+        */
 
         checkUserSession();
 
@@ -265,6 +271,9 @@ public class PrincipalActivity extends AppCompatActivity {
                     if(!mantenimientoActivo)obtenerEmpresas(rubroIntent);
                 }
             });
+
+        // INICIALIZACION DE TOOLBAR //
+        setToolbar(); // Setear Toolbar como action bar
 
 
 
@@ -388,8 +397,10 @@ public class PrincipalActivity extends AppCompatActivity {
         String usuarioIddireccion = SessionPrefs.get(this).getPrefUsuarioIdDireccion();
         String usuarioLatitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
         String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLongitud();
+        String usuarioCalle = SessionPrefs.get(this).getPrefUsuarioDireccionCalle();
+        String usuarioNumero = SessionPrefs.get(this).getPrefUsuarioDireccionNumero();
 
-        usuarioDireccion = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,"","","","","","",usuarioLatitud,usuarioLongitud);
+        usuarioDireccion = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,"",usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
         // Realizar petición HTTP
         Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, rubro);
         call.enqueue(new Callback<ApiResponseEmpresas>() {
@@ -591,6 +602,21 @@ public class PrincipalActivity extends AppCompatActivity {
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+        View view =getSupportActionBar().getCustomView();
+
+        TextView txtDireccion = view.findViewById(R.id.abDireccion);
+        txtDireccion.setText(usuarioDireccion.getCalle()+", "+usuarioDireccion.getNumero());
+        txtDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PrincipalActivity.this, MisDireccionesActivity.class));
+            }
+        });
+
         final android.support.v7.app.ActionBar ab = getSupportActionBar();
         if (ab != null) {
             // Poner ícono del drawer toggle
@@ -626,9 +652,6 @@ public class PrincipalActivity extends AppCompatActivity {
                                 break;
                             case R.id.nav_direcciones:
                                 startActivity(new Intent(PrincipalActivity.this, MisDireccionesActivity.class));
-                                break;
-                            case R.id.nav_cambiar_direccion:
-                                startActivity(new Intent(PrincipalActivity.this, SeleccionarDireccion.class));
                                 break;
                             case R.id.nav_sugerirempresa:
                                 startActivity(new Intent(PrincipalActivity.this, SugerirEmpresa.class));

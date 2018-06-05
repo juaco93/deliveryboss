@@ -209,9 +209,6 @@ public class SeleccionRubro extends AppCompatActivity {
                             case R.id.nav_direcciones:
                                 startActivity(new Intent(SeleccionRubro.this, MisDireccionesActivity.class));
                                 break;
-                            case R.id.nav_cambiar_direccion:
-                                startActivity(new Intent(SeleccionRubro.this, SeleccionarDireccion.class));
-                                break;
                             case R.id.nav_sugerirempresa:
                                 startActivity(new Intent(SeleccionRubro.this, SugerirEmpresa.class));
                                 break;
