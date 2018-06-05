@@ -70,7 +70,6 @@ public class MisOrdenesActivity extends AppCompatActivity {
         txtEmptyContainer = (TextView) findViewById(R.id.txtOrdenesEmptyContainer);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_content_ordenes);
-        Log.d("swipe", "swipe valor: " + swipeRefreshLayout.toString());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -111,7 +110,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
     private void obtenerOrdenes(){
         authorization = SessionPrefs.get(getApplicationContext()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getApplicationContext()).getPrefUsuarioIdUsuario();
-        Log.d("gson", "Recuperando Ordenes desde el Server");
+        //Log.d("gson", "Recuperando Ordenes desde el Server");
 
         // Realizar petición HTTP
         Call<ApiResponseOrdenes> call = mDeliverybossApi.obtenerOrdenesUsuario(authorization,"0",idusuario);
@@ -196,7 +195,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
     }
 
     private void mostrarOrdenes(List<Orden> ordenesServer) {
-        Log.d("gson", "Entramos a mostrar ordenes ");
+        //Log.d("gson", "Entramos a mostrar ordenes ");
         mOrdenesAdapter.swapItems(ordenesServer);
         mListaOrdenes.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
@@ -205,13 +204,13 @@ public class MisOrdenesActivity extends AppCompatActivity {
     private void mostrarOrdenesEmpty() {
         mListaOrdenes.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        txtEmptyContainer.setText("¡Todavia no realizaste ninguna orden!");
+        txtEmptyContainer.setText(getResources().getString(R.string.mensajeSinOrdenes));
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        //Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
         if(event.getIdevento().equals("1")){
             obtenerOrdenes();
             Intent intent = new Intent(this,PrincipalActivity.class);

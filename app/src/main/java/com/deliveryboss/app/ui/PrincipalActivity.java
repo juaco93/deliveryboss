@@ -390,10 +390,6 @@ public class PrincipalActivity extends AppCompatActivity {
         String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLongitud();
 
         usuarioDireccion = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,"","","","","","",usuarioLatitud,usuarioLongitud);
-
-        //Log.d("logindb", "Recuperando Empresas de: " + nombreCiudad);
-        Log.d("logindb", "Direccion Usuario: " + (new Gson()).toJson(usuarioDireccion));
-
         // Realizar petición HTTP
         Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, rubro);
         call.enqueue(new Callback<ApiResponseEmpresas>() {
@@ -443,7 +439,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponseEmpresas> call, Throwable t) {
                 showLoadingIndicator(false);
                 Log.d("logindb", "Petición rechazada:" + t.getMessage());
-                showErrorMessage("Comprueba tu conexión a Internet");
+                showErrorMessage(getResources().getString(R.string.toastCompruebaConexion));
             }
         });
     }
@@ -490,15 +486,13 @@ public class PrincipalActivity extends AppCompatActivity {
                     // Si por alguna razon no podemos obtener el registro de mantenimiento, activamos el modo normal.
                     mantenimientoActivo=false;
                     }
-
-
             }
 
             @Override
             public void onFailure(Call<ApiResponseMantenimiento> call, Throwable t) {
                 showLoadingIndicator(false);
                 Log.d("logindb", "Petición rechazada:" + t.getMessage());
-                showErrorMessage("Comprueba tu conexión a Internet");
+                showErrorMessage(getResources().getString(R.string.toastCompruebaConexion));
             }
         });
     }
@@ -541,11 +535,8 @@ public class PrincipalActivity extends AppCompatActivity {
     private void mostrarEmpresasEmpty() {
         mListaEmpresas.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        String tipo="restaurantes";
-        if(rubroIntent.equals("1"))tipo="restaurantes";
-        if(rubroIntent.equals("3"))tipo="maxikioscos";
 
-        txtEmptyStateEmpresas.setText("¡No hay "+tipo+" para tu ciudad!");
+        txtEmptyStateEmpresas.setText(R.string.mensajeSinRestaurantes);
     }
 
     private void showLoadingIndicator(final boolean show) {
@@ -689,7 +680,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public void compartirApp(){
         Intent sendText = new Intent();
         sendText.setAction(Intent.ACTION_SEND);
-        sendText.putExtra(Intent.EXTRA_TEXT, "Hola! con esta APP se puede ordenar comida en nuestra ciudad! --> https://play.google.com/store/apps/details?id=com.deliveryboss.app");
+        sendText.putExtra(Intent.EXTRA_TEXT, R.string.mensajeCompartirApp);
         sendText.setType("text/plain");
         startActivity(sendText);
     }
@@ -708,7 +699,7 @@ public class PrincipalActivity extends AppCompatActivity {
         if (tiempoPrimerClick + INTERVALO > System.currentTimeMillis()){
             finishAffinity();
         }else {
-            Toast.makeText(this, "Presioná atrás de nuevo para salir", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.toastPresionarAtras, Toast.LENGTH_LONG).show();
         }
         tiempoPrimerClick = System.currentTimeMillis();
     }

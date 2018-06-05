@@ -3,7 +3,6 @@ package com.deliveryboss.app.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
@@ -21,6 +21,10 @@ import com.deliveryboss.app.data.api.model.Calificacion;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import toan.android.floatingactionmenu.FloatingActionsMenu;
 
 public class InfoCalificacionesFragment extends Fragment {
     EmpresasBody empresa;
@@ -41,7 +46,7 @@ public class InfoCalificacionesFragment extends Fragment {
     List<Calificacion> serverCalificaciones;
     String authorization;
     Context context;
-    private FloatingActionButton mSharedFab;
+    FloatingActionsMenu menuMultipleActions;
 
     public InfoCalificacionesFragment() {
         // Required empty public constructor
@@ -60,6 +65,8 @@ public class InfoCalificacionesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_info_menu, container, false);
 
         txtEmptyContainer = (TextView) v.findViewById(R.id.txtEmptyContainer);
+
+        menuMultipleActions = v.findViewById(R.id.multiple_actions);
 
         mListaCalificaciones = (RecyclerView) v.findViewById(R.id.list_productos);
         mCalificacionesAdapter = new CalificacionesAdapter(context, new ArrayList<Calificacion>(0));
@@ -146,7 +153,7 @@ public class InfoCalificacionesFragment extends Fragment {
     }
 
     private void mostrarCalificaciones(List<Calificacion> calificacionesServer) {
-        Log.d("gson", "Entramos a mostrar productos " + calificacionesServer.get(0).getUsuario());
+        //Log.d("gson", "Entramos a mostrar productos " + calificacionesServer.get(0).getUsuario());
         txtEmptyContainer.setText(calificacionesServer.get(0).getUsuario());
         mCalificacionesAdapter.swapItems(calificacionesServer);
         mListaCalificaciones.setVisibility(View.VISIBLE);
@@ -156,11 +163,13 @@ public class InfoCalificacionesFragment extends Fragment {
     private void mostrarCalificacionesEmpty() {
         mListaCalificaciones.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        txtEmptyContainer.setText("¡El restaurante aún no tiene calificaciones!");
+        txtEmptyContainer.setText(R.string.mensajeSinCalificaciones);
     }
 
 
-    @Override
+
+    /*
+        @Override
     public void onDestroy() {
         super.onDestroy();
         mSharedFab = null; // To avoid keeping/leaking the reference of the FAB
@@ -177,5 +186,30 @@ public class InfoCalificacionesFragment extends Fragment {
             mSharedFab = fab;
             mSharedFab.setImageResource(R.drawable.cajita_sola);
         }
+    }
+    */
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        //Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        if(event.getIdevento().equals("11")){
+            menuMultipleActions.setVisibility(View.VISIBLE);
+        }else{
+            menuMultipleActions.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

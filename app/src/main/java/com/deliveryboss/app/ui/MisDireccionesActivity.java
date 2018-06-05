@@ -80,7 +80,6 @@ public class MisDireccionesActivity extends AppCompatActivity {
         txtEmptyContainer = (TextView) findViewById(R.id.txtOrdenesEmptyContainer);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_content_direcciones);
-        Log.d("swipe", "swipe valor: " + swipeRefreshLayout.toString());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -151,15 +150,12 @@ public class MisDireccionesActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }*/
                     }
-                    //showLoadingIndicator(false);
-                    //showErrorMessage(error);
-                    Log.d("gson", response.message());
-                    Log.d("gson", response.raw().toString());
+
                     return;
                 }
 
                 serverDirecciones = response.body().getDatos();
-                Log.d("gson", "todo bien, recibido: " + response.body().getDatos().toString());
+                //Log.d("gson", "tod bien, recibido: " + response.body().getDatos().toString());
                 if (serverDirecciones.size() > 0) {
                     // Mostrar lista de ordenes
                     mostrarDirecciones(serverDirecciones, direccionGuardada);
@@ -174,7 +170,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponseDirecciones> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("gson", "Petición rechazada:" + t.getMessage());
+                //Log.d("gson", "Petición rechazada:" + t.getMessage());
                 showLoadingIndicator(false);
                 //showErrorMessage("Error de comunicación");
             }
@@ -182,7 +178,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
     }
 
     private void mostrarDirecciones(List<Usuario_direccion> direccionesServer, Usuario_direccion mDireccionGuardada) {
-        Log.d("gson", "Entramos a mostrar ordenes ");
+        //Log.d("gson", "Entramos a mostrar ordenes ");
         mDireccionesAdapter.swapItems(direccionesServer,mDireccionGuardada);
         mListaDirecciones.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
@@ -191,7 +187,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
     private void mostrarDireccionesEmpty() {
         mListaDirecciones.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        txtEmptyContainer.setText("¡Todavia no agregaste ninguna dirección! Agregá una haciendo click en +");
+        txtEmptyContainer.setText(getResources().getString(R.string.mensajeSinDirecciones));
     }
 
 

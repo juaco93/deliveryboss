@@ -218,7 +218,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
 
         ///////////////////   LOGIN FACEBOOK    ///////////////////////
         loginButton = (LoginButton) findViewById(R.id.connectWithFbButton2);
-        loginButton.setReadPermissions("public_profile", "email", "user_birthday", "user_location", "");
+        loginButton.setReadPermissions("public_profile", "email", "user_birthday", "user_location", "user_gender");
         callbackManager = CallbackManager.Factory.create();
 
         // Callback registration

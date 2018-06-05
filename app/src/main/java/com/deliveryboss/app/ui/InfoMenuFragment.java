@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.deliveryboss.app.data.api.model.BadgeDrawable;
+import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,6 +41,10 @@ import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.api.model.Orden_detalle;
 import com.deliveryboss.app.data.api.model.Producto;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -281,7 +286,7 @@ public class InfoMenuFragment extends Fragment {
     private void mostrarProductosEmpty() {
         mListaProductos.setVisibility(View.GONE);
         mEmptyStateContainer.setVisibility(View.VISIBLE);
-        txtEmptyContainer.setText("¡El restaurante aún no cargó su menú!");
+        txtEmptyContainer.setText(R.string.mensajeSinMenu);
     }
 
 
@@ -485,8 +490,8 @@ public class InfoMenuFragment extends Fragment {
             } else {
                 builder = new AlertDialog.Builder(getContext());
             }
-            builder.setTitle("¡Este local no abre hoy!")
-                    .setMessage("Lo sentimos, hoy no podrás realizar pedidos en este local. Aún así podés ver el menú y los precios.")
+            builder.setTitle(R.string.alertLocalAbiertoTitle)
+                    .setMessage(R.string.alertLocalAbiertoMenuMsg)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Volvemos a la activity detalle empresa
@@ -506,6 +511,8 @@ public class InfoMenuFragment extends Fragment {
                     .show();
         }
     }
+
+
 
 
 }

@@ -96,7 +96,18 @@
     <string name="alertLocalAbiertoTitle">¡Este local no abre hoy!</string>
     <string name="alertLocalAbiertoMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Consultá los horarios en la pestaña Información para más detalles.</string>
 
-    <!-- ALERT DIALOGS -->
+    <string name="alertLocalAbiertoMenuMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Aún así podés ver el menú y los precios.</string>
+
+    <!-- MENSAJES VARIOS -->
+    <string name="mensajeSinRestaurantes">¡No hay restaurantes para tu dirección!</string>
+    <string name="mensajeSinMenu">¡El restaurante aún no cargó su menú!</string>
+    <string name="mensajeSinCalificaciones">¡El restaurante aún no tiene calificaciones!</string>
+    <string name="mensajeSinOrdenes">¡Todavia no realizaste ninguna orden!</string>
+    <string name="mensajeSinDirecciones">¡Todavia no agregaste ninguna dirección! Agregá una haciendo click en +</string>
+    <string name="mensajeCompartirApp">Hola! con esta APP se puede ordenar comida en nuestra ciudad! --> https://play.google.com/store/apps/details?id=com.deliveryboss.app</string>
 
 
+    <!-- TOASTS -->
+    <string name="toastPresionarAtras">Presioná atrás de nuevo para salir</string>
+    <string name="toastCompruebaConexion">Comprueba tu conexión a Internet</string>
 </resources>

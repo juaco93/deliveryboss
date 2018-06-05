@@ -280,7 +280,7 @@ public class ModificarDireccionFragment extends DialogFragment {
                         return;
                     }
 
-                    Log.d("insertarDireccion", "RAW: " + response.raw().toString());
+                    //Log.d("insertarDireccion", "RAW: " + response.raw().toString());
                     showError(response.body().getMensaje());
                     dismiss();
                     String direccionJson = new Gson().toJson(nuevaDireccion);

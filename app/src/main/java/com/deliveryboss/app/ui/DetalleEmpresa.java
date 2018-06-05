@@ -19,9 +19,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.EmpresasBody;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,25 +95,29 @@ public class DetalleEmpresa extends AppCompatActivity{
                     case ViewPager.SCROLL_STATE_IDLE:
                         switch (viewPager.getCurrentItem()) {
                             case 0:
-                                fragmentCalificaciones.shareFab(null); // Remove FAB from fragment
+                                //fragmentCalificaciones.shareFab(null); // Remove FAB from fragment
                                 fragmentInfoEmpresa.shareFab(null);
                                 //fragmentMenu.shareFab(mSharedFab); // Share FAB to new displayed fragment
                                 //mSharedFab.show();
+                                EventBus.getDefault().post(new MessageEvent("11", "Tab en menu"));
                                 break;
                             case 1:
                                 fragmentMenu.shareFab(null); // Remove FAB from fragment
-                                fragmentCalificaciones.shareFab(null); // Share FAB to new displayed fragment
+                                //fragmentCalificaciones.shareFab(null); // Share FAB to new displayed fragment
                                 fragmentInfoEmpresa.shareFab(null);
+                                EventBus.getDefault().post(new MessageEvent("12", "Tab NO en menu"));
                                 break;
                             case 2:
                                 fragmentMenu.shareFab(null); // Remove FAB from fragment
-                                fragmentCalificaciones.shareFab(null); // Share FAB to new displayed fragment
+                                //fragmentCalificaciones.shareFab(null); // Share FAB to new displayed fragment
                                 fragmentInfoEmpresa.shareFab(null);
+                                EventBus.getDefault().post(new MessageEvent("12", "Tab NO en menu"));
                                 break;
                             default:
                                 fragmentMenu.shareFab(null); // Remove FAB from fragment
-                                fragmentCalificaciones.shareFab(null); // Share FAB to new displayed fragment
+                                //fragmentCalificaciones.shareFab(null); // Share FAB to new displayed fragment
                                 fragmentInfoEmpresa.shareFab(null);
+                                EventBus.getDefault().post(new MessageEvent("12", "Tab NO en menu"));
                                 break;
                         }
                         //mSharedFab.show(); // Show animation
