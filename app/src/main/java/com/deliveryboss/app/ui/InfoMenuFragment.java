@@ -292,9 +292,9 @@ public class InfoMenuFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.menu_empresas, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_detalle_empresa, menu);
 
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search_menu));
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setQueryHint("Buscar producto...");

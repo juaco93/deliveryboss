@@ -104,6 +104,7 @@
     <string name="mensajeSinCalificaciones">¡El restaurante aún no tiene calificaciones!</string>
     <string name="mensajeSinOrdenes">¡Todavia no realizaste ninguna orden!</string>
     <string name="mensajeSinDirecciones">¡Todavia no agregaste ninguna dirección! Agregá una haciendo click en +</string>
+    <string name="mensajeSinDireccionesToolbar">No hay direcciones registradas</string>
     <string name="mensajeCompartirApp">Hola! con esta APP se puede ordenar comida en nuestra ciudad! --> https://play.google.com/store/apps/details?id=com.deliveryboss.app</string>
 
 

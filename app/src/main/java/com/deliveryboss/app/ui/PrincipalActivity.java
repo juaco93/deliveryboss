@@ -600,6 +600,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     // A PARTIR DE ACA EMPIEZA CODIGO RELATIVO AL NAV DRAWER
     private void setToolbar() {
+        String direccionCompleta = getResources().getString(R.string.mensajeSinDireccionesToolbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -609,7 +610,16 @@ public class PrincipalActivity extends AppCompatActivity {
         View view =getSupportActionBar().getCustomView();
 
         TextView txtDireccion = view.findViewById(R.id.abDireccion);
-        txtDireccion.setText(usuarioDireccion.getCalle()+", "+usuarioDireccion.getNumero());
+        if(usuarioDireccion.getCalle()!=null){
+            direccionCompleta = usuarioDireccion.getCalle()+", "+usuarioDireccion.getNumero();
+            if(direccionCompleta.length()<=22){
+                txtDireccion.setText(direccionCompleta);
+            }else{
+                String direccionDot = direccionCompleta.substring(0,20)+"...";
+                txtDireccion.setText(direccionDot);
+            }
+        }
+
         txtDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

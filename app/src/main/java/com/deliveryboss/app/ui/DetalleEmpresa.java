@@ -59,7 +59,7 @@ public class DetalleEmpresa extends AppCompatActivity{
 
         setContentView(R.layout.activity_detalle_empresa);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbarMenu);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
