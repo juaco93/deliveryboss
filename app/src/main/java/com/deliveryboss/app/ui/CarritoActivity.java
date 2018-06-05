@@ -654,7 +654,10 @@ public class CarritoActivity extends AppCompatActivity {
         if(pagaCon.getText()!=null && !TextUtils.isEmpty(pagaCon.getText())){
             String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
             double parsed = Double.parseDouble(cleanString);
-            if(importeTotal<= parsed){
+            double montoSinDecimales = parsed / 100;
+            //Log.d("carrito","Monto parseado->"+String.valueOf(parsed));
+            //Log.d("carrito","Monto corregido->"+String.valueOf(montoSinDecimales));
+            if(importeTotal<= montoSinDecimales){
             btnConfirmarOrden.setEnabled(true);
             btnConfirmarOrden.setText("Enviar Orden");
             return true;
