@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ///////////////////   LOGIN FACEBOOK    ///////////////////////
         loginButton = (LoginButton)findViewById(R.id.connectWithFbButton1);
-        loginButton.setReadPermissions("public_profile", "email", "user_birthday", "user_location", "");
+        loginButton.setReadPermissions("public_profile", "email", "user_birthday", "user_location", "user_gender");
         callbackManager = CallbackManager.Factory.create();
 
         // Callback registration
@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                             String date = format.format(Date.parse(FechaNac));
                             Log.d("fblogin","Fecha Formateada: "+date);
                             registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,locationName,date, generoCod);
+
 
                             /*tvEmail.setText(email);
                             tvfirst_name.setText(first_name);
@@ -270,7 +271,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void registerFacebookLogin(final String idfacebook, final String e_mail, String nombre, String apellido, String foto, String ciudad,String FechaNac, String genero) {
-        Call<Usuario> registerFbCall = mDeliverybossApi.registroFb(new FbRegisterBody(idfacebook, e_mail, nombre, apellido, foto,ciudad,FechaNac, "1", genero, "1"));
+        FbRegisterBody cuerpoRegistro = new FbRegisterBody(idfacebook, e_mail, nombre, apellido, foto,ciudad,FechaNac, "1", genero, "1");
+        Log.d("fblogin",(new Gson()).toJson(cuerpoRegistro));
+        Call<Usuario> registerFbCall = mDeliverybossApi.registroFb(cuerpoRegistro);
         registerFbCall.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
