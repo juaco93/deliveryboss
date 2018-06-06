@@ -95,8 +95,10 @@
     <string name="alertRetiroLocalMsg">De igual forma podés realizar tu orden y pasar a retirarla por el local.</string>
     <string name="alertLocalAbiertoTitle">¡Este local no abre hoy!</string>
     <string name="alertLocalAbiertoMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Consultá los horarios en la pestaña Información para más detalles.</string>
-
     <string name="alertLocalAbiertoMenuMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Aún así podés ver el menú y los precios.</string>
+    <string name="alertItemsEnElCarritoTitle">¡Estás por salir!</string>
+    <string name="alertItemsEnElCarritoMsg">Al salir perderás los items agregados en el carrito. ¿Estás seguro de querer salir?</string>
+
 
     <!-- MENSAJES VARIOS -->
     <string name="mensajeSinRestaurantes">¡No hay restaurantes para tu dirección!</string>

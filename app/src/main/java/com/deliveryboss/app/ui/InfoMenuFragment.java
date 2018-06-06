@@ -513,6 +513,65 @@ public class InfoMenuFragment extends Fragment {
     }
 
 
+    public void mostrarMensajeItemsEnElCarrito(){
+        if(ordenesDetalleLocal!=null && ordenesDetalleLocal.size()>0){
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new android.support.v7.app.AlertDialog.Builder(getContext());
+            } else {
+                builder = new AlertDialog.Builder(getContext());
+            }
+            builder.setTitle(R.string.alertItemsEnElCarritoTitle)
+                    .setMessage(R.string.alertItemsEnElCarritoMsg)
+                    .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Volvemos a la activity detalle empresa
+                            Intent intent =  new Intent(getActivity(),PrincipalActivity.class);
+                            intent.putExtra("rubro","1");
+                            startActivity(intent);
+
+                        }
+
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setIcon(R.drawable.ic_info)
+                    .setCancelable(false)
+                    .show();
+        }else{
+            Intent intent =  new Intent(getActivity(),PrincipalActivity.class);
+            intent.putExtra("rubro","1");
+            startActivity(intent);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        //Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        if(event.getIdevento().equals("13")){
+            mostrarMensajeItemsEnElCarrito();
+        }else{
+
+        }
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
 
 }
