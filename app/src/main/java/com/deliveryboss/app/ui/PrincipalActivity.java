@@ -540,7 +540,7 @@ public class PrincipalActivity extends AppCompatActivity {
         mListaEmpresas.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
 
-        //ordenarListaPorParametro("calificacion");
+        ordenarListaPorParametro("Cercanía");
     }
 
     private void mostrarEmpresasEmpty() {
@@ -849,7 +849,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     private void abrirFiltro(){
@@ -926,9 +925,7 @@ public class PrincipalActivity extends AppCompatActivity {
                     intentFiltro.putExtra("Delivery en mi zona",false);
                 }
             }
-
         }
-
         Log.d("juaco1993","Datos intent filtro abierto hoy>"+data.getBooleanExtra("Abierto hoy",false));
     }
 }
