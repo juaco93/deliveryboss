@@ -103,6 +103,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private RelativeLayout layoutContent;
     private RelativeLayout layoutButtons;
     private boolean isOpen = false;
+    private boolean isFirstOpening = true;
 
 
     // CODIGO DEL NAV DRAWER
@@ -540,7 +541,11 @@ public class PrincipalActivity extends AppCompatActivity {
         mListaEmpresas.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
 
-        ordenarListaPorParametro("Cercanía");
+        if(isFirstOpening) {
+            ordenarListaPorParametro("Cercanía");
+            intentFiltro.putExtra("Cercanía", true);
+            isFirstOpening = false;
+        }
     }
 
     private void mostrarEmpresasEmpty() {
@@ -832,12 +837,14 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         if(ordenamiento.equals("Calificacion")) {
-            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
-                @Override
-                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
-                    return empresa2.getCalificacion_general().compareToIgnoreCase(empresa1.getCalificacion_general());
-                }
-            });
+            if(serverEmpresas.get(0).getCalificacion_general()!=null) {
+                Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+                    @Override
+                    public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
+                        return empresa2.getCalificacion_general().compareToIgnoreCase(empresa1.getCalificacion_general());
+                    }
+                });
+            }
         }
 
         if(ordenamiento.equals("Cercanía")) {
