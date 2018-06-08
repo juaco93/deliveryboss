@@ -546,6 +546,8 @@ public class PrincipalActivity extends AppCompatActivity {
             intentFiltro.putExtra("Cercanía", true);
             isFirstOpening = false;
         }
+
+        ordenarSegunParametro(intentFiltro);
     }
 
     private void mostrarEmpresasEmpty() {
@@ -615,6 +617,7 @@ public class PrincipalActivity extends AppCompatActivity {
         View view =getSupportActionBar().getCustomView();
 
         TextView txtDireccion = view.findViewById(R.id.abDireccion);
+        TextView txtNombreApp = view.findViewById(R.id.abTitle);
         if(usuarioDireccion.getCalle()!=null){
             direccionCompleta = usuarioDireccion.getCalle()+", "+usuarioDireccion.getNumero();
             if(direccionCompleta.length()<=22){
@@ -626,6 +629,12 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         txtDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PrincipalActivity.this, MisDireccionesActivity.class));
+            }
+        });
+        txtNombreApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(PrincipalActivity.this, MisDireccionesActivity.class));
@@ -837,14 +846,17 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         if(ordenamiento.equals("Calificacion")) {
-            if(serverEmpresas.get(0).getCalificacion_general()!=null) {
+            for(int i=0;i<serverEmpresas.size();i++){
+                if(serverEmpresas.get(i).getCalificacion_general()==null){
+                    serverEmpresas.get(i).setCalificacion_general("0");
+                }
+            }
                 Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
                     @Override
                     public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
                         return empresa2.getCalificacion_general().compareToIgnoreCase(empresa1.getCalificacion_general());
                     }
                 });
-            }
         }
 
         if(ordenamiento.equals("Cercanía")) {
@@ -880,34 +892,7 @@ public class PrincipalActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         if(resultCode==FiltroEmpresasActivity.RESULT_CODE_OK){
             /// ORDENAMIENTO (UNICO) /////
-            if(data.getBooleanExtra("Nombre A-Z",false)){
-                ordenarListaPorParametro("AZ");
-                intentFiltro.putExtra("Nombre A-Z",true);
-            }else{
-                intentFiltro.putExtra("Nombre A-Z",false);
-            }
-
-            if(data.getBooleanExtra("Nombre Z-A",false)){
-                ordenarListaPorParametro("ZA");
-                intentFiltro.putExtra("Nombre Z-A",true);
-            }else{
-                intentFiltro.putExtra("Nombre Z-A",false);
-            }
-
-            if(data.getBooleanExtra("Calificación",false)){
-                ordenarListaPorParametro("Calificacion");
-                intentFiltro.putExtra("Calificación",true);
-            }else{
-                intentFiltro.putExtra("Calificación",false);
-            }
-
-            if(data.getBooleanExtra("Cercanía",false)){
-                ordenarListaPorParametro("Cercanía");
-                intentFiltro.putExtra("Cercanía",true);
-            }else{
-                intentFiltro.putExtra("Cercanía",false);
-            }
-
+            ordenarSegunParametro(data);
 
 
             ///// FILTROS (ACUMULATIVOS) ///////
@@ -934,5 +919,35 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         }
         Log.d("juaco1993","Datos intent filtro abierto hoy>"+data.getBooleanExtra("Abierto hoy",false));
+    }
+
+    private void ordenarSegunParametro(Intent data){
+        if(data.getBooleanExtra("Nombre A-Z",false)){
+            ordenarListaPorParametro("AZ");
+            intentFiltro.putExtra("Nombre A-Z",true);
+        }else{
+            intentFiltro.putExtra("Nombre A-Z",false);
+        }
+
+        if(data.getBooleanExtra("Nombre Z-A",false)){
+            ordenarListaPorParametro("ZA");
+            intentFiltro.putExtra("Nombre Z-A",true);
+        }else{
+            intentFiltro.putExtra("Nombre Z-A",false);
+        }
+
+        if(data.getBooleanExtra("Calificación",false)){
+            ordenarListaPorParametro("Calificacion");
+            intentFiltro.putExtra("Calificación",true);
+        }else{
+            intentFiltro.putExtra("Calificación",false);
+        }
+
+        if(data.getBooleanExtra("Cercanía",false)){
+            ordenarListaPorParametro("Cercanía");
+            intentFiltro.putExtra("Cercanía",true);
+        }else{
+            intentFiltro.putExtra("Cercanía",false);
+        }
     }
 }
