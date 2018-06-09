@@ -78,7 +78,7 @@
     <string name="configuracion_item">Configuración</string>
     <string name="title_activity_mis_ordenes">Mis órdenes</string>
     <string name="title_activity_seleccionar_ciudad">Seleccioná tu ciudad</string>
-    <string name="title_activity_mis_direcciones">Mis direcciones</string>
+    <string name="title_activity_mis_direcciones">Seleccioná tu dirección</string>
     <string name="title_activity_acerca_de">AcercaDeActivity</string>
     <string name="title_activity_sugerir_empresa">Sugerir empresa</string>
     <string name="title_activity_seleccion_direccion">SeleccionDireccion</string>
