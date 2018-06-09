@@ -118,7 +118,7 @@ public class Utilidades {
             }
         }
 
-        Log.d("deliveryUser","Distancia desde el usuario hasta el local--->"+distancia.toString());
+        Log.d("deliveryUser","Distancia desde el usuario hasta el local--->"+distancia.toString()+" Local:"+origen.getNombre_empresa());
         Log.d("deliveryUser","Precio a pagar--->"+precio);
 
         // Chequeo de zona de cobertura y respuesta
@@ -127,7 +127,7 @@ public class Utilidades {
             DeliveryRequest respuesta = new DeliveryRequest(1,"Ok",objeto);
             return respuesta;
         }else{
-            Delivery objeto = new Delivery(0.0,0.0f);
+            Delivery objeto = new Delivery(distancia,0.0f);
             DeliveryRequest respuesta = new DeliveryRequest(2,"El usuario esta fuera de la zona de cobertura del local",objeto);
             return respuesta;
         }

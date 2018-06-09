@@ -195,11 +195,12 @@ public class DetalleEmpresa extends AppCompatActivity{
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, PrincipalActivity.class);
+                //Intent intent = new Intent(this, PrincipalActivity.class);
                 //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                intent.putExtra("rubro",codRubro);
-                startActivity(intent);
+                //intent.putExtra("rubro",codRubro);
+                //startActivity(intent);
+                EventBus.getDefault().post(new MessageEvent("13", "Presionado Back"));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -261,8 +262,9 @@ public class DetalleEmpresa extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
+        EventBus.getDefault().post(new MessageEvent("13", "Presionado Back"));
+        //Intent intent = new Intent(this, PrincipalActivity.class);
+        //startActivity(intent);
     }
 
 

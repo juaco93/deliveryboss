@@ -42,7 +42,7 @@
     <!--
     <color name="colorComida">#dc2c01</color>
      -->
-    <color name="colorComida">#F44336</color>
+    <color name="colorComida">#f44336</color>
     <color name="colorMercado">#2d690c</color>
     <color name="colorFarmacia">#008DDE</color>
     <color name="colorTaxi">#FCCB1A</color>
