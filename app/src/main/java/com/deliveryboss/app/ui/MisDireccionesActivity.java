@@ -222,6 +222,8 @@ public class MisDireccionesActivity extends AppCompatActivity {
         }else if(event.getIdevento().equals("5")){
             obtenerDireccionGuardada();
             obtenerDirecciones();
+            Intent intent = new Intent(this,PrincipalActivity.class);
+            startActivity(intent);
     }
 
     }

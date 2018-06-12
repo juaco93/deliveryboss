@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+        <TextView
+            android:id="@+id/abTitle"
+            style="@android:style/TextAppearance.Material"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="18sp" />
+
+
+            <ImageView
+                android:id="@+id/abIconoDireccion"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@id/abDireccion"
+                android:layout_alignBaseline="@id/abTitle"
+                android:src="@drawable/ic_location" />
+
+    <TextView
+        android:id="@+id/abDireccion"
+        style="@android:style/TextAppearance.Material"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/abTitle"
+        android:text="Elisa de quiroga, 806"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="12sp" />
+
+</RelativeLayout>

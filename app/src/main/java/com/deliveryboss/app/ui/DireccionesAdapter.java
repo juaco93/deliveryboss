@@ -2,6 +2,7 @@ package com.deliveryboss.app.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -89,7 +90,7 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
                 Utilidades.setearDireccionPorDefecto(context,(new Gson()).toJson(direccion));
                 EventBus.getDefault().post(new MessageEvent("5","Se cambio la direccion por defecto"));
                 notifyDataSetChanged();
-                Toast.makeText(context,"Cambiaste tu dirección por defecto",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,R.string.toastDireccionPorDefecto,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -98,7 +99,7 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("¿Está seguro que desea eliminar la dirección?");
+                builder.setTitle(R.string.alertDireccionEliminar);
                 builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button

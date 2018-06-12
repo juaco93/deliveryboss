@@ -119,7 +119,8 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
         // Si el calculo de distancias es exitoso
         if(mDeliveryRequest.getEstado()==1){
-            holder.tiempo_delivery.setText("Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
+            holder.tiempo_delivery.setText("");
+            holder.distanciaDelivery.setText(Utilidades.formatearDistancia(objeto.getDistancia()));
             String precio = "";
 
          //   if (objeto.getPrecio().equals("0")) {
@@ -134,7 +135,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
                 }
                 else {
                     holder.tiempo_delivery.setText("");
-                    holder.precioDelivery.setText("No realiza delivery en tu ubicación" + " ");
+                    holder.precioDelivery.setText(R.string.mensajeDeliveryNo);
                 }
             }
             // preguntar si es mayor que 0... sino que no hay delivery en tu zona
@@ -145,11 +146,13 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 //            holder.precioDelivery.setText(precio);
         }else{
             if(mDeliveryRequest.getEstado()==2){
-                holder.tiempo_delivery.setText("");
-                holder.precioDelivery.setText("No realiza delivery en tu ubicación"+" ");
+                //holder.tiempo_delivery.setText(" Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
+                holder.distanciaDelivery.setText(Utilidades.formatearDistancia(objeto.getDistancia()));
+                holder.precioDelivery.setText(R.string.mensajeDeliveryNo);
             }
             if(mDeliveryRequest.getEstado()==4){
-                holder.tiempo_delivery.setText("No se calc");
+                holder.tiempo_delivery.setText("");
+                holder.distanciaDelivery.setText("N");
                 holder.precioDelivery.setText("No se calc"+" ");
             }
         }
@@ -247,6 +250,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         public TextView compra_minima;
         public TextView cantidad_calificacion;
         public TextView calificacionFloat;
+        public TextView distanciaDelivery;
         public View statusIndicator;
 
         public ViewHolder(View itemView) {
@@ -264,6 +268,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             compra_minima = (TextView) itemView.findViewById(R.id.txtCompraMinima);
             cantidad_calificacion = (TextView) itemView.findViewById(R.id.txtCantidadCalificacion);
             calificacionFloat = (TextView) itemView.findViewById(R.id.txtCalificacionFloat);
+            distanciaDelivery = (TextView) itemView.findViewById(R.id.txtDistancia);
 
             itemView.setOnClickListener(this);
         }
