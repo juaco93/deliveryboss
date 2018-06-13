@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.deliveryboss.app.data.api.model.EmpresasBody;
+import com.deliveryboss.app.data.api.model.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
@@ -51,6 +52,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
 
     List<Usuario_direccion> serverDirecciones;
     Usuario_direccion direccionGuardada;
+    Usuario_direccion direccionRecibidaDialog;
     String authorization;
     Context context;
 
@@ -214,7 +216,9 @@ public class MisDireccionesActivity extends AppCompatActivity {
             obtenerDirecciones();
         // Si es 3, es modificacion de direccion existente
         }else if(event.getIdevento().equals("3")){
+            direccionRecibidaDialog = (new Gson()).fromJson((event.getDescripcion()),Usuario_direccion.class);
             obtenerDirecciones();
+            SessionPrefs.get(this).saveDireccion(direccionRecibidaDialog.getIdusuario_direccion(),direccionRecibidaDialog.getCiudad_idciudad(),direccionRecibidaDialog.getCiudad(),direccionRecibidaDialog.getCalle(),direccionRecibidaDialog.getNumero(),direccionRecibidaDialog.getLatitud(),direccionRecibidaDialog.getLongitud());
         // Si es 4, es eliminacion de direccion existente
         }else if(event.getIdevento().equals("4")){
             obtenerDirecciones();

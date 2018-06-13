@@ -36,11 +36,11 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void sendRegistrationToServer(final String token) {
         // sending gcm token to server
-        Log.e("regId", "sendRegistrationToServer: " + token);
+        //Log.e("regId", "sendRegistrationToServer: " + token);
     }
 
     private void storeRegIdInPref(String token) {
-        Log.d("regId","Se guardo el token en sharedprefs: "+token);
+        //Log.d("regId","Se guardo el token en sharedprefs: "+token);
         //SessionPrefs.get(getApplicationContext()).saveRegId(token);
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         SharedPreferences.Editor editor = pref.edit();

@@ -172,10 +172,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
                                 if(getIntent().getStringExtra("estado").equals("entregada")){
                                     if(serverOrdenes.get(i).getCalificado()==null)showDialogCalificar((new Gson()).toJson(serverOrdenes.get(i)));
                                 }
-                                if(getIntent().getStringExtra("estado").equals("confirmada")){
-                                    showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
-                                }
-                                if(getIntent().getStringExtra("estado").equals("cancelada")){
+                                if(getIntent().getStringExtra("estado").equals("confirmada")||getIntent().getStringExtra("estado").equals("cancelada")||getIntent().getStringExtra("estado").equals("anulada")||getIntent().getStringExtra("estado").equals("enviada")){
                                     showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
                                 }
                             }

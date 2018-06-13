@@ -143,7 +143,7 @@ public class Utilidades {
     public static String formatearDistancia(Double distancia){
         DecimalFormat df = new DecimalFormat("#.#");
         Double distanciaEnKm = distancia/1000;
-        String stDistancia = df.format(distanciaEnKm) + "km";
+        String stDistancia = df.format(distanciaEnKm) + " km";
         return  stDistancia;
     }
 }

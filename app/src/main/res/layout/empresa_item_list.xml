@@ -183,9 +183,9 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/txtNombreEmpresa"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/txtRubroElegido">
+            android:layout_alignParentRight="true">
 
             <ImageView
                 android:id="@+id/imgDistancia"
@@ -193,7 +193,7 @@
                 android:layout_height="15dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_location_dark_2"
-                android:tint="@android:color/darker_gray" />
+                android:tint="@color/com_facebook_button_background_color_focused_disabled" />
 
             <TextView
                 android:id="@+id/txtDistancia"
@@ -203,7 +203,7 @@
                 android:layout_toRightOf="@id/imgDistancia"
                 android:text="1,8km"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
                 android:textSize="11sp" />
         </RelativeLayout>
 
