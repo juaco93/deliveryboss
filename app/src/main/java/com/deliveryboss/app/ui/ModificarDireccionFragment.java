@@ -125,7 +125,7 @@ public class ModificarDireccionFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stCiudad = serverCiudades.get(position).getIdciudad();
-                Log.d("direcciones", "id de ciudad elegida: " + stCiudad);
+                //Log.d("direcciones", "id de ciudad elegida: " + stCiudad);
             }
 
             @Override
@@ -370,7 +370,7 @@ public class ModificarDireccionFragment extends DialogFragment {
 
                 @Override
                 public void onFailure(Call<ApiResponse> call, Throwable t) {
-                    Log.d("gson", "Petición rechazada:" + t.getMessage());
+                    //Log.d("gson", "Petición rechazada:" + t.getMessage());
                     dismiss();
                 }
             });
@@ -381,7 +381,7 @@ public class ModificarDireccionFragment extends DialogFragment {
     private void obtenerCiudades(){
         String authorization = SessionPrefs.get(getContext()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getContext()).getPrefUsuarioIdUsuario();
-        Log.d("direcciones", "Recuperando Ciudades desde el Server");
+        //Log.d("direcciones", "Recuperando Ciudades desde el Server");
 
         // Realizar petición HTTP
         Call<ApiResponseCiudades> call2 = mDeliverybossApi.obtenerCiudades(authorization);
@@ -397,13 +397,13 @@ public class ModificarDireccionFragment extends DialogFragment {
                             .subtype()
                             .equals("json")) {
 
-                        Log.d("ciudades", response.errorBody().toString());
+                        //Log.d("ciudades", response.errorBody().toString());
                         //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
 
                         //error = apiError.getMessage();
                         //Log.d(TAG, apiError.getDeveloperMessage());
                     } else {
-                        Log.d("ciudades", response.errorBody().toString());
+                        //Log.d("ciudades", response.errorBody().toString());
                         /*try {
                             // Reportar causas de error no relacionado con la API
                             Log.d(TAG, response.errorBody().string());
@@ -413,13 +413,13 @@ public class ModificarDireccionFragment extends DialogFragment {
                     }
                     //showLoadingIndicator(false);
                     //showErrorMessage(error);
-                    Log.d("direcciones", response.message());
-                    Log.d("direcciones", response.raw().toString());
+                    //Log.d("direcciones", response.message());
+                    //Log.d("direcciones", response.raw().toString());
                     return;
                 }
 
                 serverCiudades = response.body().getDatos();
-                Log.d("direcciones", "todo bien, recibido: " + response.body().getDatos().toString());
+                //Log.d("direcciones", "todio bien, recibido: " + response.body().getDatos().toString());
                 if (serverCiudades.size() > 0) {
                     // Mostrar lista de ordenes
                     mostrarCiudades(serverCiudades);
@@ -432,7 +432,7 @@ public class ModificarDireccionFragment extends DialogFragment {
             @Override
             public void onFailure(Call<ApiResponseCiudades> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("direcciones", "Petición rechazada:" + t.getMessage());
+                //Log.d("direcciones", "Petición rechazada:" + t.getMessage());
                 //showErrorMessage("Error de comunicación");
             }
         });
@@ -503,7 +503,7 @@ public class ModificarDireccionFragment extends DialogFragment {
 
         // Calle
         if (TextUtils.isEmpty(stCalle)) {
-            Log.d("direccionMod","Esta vacio calle: "+ stCalle+" <-");
+            //Log.d("direccionMod","Esta vacio calle: "+ stCalle+" <-");
             calle.setError(getString(R.string.error_field_required));
             mFloatLabelCalle.setError(getString(R.string.error_field_required));
             focusView = calle;
@@ -511,7 +511,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         }
         // Numero
         if (TextUtils.isEmpty(stNumero)) {
-            Log.d("direccionMod","Esta vacio numero: "+ stNumero+" <-");
+            //Log.d("direccionMod","Esta vacio numero: "+ stNumero+" <-");
             numero.setError(getString(R.string.error_field_required));
             mFloatLabelNumero.setError(getString(R.string.error_field_required));
             focusView = numero;
@@ -529,7 +529,7 @@ public class ModificarDireccionFragment extends DialogFragment {
 
         // Barrio
         if (TextUtils.isEmpty(stBarrio)) {
-            Log.d("direccionMod","Esta vacio barrio: "+ stBarrio+" <-");
+            //Log.d("direccionMod","Esta vacio barrio: "+ stBarrio+" <-");
             barrio.setError(getString(R.string.error_field_required));
             mFloatLabelBarrio.setError(getString(R.string.error_field_required));
             focusView = barrio;
@@ -558,12 +558,12 @@ public class ModificarDireccionFragment extends DialogFragment {
                     latRecibida = data.getStringExtra("CoordLat");
                     longRecibida = data.getStringExtra("CoordLon");
 
-                    Log.d("ubicacion","Ubicacion recibida: "+latRecibida+","+longRecibida);
+                    //Log.d("ubicacion","Ubicacion recibida: "+latRecibida+","+longRecibida);
                     latitudLongitud.setText("¡Ubicación registrada!");
                 }
                 // Latitud y longitud en null
                 else{
-                    Log.d("ubicacion", "Lat y Long desde el mapa no se guardaron");
+                    //Log.d("ubicacion", "Lat y Long desde el mapa no se guardaron");
                 }
             }
 
@@ -572,12 +572,12 @@ public class ModificarDireccionFragment extends DialogFragment {
                 //Write your code if there's no result
                 if(direccion.getLatitud()!=null && direccion.getLongitud()!=null) {
                     if(!direccion.getLatitud().isEmpty() && !direccion.getLongitud().isEmpty()) {
-                        Log.d("ubicacion", "Usando latitud y longitud ORIGINALES");
+                        //Log.d("ubicacion", "Usando latitud y longitud ORIGINALES");
                         latRecibida = direccion.getLatitud();
                         longRecibida = direccion.getLongitud();
 
-                        Log.d("ubicacion","Valor de latRecibida--->" + latRecibida);
-                        Log.d("ubicacion","Valor de longRecibida--->" + longRecibida);
+                        //Log.d("ubicacion","Valor de latRecibida--->" + latRecibida);
+                        //Log.d("ubicacion","Valor de longRecibida--->" + longRecibida);
                     }
                 }
             }

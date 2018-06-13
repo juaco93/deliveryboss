@@ -148,7 +148,7 @@ public class PrincipalActivity extends AppCompatActivity {
         String mensaje = getIntent().getStringExtra("mensaje");
         if(estado!=null){
             if(estado.equals("1")){
-                Log.d("ordenEnviada","Mostramos el dialog de orden enviada");
+                //Log.d("ordenEnviada","Mostramos el dialog de orden enviada");
                 showOrdenEnviadaDialog();
             }
         }
@@ -264,7 +264,7 @@ public class PrincipalActivity extends AppCompatActivity {
         if(!mantenimientoActivo)obtenerEmpresas(rubroIntent);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_content);
-        Log.d("swipe", "swipe valor: " + swipeRefreshLayout.toString());
+        //Log.d("swipe", "swipe valor: " + swipeRefreshLayout.toString());
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -450,7 +450,7 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponseEmpresas> call, Throwable t) {
                 showLoadingIndicator(false);
-                Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                //Log.d("logindb", "Petición rechazada:" + t.getMessage());
                 showErrorMessage(getResources().getString(R.string.toastCompruebaConexion));
             }
         });
@@ -491,8 +491,8 @@ public class PrincipalActivity extends AppCompatActivity {
                 mantenimientos = response.body().getDatos();
 
                 if (mantenimientos.size() > 0) {
-                    Log.d("mantenimiento",mantenimientos.get(0).getTitulo()+": "+ mantenimientos.get(0).getMensaje());
-                    Log.d("mantenimiento","Estado Mantenimiento: "+mantenimientos.get(0).getEstado());
+                    //Log.d("mantenimiento",mantenimientos.get(0).getTitulo()+": "+ mantenimientos.get(0).getMensaje());
+                    //Log.d("mantenimiento","Estado Mantenimiento: "+mantenimientos.get(0).getEstado());
                     chequearMantenimiento(mantenimientos);
                 } else {
                     // Si por alguna razon no podemos obtener el registro de mantenimiento, activamos el modo normal.
@@ -503,7 +503,7 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponseMantenimiento> call, Throwable t) {
                 showLoadingIndicator(false);
-                Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                //Log.d("logindb", "Petición rechazada:" + t.getMessage());
                 showErrorMessage(getResources().getString(R.string.toastCompruebaConexion));
             }
         });
@@ -791,7 +791,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void filtrarListaPorParametro(String filtro){
         filtro = filtro.toString().toLowerCase();
-        Log.d("juaco1993","Filtrando por: "+filtro);
+        //Log.d("juaco1993","Filtrando por: "+filtro);
 
         final List<EmpresasBody> filteredList = new ArrayList<>();
 
@@ -815,7 +815,7 @@ public class PrincipalActivity extends AppCompatActivity {
         if(filtro.equals("delivery_mi_zona")) {
             for (int i = 0; i < serverEmpresas.size(); i++) {
                 DeliveryRequest request = Utilidades.calcularPrecioDelivery(usuarioDireccion,serverEmpresas.get(i));
-                Log.d("juaco1993","estado: "+request.getEstado().toString()+", msj: "+request.getMensaje());
+                //Log.d("juaco1993","estado: "+request.getEstado().toString()+", msj: "+request.getMensaje());
                 if (request.getEstado()==1) {
                     filteredList.add(serverEmpresas.get(i));
                 }
@@ -918,7 +918,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 }
             }
         }
-        Log.d("juaco1993","Datos intent filtro abierto hoy>"+data.getBooleanExtra("Abierto hoy",false));
+        //Log.d("juaco1993","Datos intent filtro abierto hoy>"+data.getBooleanExtra("Abierto hoy",false));
     }
 
     private void ordenarSegunParametro(Intent data){

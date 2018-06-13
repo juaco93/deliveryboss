@@ -126,7 +126,7 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
             revealX = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_X, 0);
             revealY = intent.getIntExtra(EXTRA_CIRCULAR_REVEAL_Y, 0);
 
-            Log.d("juaco1993","Reveal X: "+revealX);
+            //Log.d("juaco1993","Reveal X: "+revealX);
 
 
 
@@ -190,7 +190,7 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
         texto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("juaco1993","Click en filtro>"+texto.getText().toString());
+                //Log.d("juaco1993","Click en filtro>"+texto.getText().toString());
                 if(texto.getBackground().getConstantState()==getResources().getDrawable(R.drawable.rounded_corner).getConstantState()){
                     marcarBotonPresionado(texto);
                 }else{
@@ -204,7 +204,7 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
         texto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("juaco1993","Click en ordenamiento>"+texto.getText().toString());
+                //Log.d("juaco1993","Click en ordenamiento>"+texto.getText().toString());
                 if(texto.getBackground().getConstantState()==getResources().getDrawable(R.drawable.rounded_corner).getConstantState()){
                     blanquearSeleccionesRadio();
 

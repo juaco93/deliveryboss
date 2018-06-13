@@ -216,8 +216,8 @@ public class InfoMenuFragment extends Fragment {
 
     private void obtenerProductos(String rawStatus) {
         authorization = SessionPrefs.get(getContext()).getPrefUsuarioToken();
-        Log.d("gson", "Recuperando Productos desde el Server");
-        Log.d("gson", "Token Header: " + authorization);
+        //Log.d("gson", "Recuperando Productos desde el Server");
+        //Log.d("gson", "Token Header: " + authorization);
 
         // Realizar petición HTTP
         Call<ApiResponseProductos> call = mDeliverybossApi.obtenerProductos(authorization,empresa.getIdempresa());
@@ -233,13 +233,13 @@ public class InfoMenuFragment extends Fragment {
                             .subtype()
                             .equals("json")) {
 
-                        Log.d("gson", response.errorBody().toString());
+                        //Log.d("gson", response.errorBody().toString());
                         //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
 
                         //error = apiError.getMessage();
                         //Log.d(TAG, apiError.getDeveloperMessage());
                     } else {
-                        Log.d("gson", response.errorBody().toString());
+                        //Log.d("gson", response.errorBody().toString());
                         /*try {
                             // Reportar causas de error no relacionado con la API
                             Log.d(TAG, response.errorBody().string());
@@ -249,15 +249,15 @@ public class InfoMenuFragment extends Fragment {
                     }
                     //showLoadingIndicator(false);
                     //showErrorMessage(error);
-                    Log.d("gson", response.message());
-                    Log.d("gson", response.raw().toString());
+                    //Log.d("gson", response.message());
+                    //Log.d("gson", response.raw().toString());
                     return;
                 }
 
                 serverProductos = response.body().getDatos();
-                Log.d("gson", "todo bien, recibido: " + response.body().getDatos().toString());
+                //Log.d("gson", "todio bien, recibido: " + response.body().getDatos().toString());
                 if (serverProductos.size() > 0) {
-                    Log.d("gson", "nombre producto: " + serverProductos.get(0).getProducto());
+                    //Log.d("gson", "nombre producto: " + serverProductos.get(0).getProducto());
                     // Mostrar lista de empresas
                     mostrarProductos(serverProductos);
                 } else {
@@ -269,14 +269,14 @@ public class InfoMenuFragment extends Fragment {
             @Override
             public void onFailure(Call<ApiResponseProductos> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("gson", "Petición rechazada:" + t.getMessage());
+                //Log.d("gson", "Petición rechazada:" + t.getMessage());
                 //showErrorMessage("Error de comunicación");
             }
         });
     }
 
     private void mostrarProductos(List<Producto> productosServer) {
-        Log.d("gson", "Entramos a mostrar productos " + productosServer.get(0).getProducto());
+        //Log.d("gson", "Entramos a mostrar productos " + productosServer.get(0).getProducto());
         txtEmptyContainer.setText(productosServer.get(0).getProducto());
         mProductosAdapter.swapItems(productosServer);
         mListaProductos.setVisibility(View.VISIBLE);

@@ -126,13 +126,13 @@ public class MisOrdenesActivity extends AppCompatActivity {
                             .subtype()
                             .equals("json")) {
 
-                        Log.d("gson", response.errorBody().toString());
+                        //Log.d("gson", response.errorBody().toString());
                         //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
 
                         //error = apiError.getMessage();
                         //Log.d(TAG, apiError.getDeveloperMessage());
                     } else {
-                        Log.d("gson", response.errorBody().toString());
+                        //Log.d("gson", response.errorBody().toString());
                         /*try {
                             // Reportar causas de error no relacionado con la API
                             Log.d(TAG, response.errorBody().string());
@@ -142,15 +142,15 @@ public class MisOrdenesActivity extends AppCompatActivity {
                     }
                     //showLoadingIndicator(false);
                     //showErrorMessage(error);
-                    Log.d("gson", response.message());
-                    Log.d("gson", response.raw().toString());
+                    //Log.d("gson", response.message());
+                    //Log.d("gson", response.raw().toString());
                     // Mostrar empty state
                     mostrarOrdenesEmpty();
                     return;
                 }
 
                 serverOrdenes = response.body().getDatos();
-                Log.d("gson", "todo bien, recibido: " + response.body().getDatos().toString());
+                //Log.d("gson", "toido bien, recibido: " + response.body().getDatos().toString());
                 if (serverOrdenes.size() > 0) {
                     // Mostrar lista de ordenes
                     mostrarOrdenes(serverOrdenes);
@@ -161,7 +161,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
                     showLoadingIndicator(false);
                 }
                 if(getIntent()!=null){
-                    Log.d("notinoti","Recibimos notificacion, ingresando a orden");
+                    //Log.d("notinoti","Recibimos notificacion, ingresando a orden");
                     if(getIntent().getStringExtra("idorden")!=null){
                         int cant = serverOrdenes.size();
                         for(int i=0;i<cant;i++){
@@ -184,7 +184,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponseOrdenes> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("gson", "Petición rechazada:" + t.getMessage());
+                //Log.d("gson", "Petición rechazada:" + t.getMessage());
                 showLoadingIndicator(false);
                 //showErrorMessage("Error de comunicación");
             }

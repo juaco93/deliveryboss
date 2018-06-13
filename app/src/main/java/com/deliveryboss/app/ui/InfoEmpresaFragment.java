@@ -296,7 +296,7 @@ public class InfoEmpresaFragment extends Fragment{
             SimpleDateFormat sdf = new SimpleDateFormat("EEE");
             String diaActual = sdf.format(new Date());
 
-            Log.d("dia", diaActual);
+            //Log.d("dia", diaActual);
 
             Boolean abierto= false;
             String turno1desde = "";
@@ -496,7 +496,7 @@ public class InfoEmpresaFragment extends Fragment{
         String authorization = SessionPrefs.get(getActivity()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getActivity()).getPrefUsuarioIdUsuario();
         String idempresa = empresa.getIdempresa();
-        Log.d("calificacionUser", "idusuario: " + idusuario + "idempresa: " + idempresa);
+        //Log.d("calificacionUser", "idusuario: " + idusuario + "idempresa: " + idempresa);
 
         // Realizar petición HTTP
         Call<ApiResponseCalificaciones> call = mDeliverybossApi.obtenerCalificacionUsuario(authorization,idempresa, idusuario);
@@ -518,7 +518,7 @@ public class InfoEmpresaFragment extends Fragment{
 
                     return;
                 }
-                Log.d("calificacionUser", response.raw().toString());
+                //Log.d("calificacionUser", response.raw().toString());
                 //EN CASO DE QUE SEA EXITOSA
                 serverCalificaciones = response.body().getDatos();
                 if (serverCalificaciones.size() > 0) {
@@ -543,7 +543,7 @@ public class InfoEmpresaFragment extends Fragment{
             @Override
             public void onFailure(Call<ApiResponseCalificaciones> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                //Log.d("logindb", "Petición rechazada:" + t.getMessage());
                 //showErrorMessage("Comprueba tu conexión a Internet");
             }
         });

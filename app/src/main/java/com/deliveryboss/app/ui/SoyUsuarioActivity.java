@@ -155,7 +155,7 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         try {
-                            Log.d("logindb", "" + response.getJSONObject().toString());
+                            //Log.d("logindb", "" + response.getJSONObject().toString());
                             JSONObject location = object.getJSONObject("location");
                             JSONObject picture = object.getJSONObject("picture");
                             JSONObject data = picture.getJSONObject("data");
@@ -178,14 +178,14 @@ public class SoyUsuarioActivity extends AppCompatActivity {
 
                             java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
                             String date = format.format(Date.parse(FechaNac));
-                            Log.d("fblogin","Fecha Formateada: "+date);
+                            //Log.d("fblogin","Fecha Formateada: "+date);
                             registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,locationName,date, generoCod);
 
-                            Log.d("logindb", "URL: " + urlFotoPerfil);
+                            //Log.d("logindb", "URL: " + urlFotoPerfil);
 
                             LoginManager.getInstance().logOut();
                         } catch (JSONException e) {
-                            Log.d("logindb", e.toString());
+                            //Log.d("logindb", e.toString());
                         }
                     }
                 });
@@ -265,19 +265,19 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                                 .contentType()
                                 .subtype()
                                 .equals("application/json")) {
-                            Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                            //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                         } else {
                             error = response.message();
-                            Log.d("logindb", "hubo un error: " + response.message());
+                            //Log.d("logindb", "hubo un error: " + response.message());
                         }
 
                         showLoginError("Usuario o contraseña incorrectos");
                         return;
                     }
-                    Log.d("logindb", "RAW: " + response.raw().toString());
-                    Log.d("logindb", "Nombre: " + response.body().getNombre());
-                    Log.d("logindb", "Apellido: " + response.body().getApellido());
-                    Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                    //Log.d("logindb", "RAW: " + response.raw().toString());
+                    //Log.d("logindb", "Nombre: " + response.body().getNombre());
+                    //Log.d("logindb", "Apellido: " + response.body().getApellido());
+                    //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                     // Guardar usuario en preferencias
                     SessionPrefs.get(SoyUsuarioActivity.this).saveUsuario(response.body());
@@ -436,16 +436,16 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         //POR ARQUITECTURA DEL SERVER NO PUEDE HABER EMAIL REPETIDO, ENTONCES INTENTAMOS LOGUEAR SI YA ESTA REGISTRADO
-                        Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
+                        //Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
                         FacebookLogin(e_mail, idfacebook);
                     }
                     return;
                 }
-                Log.d("logindb", "RAW: " + response.raw().toString());
-                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                //Log.d("logindb", "RAW: " + response.raw().toString());
+                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 //SessionPrefs.get(SoyUsuarioActivity.this).saveUsuario(response.body());
@@ -475,14 +475,14 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
-                        Log.d("logindb", "hubo un error: " + response.message());
+                        //Log.d("logindb", "hubo un error: " + response.message());
                     }
                     return;
                 }
-                Log.d("logindb", "RAW: " + response.raw().toString());
-                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                //Log.d("logindb", "RAW: " + response.raw().toString());
+                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 SessionPrefs.get(SoyUsuarioActivity.this).saveUsuario(response.body());
@@ -559,8 +559,8 @@ public class SoyUsuarioActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
 
-        Log.d("regId", "Firebase reg id: " + regId);
-        Log.d("regId", "Firebase idusuario: " + idusuario);
+        //Log.d("regId", "Firebase reg id: " + regId);
+        //Log.d("regId", "Firebase idusuario: " + idusuario);
 
         Call<ApiResponse> call = mDeliverybossApi.registrarRegId(new regIdBody(regId,idusuario));
         call.enqueue(new Callback<ApiResponse>() {
@@ -574,7 +574,7 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("regId", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        //Log.d("regId", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         //POR ARQUITECTURA DEL SERVER NO PUEDE HABER EMAIL REPETIDO, ENTONCES INTENTAMOS LOGUEAR SI YA ESTA REGISTRADO
                         Log.d("regId", "hubo un error, no pude registrar el RegId en la BD");
@@ -582,9 +582,9 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                Log.d("regId", "Registre correctamente el RegId en la BD");
-                Log.d("regId", "RAW: " + response.raw().toString());
-                Log.d("regId", "Parseada: " + response.body().getMensaje());
+                //Log.d("regId", "Registre correctamente el RegId en la BD");
+                //Log.d("regId", "RAW: " + response.raw().toString());
+                //Log.d("regId", "Parseada: " + response.body().getMensaje());
                 //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias

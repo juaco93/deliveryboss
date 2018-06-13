@@ -134,7 +134,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
     private void obtenerDirecciones(){
         authorization = SessionPrefs.get(getApplicationContext()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getApplicationContext()).getPrefUsuarioIdUsuario();
-        Log.d("direcciones", "Recuperando Direcciones desde el Server");
+        //Log.d("direcciones", "Recuperando Direcciones desde el Server");
 
         // Realizar petición HTTP
         Call<ApiResponseDirecciones> call2 = mDeliverybossApi.obtenerDireccionesUsuario(authorization,idusuario);
@@ -150,22 +150,22 @@ public class SeleccionarDireccion extends AppCompatActivity {
                             .subtype()
                             .equals("json")) {
 
-                        Log.d("direcciones", response.errorBody().toString());
+                        //Log.d("direcciones", response.errorBody().toString());
                     } else {
-                        Log.d("direcciones", response.errorBody().toString());
+                        //Log.d("direcciones", response.errorBody().toString());
                     }
 
-                    Log.d("direcciones", response.message());
-                    Log.d("direcciones", response.raw().toString());
+                    //Log.d("direcciones", response.message());
+                    //Log.d("direcciones", response.raw().toString());
                     return;
                 }
 
                 serverDirecciones = response.body().getDatos();
-                Log.d("direcciones", "todo bien, recibido: " + response.body().getDatos().toString());
+                //Log.d("direcciones", "todio bien, recibido: " + response.body().getDatos().toString());
                 if (serverDirecciones.size() > 0) {
                     // Mostrar lista de ordenes
                     mostrarDirecciones(serverDirecciones);
-                    Log.d("direcciones","obtuvimos nueva direccion del fragment, pasamos a habilitar el boton");
+                    //Log.d("direcciones","obtuvimos nueva direccion del fragment, pasamos a habilitar el boton");
                 } else {
                     // Mostrar empty state
                     mostrarDireccionesEmpty();
@@ -175,14 +175,14 @@ public class SeleccionarDireccion extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponseDirecciones> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("direcciones", "Petición rechazada:" + t.getMessage());
+                //Log.d("direcciones", "Petición rechazada:" + t.getMessage());
                 //showErrorMessage("Error de comunicación");
             }
         });
     }
 
     private void mostrarDirecciones(List<Usuario_direccion> direccionesServer) {
-        Log.d("direcciones", "Entramos a mostrar direcciones ");
+        //Log.d("direcciones", "Entramos a mostrar direcciones ");
 
         // String[] items = new String[direccionesServer.size()];
         String[] items = new String[direccionesServer.size()+1];

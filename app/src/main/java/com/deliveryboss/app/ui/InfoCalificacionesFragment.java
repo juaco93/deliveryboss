@@ -94,8 +94,8 @@ public class InfoCalificacionesFragment extends Fragment {
 
         Intent intentRecibido = getActivity().getIntent();
         empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
-        Log.d("gson",empresa.getIdempresa());
-        Log.d("gson",empresa.getNombre_empresa());
+        //Log.d("gson",empresa.getIdempresa());
+        //Log.d("gson",empresa.getNombre_empresa());
 
         obtenerCalificaciones("");
 
@@ -106,8 +106,8 @@ public class InfoCalificacionesFragment extends Fragment {
 
     private void obtenerCalificaciones(String rawStatus) {
         authorization = SessionPrefs.get(getContext()).getPrefUsuarioToken();
-        Log.d("gson", "Recuperando Productos desde el Server");
-        Log.d("gson", "Token Header: " + authorization);
+        //Log.d("gson", "Recuperando Productos desde el Server");
+        //Log.d("gson", "Token Header: " + authorization);
 
         // Realizar petición HTTP
         Call<ApiResponseCalificaciones> call = mDeliverybossApi.obtenerCalificacionUsuario(authorization,empresa.getIdempresa(),"");
@@ -123,17 +123,17 @@ public class InfoCalificacionesFragment extends Fragment {
                             .subtype()
                             .equals("json")) {
 
-                        Log.d("gson", response.errorBody().toString());
+                        //Log.d("gson", response.errorBody().toString());
                     } else {
-                        Log.d("gson", response.errorBody().toString());
+                        //Log.d("gson", response.errorBody().toString());
                     }
-                    Log.d("gson", response.message());
-                    Log.d("gson", response.raw().toString());
+                    //Log.d("gson", response.message());
+                    //Log.d("gson", response.raw().toString());
                     return;
                 }
 
                 serverCalificaciones = response.body().getDatos();
-                Log.d("gson", "todo bien, recibido: " + response.body().getDatos().toString());
+                //Log.d("gson", "todo bien, recibido: " + response.body().getDatos().toString());
                 if (serverCalificaciones.size() > 0) {
                     // Mostrar lista de calificaciones
                     mostrarCalificaciones(serverCalificaciones);
@@ -146,7 +146,7 @@ public class InfoCalificacionesFragment extends Fragment {
             @Override
             public void onFailure(Call<ApiResponseCalificaciones> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("gson", "Petición rechazada:" + t.getMessage());
+                //Log.d("gson", "Petición rechazada:" + t.getMessage());
                 //showErrorMessage("Error de comunicación");
             }
         });

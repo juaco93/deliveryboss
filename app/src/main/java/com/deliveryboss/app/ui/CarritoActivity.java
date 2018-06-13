@@ -159,7 +159,7 @@ public class CarritoActivity extends AppCompatActivity {
         String usuarioLatitud = SessionPrefs.get(this).getPrefUsuarioDireccionLatitud();
         String usuarioLongitud = SessionPrefs.get(this).getPrefUsuarioDireccionLongitud();
         direccionUsuario = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,usuarioCiudad,usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
-        Log.d("chequeo","Direccion usuario -->"+direccionUsuario.getLatitud()+","+direccionUsuario.getLongitud());
+        //Log.d("chequeo","Direccion usuario -->"+direccionUsuario.getLatitud()+","+direccionUsuario.getLongitud());
 
 
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
@@ -237,7 +237,7 @@ public class CarritoActivity extends AppCompatActivity {
                 if(position==1){
                     //precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
                     cvDireccion.setVisibility(View.VISIBLE);
-                    Log.d("chequeo","Precio calculado en carrito--> $"+precioDelivery.toString());
+                    //Log.d("chequeo","Precio calculado en carrito--> $"+precioDelivery.toString());
                     txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                     importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
@@ -286,7 +286,7 @@ public class CarritoActivity extends AppCompatActivity {
 
                 //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
                // Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
-                Log.d("direcciones", "id de direccion elegida: " + stDireccion);
+                //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
             }
 
             @Override
@@ -325,7 +325,7 @@ public class CarritoActivity extends AppCompatActivity {
         mCarritoAdapter.setOnBtnEditClickListener(new CarritoAdapter.btnEditClickListener() {
             @Override
             public void onBtnEditClick(Orden_detalle clickedItemCarrito) {
-                Log.d("carrito","click EDIT en un item del carrito: ");
+                //Log.d("carrito","click EDIT en un item del carrito: ");
                 showDialog("orden_detalle",(new Gson()).toJson(clickedItemCarrito));
             }
         });
@@ -349,7 +349,7 @@ public class CarritoActivity extends AppCompatActivity {
                 String titulo = String.valueOf(c)+" seleccionados";
                 mActionMode.setTitle(titulo);
 
-                Log.d("carritoLongClick","Click largo en item: "+clickedItemCarrito.getProducto_nombre() + "--> Seteado a: " + clickedItemCarrito.getSelected().toString());
+                //Log.d("carritoLongClick","Click largo en item: "+clickedItemCarrito.getProducto_nombre() + "--> Seteado a: " + clickedItemCarrito.getSelected().toString());
             }
         });
 
@@ -506,7 +506,7 @@ public class CarritoActivity extends AppCompatActivity {
         String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
         BigDecimal parsed = new BigDecimal(cleanString).setScale(2,BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100),BigDecimal.ROUND_FLOOR);
         String usuarioPagaCon = String.valueOf(parsed);
-        Log.d("pagacom","Paga con: "+usuarioPagaCon);
+        //Log.d("pagacom","Paga con: "+usuarioPagaCon);
 
         String textoNota = nota.getText().toString();
         String total = String.valueOf(importeTotal);
@@ -527,12 +527,8 @@ public class CarritoActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        try {
-                            Log.d("insertarOrden", "se recibio respuesta json (con error): " + response.errorBody().string());
+                        //Log.d("insertarOrden", "se recibio respuesta json (con error): " + response.errorBody().string());
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     } else {
                         Gson gson = new Gson();
                         ApiResponse mensaje = null;
@@ -547,7 +543,7 @@ public class CarritoActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d("insertarOrden", "RAW: " + response.raw().toString());
+                //Log.d("insertarOrden", "RAW: " + response.raw().toString());
                // showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
                 intent.putExtra("estado","1");
@@ -559,7 +555,7 @@ public class CarritoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Log.d("gson", "Petición rechazada:" + t.getMessage());
+                //Log.d("gson", "Petición rechazada:" + t.getMessage());
             }
         });
     }
@@ -729,7 +725,7 @@ public class CarritoActivity extends AppCompatActivity {
     }
 
     private void mostrarDirecciones(Usuario_direccion direccion) {
-        Log.d("direcciones", "Entramos a mostrar direcciones ");
+        //Log.d("direcciones", "Entramos a mostrar direcciones ");
 
         String[] items = new String[1];
         items[0] = direccion.getCalle() + " " + direccion.getNumero();
@@ -799,7 +795,7 @@ public class CarritoActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        //Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
         if(event.getIdevento().equals("2")){
             obtenerDirecciones();
         }else if(event.getIdevento().equals("3")){
@@ -847,17 +843,17 @@ public class CarritoActivity extends AppCompatActivity {
 
                     for (int i=0; i<ordenesDetalleLocal.size(); i++) {
                         if(ordenesDetalleLocal.get(i).getProducto_idproducto().equals(detalleMod.getProducto_idproducto())){
-                            Log.d("eventbus","Encontrado en carrito, posicion-->" + i);
+                            //Log.d("eventbus","Encontrado en carrito, posicion-->" + i);
                             posicion = i;
                         }
                     }
 
                         // SI LA CANTIDAD SETEADA ES '0' LO QUITAMOS DE LA LISTA
                         if(detalleMod.getCantidad().equals("0")){
-                            Log.d("eventbus","Borrando...");
+                            //Log.d("eventbus","Borrando...");
                             ordenesDetalleLocal.remove(posicion);
                         }else{
-                            Log.d("eventbus","Modificando...");
+                            //Log.d("eventbus","Modificando...");
                             // SI NO, MODIFICAR
                             ordenesDetalleLocal.set(posicion,detalleMod);
                         }
@@ -911,11 +907,11 @@ public class CarritoActivity extends AppCompatActivity {
                             f++;
                         }
                     }
-                    Log.d("carrito1","A BORRAR-->"+Arrays.toString(elem_a_borrar));
+                    //Log.d("carrito1","A BORRAR-->"+Arrays.toString(elem_a_borrar));
                     // Caso seguido los borramos uno por uno del array original (array original= ordenesDetalleLocal)
                     // Lo borramos en orden invertido para que no afecte la posicion de los items que van quedando
                     for(int i=c; i>0;i--){
-                        Log.d("carrito1","borrando-->"+String.valueOf(elem_a_borrar[i-1]));
+                        //Log.d("carrito1","borrando-->"+String.valueOf(elem_a_borrar[i-1]));
                         ordenesDetalleLocal.remove(elem_a_borrar[i-1]);
                     }
                     mode.finish(); // Action picked, so close the CAB

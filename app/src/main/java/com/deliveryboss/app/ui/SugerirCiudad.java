@@ -103,12 +103,8 @@ public class SugerirCiudad extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        try {
-                            Log.d("sugerir", "se recibio respuesta json (con error): " + response.errorBody().string());
+                        //Log.d("sugerir", "se recibio respuesta json (con error): " + response.errorBody().string());
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     } else {
                         Gson gson = new Gson();
                         ApiResponse mensaje = null;
@@ -122,7 +118,7 @@ public class SugerirCiudad extends AppCompatActivity {
                     //showLoginError(error);
                     return;
                 }
-                Log.d("sugerir", "RAW: " + response.raw().toString());
+                //Log.d("sugerir", "RAW: " + response.raw().toString());
                 showErrorMessage(response.body().getMensaje());
 
                 // Ir a la pantalla principal

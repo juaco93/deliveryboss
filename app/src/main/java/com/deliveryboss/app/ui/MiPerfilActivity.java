@@ -278,7 +278,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponseUsuario> call, Throwable t) {
                 //showLoadingIndicator(false);
-                Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                //Log.d("logindb", "Petición rechazada:" + t.getMessage());
                 showErrorMessage("Comprueba tu conexión a Internet");
             }
         });
@@ -317,7 +317,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             Gson gson = new Gson();
             String jsonInString = gson.toJson(usuarioMod);
 
-            Log.d("logindb", "Modificando usuario>" + jsonInString);
+            //Log.d("logindb", "Modificando usuario>" + jsonInString);
 
             // Realizar petición HTTP
             Call<ApiResponse> call = mDeliverybossApi.modificarUsuario(authorization, usuarioMod, idusuario);
@@ -355,7 +355,7 @@ public class MiPerfilActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<ApiResponse> call, Throwable t) {
                     //showLoadingIndicator(false);
-                    Log.d("logindb", "Petición rechazada:" + t.getMessage());
+                    //Log.d("logindb", "Petición rechazada:" + t.getMessage());
                     showErrorMessage("Comprueba tu conexión a Internet");
                 }
             });
@@ -395,15 +395,15 @@ public class MiPerfilActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.N)
     private void updateLabel() {
-        Log.d("logindb","UPDATE LABEL");
+        //Log.d("logindb","UPDATE LABEL");
         String myFormat = "yyyy-MM-dd";
         java.text.SimpleDateFormat sdf = null;
 
         sdf = new java.text.SimpleDateFormat(myFormat, Locale.US);
 
-        Log.d("logindb","Fecha sin formato: "+myCalendar.getTime().toString());
+        //Log.d("logindb","Fecha sin formato: "+myCalendar.getTime().toString());
         assert sdf != null;
-        Log.d("logindb","Fecha con formato: "+ sdf.format(myCalendar.getTime()));
+        //Log.d("logindb","Fecha con formato: "+ sdf.format(myCalendar.getTime()));
         perfilFechaNacimiento.setText(sdf.format(myCalendar.getTime()));
     }
 
@@ -423,7 +423,7 @@ public class MiPerfilActivity extends AppCompatActivity {
         View focusView = null;
         // Nombre
         if (TextUtils.isEmpty(perfilNombre.getText())) {
-            Log.d("registro","Esta vacio nombre<-");
+            //Log.d("registro","Esta vacio nombre<-");
             perfilNombre.setError(getString(R.string.error_field_required));
             mFloatLabelNombre.setError(getString(R.string.error_field_required));
             focusView = perfilNombre;
@@ -462,7 +462,7 @@ public class MiPerfilActivity extends AppCompatActivity {
     /// CODIGO DE EVENTBUS /////
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        //Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
         if(event.getIdevento().equals("9")){
             item_modificar.setIcon(R.drawable.ic_action_okay);
             modificar = true;

@@ -153,7 +153,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
         spSexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("logindb","posicion sexo: " + String.valueOf(position));
+                //Log.d("logindb","posicion sexo: " + String.valueOf(position));
                 codSexo = String.valueOf(position);
             }
 
@@ -230,7 +230,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         try {
-                            Log.d("logindb", "" + response.getJSONObject().toString());
+                            //Log.d("logindb", "" + response.getJSONObject().toString());
                             JSONObject location = object.getJSONObject("location");
                             JSONObject picture = object.getJSONObject("picture");
                             JSONObject data = picture.getJSONObject("data");
@@ -252,7 +252,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                             String FechaNac = object.getString("birthday");
                             java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
                             String date = format.format(Date.parse(FechaNac));
-                            Log.d("fblogin","Fecha Formateada: "+date);
+                            //Log.d("fblogin","Fecha Formateada: "+date);
                             registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,locationName,date, generoCod);
 
                             /*tvEmail.setText(email);
@@ -261,7 +261,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                             tvfull_name.setText(name);
                             tvlocation.setText(locationName);*/
 
-                            Log.d("logindb", "URL: " + urlFotoPerfil);
+                            //Log.d("logindb", "URL: " + urlFotoPerfil);
                             //fotoPerfil.setImageDrawable(LoadImageFromWebOperations(urlFotoPerfil));
                             //Picasso.with(LoginActivity.this).load(urlFotoPerfil).into(fotoPerfil);
 
@@ -270,7 +270,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
 
                             LoginManager.getInstance().logOut();
                         } catch (JSONException e) {
-                            Log.d("logindb", e.toString());
+                            //Log.d("logindb", e.toString());
                         }
                     }
                 });
@@ -332,7 +332,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
 
         // Nombre
         if (TextUtils.isEmpty(nombre)) {
-            Log.d("registro","Esta vacio nombre: "+ nombre+" <-");
+            //Log.d("registro","Esta vacio nombre: "+ nombre+" <-");
             txtNombre.setError(getString(R.string.error_field_required));
             mFloatLabelNombre.setError(getString(R.string.error_field_required));
             focusView = txtNombre;
@@ -417,12 +417,8 @@ public class RegistrarmeActivity extends AppCompatActivity {
                                 .contentType()
                                 .subtype()
                                 .equals("application/json")) {
-                            try {
-                                Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().string());
+                            //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().string());
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                         } else {
                             Gson gson = new Gson();
                             ApiResponse mensaje = null;
@@ -436,13 +432,13 @@ public class RegistrarmeActivity extends AppCompatActivity {
                                 error[0] = "Su email ya se encuentra registrado";
                                 yaExiste[0] =true;
                             }
-                            Log.d("logindb", "Mensaje: " + mensaje.getMensaje() + " Estado>"+mensaje.getEstado());
+                            //Log.d("logindb", "Mensaje: " + mensaje.getMensaje() + " Estado>"+mensaje.getEstado());
                         }
 
                         showLoginError(error[0]);
                         return;
                     }
-                    Log.d("logindb", "RAW: " + response.raw().toString());
+                    //Log.d("logindb", "RAW: " + response.raw().toString());
                     showLoginError(response.body().getMensaje());
 
                     // Guardar usuario en preferencias
@@ -574,16 +570,16 @@ public class RegistrarmeActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         //POR ARQUITECTURA DEL SERVER NO PUEDE HABER EMAIL REPETIDO, ENTONCES INTENTAMOS LOGUEAR SI YA ESTA REGISTRADO
-                        Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
+                        //Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
                         FacebookLogin(e_mail, idfacebook);
                     }
                     return;
                 }
-                Log.d("logindb", "RAW: " + response.raw().toString());
-                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                //Log.d("logindb", "RAW: " + response.raw().toString());
+                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 //SessionPrefs.get(RegistrarmeActivity.this).saveUsuario(response.body());
@@ -612,14 +608,14 @@ public class RegistrarmeActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         Log.d("logindb", "hubo un error: " + response.message());
                     }
                     return;
                 }
-                Log.d("logindb", "RAW: " + response.raw().toString());
-                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                //Log.d("logindb", "RAW: " + response.raw().toString());
+                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 SessionPrefs.get(RegistrarmeActivity.this).saveUsuario(response.body());
@@ -665,19 +661,19 @@ public class RegistrarmeActivity extends AppCompatActivity {
                                 .contentType()
                                 .subtype()
                                 .equals("application/json")) {
-                            Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                            //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                         } else {
                             error = response.message();
-                            Log.d("logindb", "hubo un error: " + response.message());
+                            //Log.d("logindb", "hubo un error: " + response.message());
                         }
 
                         //showLoginError(error);
                         return;
                     }
-                    Log.d("logindb", "RAW: " + response.raw().toString());
-                    Log.d("logindb", "Nombre: " + response.body().getNombre());
-                    Log.d("logindb", "Apellido: " + response.body().getApellido());
-                    Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                    //Log.d("logindb", "RAW: " + response.raw().toString());
+                    //Log.d("logindb", "Nombre: " + response.body().getNombre());
+                    //Log.d("logindb", "Apellido: " + response.body().getApellido());
+                    //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                     // Guardar usuario en preferencias
                     SessionPrefs.get(RegistrarmeActivity.this).saveUsuario(response.body());
@@ -701,15 +697,15 @@ public class RegistrarmeActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.N)
     private void updateLabel() {
-        Log.d("logindb","UPDATE LABEL");
+        //Log.d("logindb","UPDATE LABEL");
         String myFormat = "yyyy-MM-dd";
         java.text.SimpleDateFormat sdf = null;
 
             sdf = new java.text.SimpleDateFormat(myFormat, Locale.US);
 
-            Log.d("logindb","Fecha sin formato: "+myCalendar.getTime().toString());
+            //Log.d("logindb","Fecha sin formato: "+myCalendar.getTime().toString());
             assert sdf != null;
-            Log.d("logindb","Fecha con formato: "+ sdf.format(myCalendar.getTime()));
+            //Log.d("logindb","Fecha con formato: "+ sdf.format(myCalendar.getTime()));
             txtFechaNacimiento.setText(sdf.format(myCalendar.getTime()));
     }
 
@@ -729,7 +725,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
     // Fetches reg id from shared preferences
     // and displays on the screen
     private void displayFirebaseRegId() {
-        Log.d("regId", "Registrar el regID");
+        //Log.d("regId", "Registrar el regID");
         //// PARTE DE MENSAJERIA VIA FCM
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -764,8 +760,8 @@ public class RegistrarmeActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
 
-        Log.d("regId", "Firebase reg id: " + regId);
-        Log.d("regId", "Firebase idusuario: " + idusuario);
+        //Log.d("regId", "Firebase reg id: " + regId);
+        //Log.d("regId", "Firebase idusuario: " + idusuario);
 
         Call<ApiResponse> call = mDeliverybossApi.registrarRegId(new regIdBody(regId,idusuario));
         call.enqueue(new Callback<ApiResponse>() {
@@ -779,17 +775,17 @@ public class RegistrarmeActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("regId", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        //Log.d("regId", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         //POR ARQUITECTURA DEL SERVER NO PUEDE HABER EMAIL REPETIDO, ENTONCES INTENTAMOS LOGUEAR SI YA ESTA REGISTRADO
-                        Log.d("regId", "hubo un error, no pude registrar el RegId en la BD");
+                        //Log.d("regId", "hubo un error, no pude registrar el RegId en la BD");
                         //FacebookLogin(e_mail, idfacebook);
                     }
                     return;
                 }
-                Log.d("regId", "Registre correctamente el RegId en la BD");
-                Log.d("regId", "RAW: " + response.raw().toString());
-                Log.d("regId", "Parseada: " + response.body().getMensaje());
+                //Log.d("regId", "Registre correctamente el RegId en la BD");
+                //Log.d("regId", "RAW: " + response.raw().toString());
+                //Log.d("regId", "Parseada: " + response.body().getMensaje());
                 //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
