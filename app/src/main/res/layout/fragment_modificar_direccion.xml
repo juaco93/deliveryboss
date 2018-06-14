@@ -85,7 +85,7 @@
                         android:imeActionId="@+id/login"
                         android:imeActionLabel="Numero"
                         android:imeOptions="actionUnspecified"
-                        android:inputType="text"
+                        android:inputType="text|number"
                         android:maxLines="1"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/black" />

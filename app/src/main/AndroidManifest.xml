@@ -84,9 +84,15 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
+        <!--SI ES EN MODO DEBUG
+              <meta-data
+            android:name="com.google.android.geo.API_KEY"
+               android:value="@string/google_maps_key" />
+        -->
+        <!--SI ES EN MODO RELEASE-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyCK9MYHeijzLs4wzKpq88M-trZe-ZizvZc" />
 
         <activity
             android:name=".ui.SoyUsuarioActivity"
