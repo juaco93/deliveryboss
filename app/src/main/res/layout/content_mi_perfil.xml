@@ -121,6 +121,24 @@
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lbPerfilGenero"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlFechaNacimiento"
+            app:passwordToggleEnabled="false">
+
+            <Spinner
+                android:id="@+id/txtPerfilGenero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="Género"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
     </RelativeLayout>
 
     <Button

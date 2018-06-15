@@ -16,10 +16,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.deliveryboss.app.data.api.model.MessageEvent;
@@ -56,13 +59,16 @@ public class MiPerfilActivity extends AppCompatActivity {
     EditText perfilTelefono;
     EditText perfilEmail;
     EditText perfilFechaNacimiento;
+    Spinner perfilGenero;
     Button perfilAceptar;
+    String codGenero;
 
     private TextInputLayout mFloatLabelNombre;
     private TextInputLayout mFloatLabelApellido;
     private TextInputLayout mFloatLabelTelefono;
     private TextInputLayout mFloatLabelEmail;
     private TextInputLayout mFloatLabelFechaNacimiento;
+    private TextInputLayout mFloatLabelGenero;
 
 
     private Retrofit mRestAdapter;
@@ -92,6 +98,25 @@ public class MiPerfilActivity extends AppCompatActivity {
         perfilEmail = (EditText) findViewById(R.id.txtPerfilEmail);
         perfilFechaNacimiento = (EditText) findViewById(R.id.txtPerfilFechaNacimiento);
         perfilAceptar = (Button) findViewById(R.id.btnPerfilAceptar);
+        perfilGenero = (Spinner) findViewById(R.id.txtPerfilGenero);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sexo, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item_layoutpropio);
+        perfilGenero.setAdapter(adapter);
+        codGenero="";
+        perfilGenero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Log.d("logindb","posicion sexo: " + String.valueOf(position));
+                codGenero = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        perfilGenero.setEnabled(false);
 
         mFloatLabelNombre = (TextInputLayout) findViewById(R.id.lbPerfilNombre);
         mFloatLabelApellido = (TextInputLayout) findViewById(R.id.lbPerfilApellido);
@@ -194,6 +219,7 @@ public class MiPerfilActivity extends AppCompatActivity {
                         perfilTelefono.setEnabled(true);
                         //perfilEmail.setEnabled(true);
                         perfilFechaNacimiento.setEnabled(true);
+                        perfilGenero.setEnabled(true);
                     } else {
                         if(modificarUsuario()){
                             item.setIcon(R.drawable.ic_action_edit_2);
@@ -202,8 +228,8 @@ public class MiPerfilActivity extends AppCompatActivity {
                             perfilTelefono.setEnabled(false);
                             //perfilEmail.setEnabled(false);
                             perfilFechaNacimiento.setEnabled(false);
+                            perfilGenero.setEnabled(false);
                             modificar = false;
-
                         }
                     }
 
@@ -299,7 +325,7 @@ public class MiPerfilActivity extends AppCompatActivity {
         String apellido = perfilApellido.getText().toString();
         String telefono = perfilTelefono.getText().toString();
         String e_mail = perfilEmail.getText().toString();
-        String sexo_idsexo =sexo;
+        String sexo_idsexo =codGenero;
         String fecha_nacimiento = perfilFechaNacimiento.getText().toString();
 
 
@@ -371,6 +397,10 @@ public class MiPerfilActivity extends AppCompatActivity {
         perfilTelefono.setText(user.getTelefono());
         perfilEmail.setText(user.getE_mail());
         perfilFechaNacimiento.setText(user.getFecha_nacimiento());
+        int posicion = Integer.valueOf(user.getSexo_idsexo());
+        if(posicion>0) {
+            perfilGenero.setSelection(posicion);
+        }
 
         urlFoto = user.getImagen();
         sexo = user.getSexo_idsexo();
@@ -446,11 +476,20 @@ public class MiPerfilActivity extends AppCompatActivity {
         }
 
 
-        // Email
-        if (TextUtils.isEmpty(perfilEmail.getText())) {
-            perfilEmail.setError(getString(R.string.error_field_required));
-            mFloatLabelEmail.setError(getString(R.string.error_field_required));
-            focusView = perfilEmail;
+        // Fecha de Nacimiento
+        if(perfilFechaNacimiento.getText()!=null) {
+            if (perfilFechaNacimiento.getText().toString().equals("0000-00-00")) {
+                perfilFechaNacimiento.setError(getString(R.string.error_field_required));
+                mFloatLabelFechaNacimiento.setError(getString(R.string.error_field_required));
+                focusView = perfilFechaNacimiento;
+                cancel = true;
+            }
+        }
+
+        // Genero
+        if (perfilGenero.getSelectedItem().equals("Género")) {
+            Toast.makeText(this,R.string.toastPerfilCompletaGenero,Toast.LENGTH_LONG).show();
+            focusView = perfilGenero;
             cancel = true;
         }
 
@@ -471,6 +510,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             perfilTelefono.setEnabled(true);
             //perfilEmail.setEnabled(true);
             perfilFechaNacimiento.setEnabled(true);
+            perfilGenero.setEnabled(true);
             perfilTelefono.requestFocus();
             perfilAceptar.setVisibility(View.VISIBLE);
         }

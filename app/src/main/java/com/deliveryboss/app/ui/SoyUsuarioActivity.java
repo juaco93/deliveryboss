@@ -150,48 +150,66 @@ public class SoyUsuarioActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                GraphRequest graphRequest   =   GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback()
+                {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        try {
-                            //Log.d("logindb", "" + response.getJSONObject().toString());
-                            JSONObject location = object.getJSONObject("location");
+                    public void onCompleted(JSONObject object, GraphResponse response)
+                    {
+                        try
+                        {
+                            //Log.d("fblogin", ""+response.getJSONObject().toString());
+                            //JSONObject location = object.getJSONObject("location");
                             JSONObject picture = object.getJSONObject("picture");
                             JSONObject data = picture.getJSONObject("data");
 
-                            String id = object.getString("id");
-                            String email = object.getString("email");
-                            String first_name = object.optString("first_name");
-                            String last_name = object.optString("last_name");
-                            String locationName = location.getString("name");
-                            String genero = object.optString("gender");
-                            String generoCod = "";
-                            if (genero.equals("male")) {
+                            String id          =   object.getString("id");
+                            String email       =   object.getString("email");
+                            String first_name  =   object.optString("first_name");
+                            String last_name   =   object.optString("last_name");
+                            //String locationName   =   location.getString("name");
+                            //String genero = object.optString("gender");
+                            /*String generoCod = "";
+                            if(genero.equals("male")){
                                 generoCod = "1";
-                            } else if (genero.equals("female")) {
+                            }else if(genero.equals("female")){
                                 generoCod = "2";
-                            }
+                            }*/
+
 
                             String urlFotoPerfil = "https://graph.facebook.com/" + id + "/picture?type=large";
-                            String FechaNac = object.getString("birthday");
+                            //String FechaNac = object.getString("birthday");
 
-                            java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
-                            String date = format.format(Date.parse(FechaNac));
-                            //Log.d("fblogin","Fecha Formateada: "+date);
-                            registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,locationName,date, generoCod);
+                            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            //String date = format.format(Date.parse(FechaNac));
+                            //Log.d("logindb","Fecha Formateada: "+date);
+                            registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,"","", "3");
 
-                            //Log.d("logindb", "URL: " + urlFotoPerfil);
+
+                            /*tvEmail.setText(email);
+                            tvfirst_name.setText(first_name);
+                            tvlast_name.setText(last_name);
+                            tvfull_name.setText(name);
+                            tvlocation.setText(locationName);*/
+
+                            Log.d("logindb", "URL: "+urlFotoPerfil);
+                            //fotoPerfil.setImageDrawable(LoadImageFromWebOperations(urlFotoPerfil));
+                            //Picasso.with(LoginActivity.this).load(urlFotoPerfil).into(fotoPerfil);
+
+                            //showPrincipalScreen();
+                            //finish();
 
                             LoginManager.getInstance().logOut();
-                        } catch (JSONException e) {
-                            //Log.d("logindb", e.toString());
+                        }
+                        catch (JSONException e)
+                        {
+                            Log.d("logindb",e.toString());
                         }
                     }
                 });
 
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,first_name,last_name,email,gender, location,birthday, picture");
+                parameters.putString("fields", "id,first_name,last_name,email, picture");
                 graphRequest.setParameters(parameters);
                 graphRequest.executeAsync();
             }

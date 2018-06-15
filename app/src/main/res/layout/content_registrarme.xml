@@ -25,24 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
         android:weightSum="1">
-
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/connectWithFbButton2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/altura_boton"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:text="Continuar con Facebook"
-            android:textSize="@dimen/size_texto_boton" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -189,12 +174,13 @@
                     android:id="@+id/spSexo"
                     android:layout_width="164dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="163dp"
                     android:layout_marginStart="163dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="163dp" />
+                    android:layout_marginTop="20dp" />
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
+
         <Button
             android:id="@+id/email_register_button"
             style="@style/Widget.AppCompat.Button"
@@ -205,6 +191,21 @@
             android:text="Registrar usuario"
             android:textAllCaps="false"
             android:textColor="@color/colorTextoBoton"
+            android:textSize="@dimen/size_texto_boton" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/connectWithFbButton2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/altura_boton"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="Continuar con Facebook"
             android:textSize="@dimen/size_texto_boton" />
     </LinearLayout>
 </LinearLayout>

@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Log.d("logindb","Entre a la pantalla de login");
+
         super.onCreate(savedInstanceState);
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
@@ -113,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                         try
                         {
                             //Log.d("fblogin", ""+response.getJSONObject().toString());
-                            JSONObject location = object.getJSONObject("location");
+                            //JSONObject location = object.getJSONObject("location");
                             JSONObject picture = object.getJSONObject("picture");
                             JSONObject data = picture.getJSONObject("data");
 
@@ -121,23 +123,23 @@ public class LoginActivity extends AppCompatActivity {
                             String email       =   object.getString("email");
                             String first_name  =   object.optString("first_name");
                             String last_name   =   object.optString("last_name");
-                            String locationName   =   location.getString("name");
-                            String genero = object.optString("gender");
+                            //String locationName   =   location.getString("name");
+                            /*String genero = object.optString("gender");
                             String generoCod = "";
                             if(genero.equals("male")){
                                 generoCod = "1";
                             }else if(genero.equals("female")){
                                 generoCod = "2";
-                            }
+                            }*/
 
 
                             String urlFotoPerfil = "https://graph.facebook.com/" + id + "/picture?type=large";
-                            String FechaNac = object.getString("birthday");
+                            //String FechaNac = object.getString("birthday");
 
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                            String date = format.format(Date.parse(FechaNac));
-                            //Log.d("fblogin","Fecha Formateada: "+date);
-                            registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,locationName,date, generoCod);
+                            //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            //String date = format.format(Date.parse(FechaNac));
+                            //Log.d("logindb","Fecha Formateada: "+date);
+                            registerFacebookLogin(id, email, first_name, last_name, urlFotoPerfil,"","", "3");
 
 
                             /*tvEmail.setText(email);
@@ -146,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                             tvfull_name.setText(name);
                             tvlocation.setText(locationName);*/
 
-                            //Log.d("logindb", "URL: "+urlFotoPerfil);
+                            Log.d("logindb", "URL: "+urlFotoPerfil);
                             //fotoPerfil.setImageDrawable(LoadImageFromWebOperations(urlFotoPerfil));
                             //Picasso.with(LoginActivity.this).load(urlFotoPerfil).into(fotoPerfil);
 
@@ -157,13 +159,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         catch (JSONException e)
                         {
-                            //Log.d("logindb",e.toString());
+                            Log.d("logindb",e.toString());
                         }
                     }
                 });
 
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,first_name,last_name,email,gender, location,birthday, picture");
+                parameters.putString("fields", "id,first_name,last_name,email, picture");
                 graphRequest.setParameters(parameters);
                 graphRequest.executeAsync();
             }
@@ -272,7 +274,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void registerFacebookLogin(final String idfacebook, final String e_mail, String nombre, String apellido, String foto, String ciudad,String FechaNac, String genero) {
         FbRegisterBody cuerpoRegistro = new FbRegisterBody(idfacebook, e_mail, nombre, apellido, foto,ciudad,FechaNac, "1", genero, "1");
-        //Log.d("fblogin",(new Gson()).toJson(cuerpoRegistro));
+        Log.d("logindb",(new Gson()).toJson(cuerpoRegistro));
         Call<Usuario> registerFbCall = mDeliverybossApi.registroFb(cuerpoRegistro);
         registerFbCall.enqueue(new Callback<Usuario>() {
             @Override
@@ -285,7 +287,7 @@ public class LoginActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         //POR ARQUITECTURA DEL SERVER NO PUEDE HABER EMAIL REPETIDO, ENTONCES INTENTAMOS LOGUEAR SI YA ESTA REGISTRADO
                         //Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
@@ -293,8 +295,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                //Log.d("logindb", "RAW: " + response.raw().toString());
-                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                Log.d("logindb", "RAW: " + response.raw().toString());
+
 
                 // Guardar usuario en preferencias
                 SessionPrefs.get(LoginActivity.this).saveUsuario(response.body());
@@ -311,7 +313,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void FacebookLogin(String e_mail, String idfacebook) {
-        //Log.d("logindb", "Logueando por facebook: " + e_mail);
+        Log.d("logindb", "Logueando por facebook: " + e_mail);
         Call<Usuario> registerFbCall = mDeliverybossApi.loginFb(new FbLoginBody(e_mail, idfacebook));
         registerFbCall.enqueue(new Callback<Usuario>() {
             @Override
@@ -323,14 +325,14 @@ public class LoginActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         Log.d("logindb", "hubo un error: " + response.message());
                     }
                     return;
                 }
-                //Log.d("logindb", "RAW: " + response.raw().toString());
-                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                Log.d("logindb", "RAW: " + response.raw().toString());
+                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 SessionPrefs.get(LoginActivity.this).saveUsuario(response.body());

@@ -493,6 +493,8 @@ public class CarritoActivity extends AppCompatActivity {
 
 
     private void enviarOrden() {
+        // Mostramos el toast de "enviando orden"
+        showError(getResources().getString(R.string.toastCarritoEnviandoOrden));
         // Variables del Objeto "Orden"
         String authorization = SessionPrefs.get(this).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();

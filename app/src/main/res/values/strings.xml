@@ -8,6 +8,7 @@
         <item>Género</item>
         <item>Hombre</item>
         <item>Mujer</item>
+        <item>No especificado</item>
     </string-array>
 
     <string-array name="tipo_entrega">
@@ -116,4 +117,6 @@
     <string name="toastPresionarAtras">Presioná atrás de nuevo para salir</string>
     <string name="toastCompruebaConexion">Comprueba tu conexión a Internet</string>
     <string name="toastDireccionPorDefecto">Se cambió tu dirección</string>
+    <string name="toastPerfilCompletaGenero">Por favor, seleccioná un género.</string>
+    <string name="toastCarritoEnviandoOrden">Se está enviando tu orden...</string>
 </resources>
