@@ -1,10 +1,13 @@
 package com.deliveryboss.app.data.api.model;
 
+import static com.deliveryboss.app.data.api.model.ListItem.TYPE_ITEM;
+
 /**
  * Created by Joaquin on 26/6/2017.
  */
 
-public class Producto {
+public class Producto extends ListItem{
+
     String idproducto;
     String producto;
     String producto_detalle;
@@ -12,8 +15,9 @@ public class Producto {
     String descuento;
     String empresa_idempresa;
     String producto_rubro_idproducto_rubro;
+    String producto_rubro;
 
-    public Producto(String idproducto, String producto, String producto_detalle, String precio, String descuento, String empresa_idempresa, String producto_rubro_idproducto_rubro) {
+    public Producto(String idproducto, String producto, String producto_detalle, String precio, String descuento, String empresa_idempresa, String producto_rubro_idproducto_rubro, String producto_rubro) {
         this.idproducto = idproducto;
         this.producto = producto;
         this.producto_detalle = producto_detalle;
@@ -21,6 +25,7 @@ public class Producto {
         this.descuento = descuento;
         this.empresa_idempresa = empresa_idempresa;
         this.producto_rubro_idproducto_rubro = producto_rubro_idproducto_rubro;
+        this.producto_rubro = producto_rubro;
     }
 
     public String getIdproducto() {
@@ -77,5 +82,17 @@ public class Producto {
 
     public void setProducto_rubro_idproducto_rubro(String producto_rubro_idproducto_rubro) {
         this.producto_rubro_idproducto_rubro = producto_rubro_idproducto_rubro;
+    }
+
+    public String getProducto_rubro() {
+        return producto_rubro;
+    }
+
+    public void setProducto_rubro(String producto_rubro) {
+        this.producto_rubro = producto_rubro;
+    }
+
+    public int getType() {
+        return TYPE_ITEM;
     }
 }

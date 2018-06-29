@@ -11,10 +11,12 @@ import android.graphics.drawable.LayerDrawable;
 import android.icu.text.IDNA;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -29,7 +31,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.deliveryboss.app.data.api.model.BadgeDrawable;
+import com.deliveryboss.app.data.api.model.ListItem;
 import com.deliveryboss.app.data.api.model.MessageEvent;
+import com.deliveryboss.app.data.api.model.Rubro;
 import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,7 +52,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +71,8 @@ import static android.content.Context.SEARCH_SERVICE;
 public class InfoMenuFragment extends Fragment {
     EmpresasBody empresa;
     private RecyclerView mListaProductos;
-    private ProductosAdapter mProductosAdapter;
+    //private ProductosAdapter mProductosAdapter;
+    private RubrosAdapter mProductosAdapter;
     private Retrofit mRestAdapter;
     private DeliverybossApi mDeliverybossApi;
     private View mEmptyStateContainer;
@@ -85,6 +93,11 @@ public class InfoMenuFragment extends Fragment {
     private FloatingActionsMenu mSharedFab;
     boolean visible;
     ViewGroup transitionsContainer;
+
+    // Nuevo adapter //
+    Map<String, List<Producto>> mapaProductos;
+    @NonNull
+    private List<ListItem> itemsConsolidados = new ArrayList<>();
 
     public InfoMenuFragment() {
         // Required empty public constructor
@@ -111,8 +124,8 @@ public class InfoMenuFragment extends Fragment {
         txtEmptyContainer = (TextView) v.findViewById(R.id.txtEmptyContainer);
 
         mListaProductos = (RecyclerView) v.findViewById(R.id.list_productos);
-        mProductosAdapter = new ProductosAdapter(context, new ArrayList<Producto>(0));
-        mProductosAdapter.setOnItemClickListener(new ProductosAdapter.OnItemClickListener() {
+        //mProductosAdapter = new RubrosAdapter(context, new ArrayList<Producto>(0));
+        /*mProductosAdapter.setOnItemClickListener(new ProductosAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Producto clickedProducto) {
                 //showDialog(clickedProducto.getIdproducto(),clickedProducto.getProducto());
@@ -120,9 +133,9 @@ public class InfoMenuFragment extends Fragment {
                 //fab.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.cajita_open));
             }
 
-        });
+        });*/
 
-        mListaProductos.setAdapter(mProductosAdapter);
+        //mListaProductos.setAdapter(mProductosAdapter);
         mEmptyStateContainer = v.findViewById(R.id.empty_state_containerMenu);
 
         /////// FAB CARRITO ///////////
@@ -276,11 +289,39 @@ public class InfoMenuFragment extends Fragment {
     }
 
     private void mostrarProductos(List<Producto> productosServer) {
-        //Log.d("gson", "Entramos a mostrar productos " + productosServer.get(0).getProducto());
+        Log.d("gson", "Entramos a mostrar productos ");
         txtEmptyContainer.setText(productosServer.get(0).getProducto());
-        mProductosAdapter.swapItems(productosServer);
+        //mProductosAdapter.swapItems(productosServer);
         mListaProductos.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
+
+
+        // Nuevo adapter //
+        itemsConsolidados.clear();
+        mapaProductos = toMap(productosServer);
+        for (String rubro : mapaProductos.keySet()) {
+            Rubro header = new Rubro(rubro) {};
+            itemsConsolidados.add(header);
+            for (Producto producto : mapaProductos.get(rubro)) {
+                Producto item = new Producto(producto.getIdproducto(),producto.getProducto(),producto.getProducto_detalle(),producto.getPrecio(),producto.getDescuento(),producto.getEmpresa_idempresa(),producto.getProducto_rubro_idproducto_rubro(),producto.getProducto_rubro());
+                itemsConsolidados.add(item);
+            }
+        }
+
+        //Log.d("productosNuevo","JSON-->"+(new Gson().toJson(itemsConsolidados)));
+
+        mListaProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+        mProductosAdapter = new RubrosAdapter(itemsConsolidados);
+        mProductosAdapter.setOnItemClickListener(new RubrosAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Producto clickedProducto) {
+                Log.d("productosNuevo","Click en producto->"+(new Gson().toJson(clickedProducto)));
+                showDialog("producto",(new Gson()).toJson(clickedProducto));
+            }
+        });
+
+        mListaProductos.setAdapter(mProductosAdapter);
+
     }
 
     private void mostrarProductosEmpty() {
@@ -319,13 +360,37 @@ public class InfoMenuFragment extends Fragment {
 
     public void buscar(String query){
         query = query.toString().toLowerCase();
-        final List<Producto> filteredList = new ArrayList<>();
-
+        final List<ListItem> filteredList = new ArrayList<>();
+    /*
         for (int i = 0; i < serverProductos.size(); i++) {
 
             final String nombre = serverProductos.get(i).getProducto().toLowerCase();
             if (nombre.contains(query)) {
                 filteredList.add(serverProductos.get(i));
+            }
+        }*/
+
+        // Nuevo adapter //
+        //itemsConsolidados.clear();
+        mapaProductos = toMap(serverProductos);
+        boolean headerYaMostrado = false;
+        for (String rubro : mapaProductos.keySet()) {
+            Rubro header = new Rubro(rubro) {};
+            //filteredList.add(header);
+            for (Producto producto : mapaProductos.get(rubro)) {
+                Producto item = new Producto(producto.getIdproducto(),producto.getProducto(),producto.getProducto_detalle(),producto.getPrecio(),producto.getDescuento(),producto.getEmpresa_idempresa(),producto.getProducto_rubro_idproducto_rubro(),producto.getProducto_rubro());
+                //itemsConsolidados.add(item);
+                final String nombre_rubro = header.getRubro().toLowerCase();
+                final String nombre = item.getProducto().toLowerCase();
+                if (nombre.contains(query) || nombre_rubro.contains(query)) {
+                    if(headerYaMostrado){
+                        filteredList.add(item);
+                    }else{
+                        filteredList.add(header);
+                        filteredList.add(item);
+                        headerYaMostrado = true;
+                    }
+                }
             }
         }
         mProductosAdapter.swapItems(filteredList);
@@ -557,8 +622,6 @@ public class InfoMenuFragment extends Fragment {
         }else{
 
         }
-
-
     }
 
     @Override
@@ -572,6 +635,31 @@ public class InfoMenuFragment extends Fragment {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+    /// Nuevo conversor a map ///
+    @NonNull
+    private Map<String, List<Producto>> toMap(@NonNull List<Producto> productos) {
+        Map<String, List<Producto>> map = new TreeMap<>();
+
+        for (Producto producto : productos) {
+            List<Producto> value;
+            if(producto.getProducto_rubro()!=null) {
+                // ENCABEZADO DE LOS PRODUCTOS QUE SI TIENEN RUBRO
+                value = map.get(producto.getProducto_rubro());
+            }else{
+                // ENCABEZADO DE LOS PRODUCTOS QUE NO TIENEN RUBRO
+                value = map.get("");
+            }
+            if (value == null) {
+                value = new ArrayList<>();
+                map.put(producto.getProducto_rubro(), value);
+            }
+            value.add(producto);
+        }
+
+        return map;
+    }
+    // Fin nuevo conversor a Map //
 
 
 }

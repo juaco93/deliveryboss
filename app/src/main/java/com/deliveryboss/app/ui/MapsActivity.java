@@ -2,11 +2,14 @@ package com.deliveryboss.app.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
     }
 
 
@@ -74,6 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+
         // Chequeamos si tenemos permiso para usar la ubicacion.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -149,6 +154,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
+        String latOriginal=null;
+        String longOriginal=null;
+
         Intent returnIntent = new Intent(MapsActivity.this, ModificarDireccionFragment.class);
             // no hay marcador ni nada. Volvemos a los valores que recibimos de entrada
         String latitudLongitudRecibidas ="";
@@ -158,9 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }else{
                 latitudLongitudRecibidas = null;
             }
-
-            String latOriginal="";
-            String longOriginal="";
 
             if(latitudLongitudRecibidas!=null){
                 latLngForm = latitudLongitudRecibidas.split(",");
@@ -173,11 +178,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             returnIntent.putExtra("CoordLat", latOriginal);
             returnIntent.putExtra("CoordLon", longOriginal);
+            Log.d("lat","Latitud devuelta a FORM->"+latOriginal);
+            Log.d("lat","Longitud devuelta a FORM->"+longOriginal);
+
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
 
     }
-
-
 
 }

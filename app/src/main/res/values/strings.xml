@@ -100,7 +100,8 @@
     <string name="alertItemsEnElCarritoTitle">¡Estás por salir!</string>
     <string name="alertItemsEnElCarritoMsg">Al salir perderás los items agregados en el carrito. ¿Estás seguro de querer salir?</string>
     <string name="alertDireccionEliminar">¿Está seguro que desea eliminar la dirección?</string>
-
+    <string name="title_location_permission">Permiso de Ubicación</string>
+    <string name="text_location_permission">Para mostrar tu ubicación necesitamos que actives el permiso.</string>
 
     <!-- MENSAJES VARIOS -->
     <string name="mensajeSinRestaurantes">¡No hay restaurantes para tu dirección!</string>
