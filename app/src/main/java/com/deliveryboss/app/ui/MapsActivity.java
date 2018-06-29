@@ -89,10 +89,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Tenemos permiso para usar la ubicacion
             mMap.setMyLocationEnabled(true);
         }
-        Log.d("latlong", "Mapa listo");
+        //Log.d("latlong", "Mapa listo");
 
         intent = getIntent();
-        Log.d("latlong", "Valor del intent--->" + intent.getStringExtra("latitudLongitud"));
+        //Log.d("latlong", "Valor del intent--->" + intent.getStringExtra("latitudLongitud"));
 
         //SI NO EXISTE EN LA BD PERO VIENE DEL FORMULARIO ANTERIOR
         if (intent.getStringExtra("latitudLongitud") != null && !intent.getStringExtra("latitudLongitud").trim().isEmpty() && !intent.getStringExtra("latitudLongitud").equals("¡Agregá tu ubicación!") ) {
@@ -105,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latitud = latLngForm[0];
             longitud = latLngForm[1];
 
-            Log.d("latlong", latitud + ',' + longitud);
+            //Log.d("latlong", latitud + ',' + longitud);
 
             LatLng guardadaPreviamente = new LatLng(latGuar, lonGuar);
             mMap.addMarker(new MarkerOptions()
@@ -178,8 +178,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             returnIntent.putExtra("CoordLat", latOriginal);
             returnIntent.putExtra("CoordLon", longOriginal);
-            Log.d("lat","Latitud devuelta a FORM->"+latOriginal);
-            Log.d("lat","Longitud devuelta a FORM->"+longOriginal);
+            //Log.d("lat","Latitud devuelta a FORM->"+latOriginal);
+            //Log.d("lat","Longitud devuelta a FORM->"+longOriginal);
 
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
