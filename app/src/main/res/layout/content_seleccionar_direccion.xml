@@ -84,36 +84,6 @@
 
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btnSeleccionarDireccionAgregar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="26dp"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:gravity="right"
-            android:text="¿Tu dirección no está en la lista?"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextoBotonRubro" />
-
-        <Button
-            android:id="@+id/btnSeleccionarDireccionAgregar"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/altura_boton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/boton_nuevo"
-            android:text="Agregar dirección"
-            android:textAllCaps="false"
-            android:textColor="@color/colorTextoBoton"
-            android:textSize="@dimen/size_texto_boton" />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

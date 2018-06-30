@@ -289,7 +289,7 @@ public class InfoMenuFragment extends Fragment {
     }
 
     private void mostrarProductos(List<Producto> productosServer) {
-        Log.d("gson", "Entramos a mostrar productos ");
+        //Log.d("gson", "Entramos a mostrar productos ");
         txtEmptyContainer.setText(productosServer.get(0).getProducto());
         //mProductosAdapter.swapItems(productosServer);
         mListaProductos.setVisibility(View.VISIBLE);
@@ -315,7 +315,7 @@ public class InfoMenuFragment extends Fragment {
         mProductosAdapter.setOnItemClickListener(new RubrosAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Producto clickedProducto) {
-                Log.d("productosNuevo","Click en producto->"+(new Gson().toJson(clickedProducto)));
+                //Log.d("productosNuevo","Click en producto->"+(new Gson().toJson(clickedProducto)));
                 showDialog("producto",(new Gson()).toJson(clickedProducto));
             }
         });

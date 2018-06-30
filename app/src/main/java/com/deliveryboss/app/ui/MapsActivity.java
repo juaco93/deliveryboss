@@ -144,9 +144,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (permissions.length == 1 &&
                     permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mMap.setMyLocationEnabled(true);
-            } else {
                 Toast.makeText(this,"No ha otorgado los permisos para la Ubicacion",Toast.LENGTH_LONG).show();
+            } else {
+                mMap.setMyLocationEnabled(true);
+
             }
         }
     }
@@ -183,7 +184,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
-
     }
 
 }

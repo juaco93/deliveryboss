@@ -47,7 +47,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
 
     String stDireccion;
     String authorization;
-    Button btnAgregarDireccion;
+    //Button btnAgregarDireccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +57,14 @@ public class SeleccionarDireccion extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         spDirecciones = (Spinner) findViewById(R.id.spSeleccionarDireccion);
-        btnAgregarDireccion = (Button) findViewById(R.id.btnSeleccionarDireccionAgregar);
-        btnAgregarDireccion.setOnClickListener(new View.OnClickListener() {
+        //btnAgregarDireccion = (Button) findViewById(R.id.btnSeleccionarDireccionAgregar);
+        /*btnAgregarDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SeleccionarDireccion.this,MisDireccionesActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         btnContinuar = (CardView) findViewById(R.id.btnSeleccionarDireccionContinuar);
         btnContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
