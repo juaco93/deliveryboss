@@ -79,11 +79,13 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView txt_title;
         TextView txt_detalle;
+        TextView txt_precio;
 
         public EventViewHolder(View itemView) {
             super(itemView);
             txt_title = (TextView) itemView.findViewById(R.id.txtNombreProducto);
             txt_detalle = (TextView) itemView.findViewById(R.id.txtProductoDetalle);
+            txt_precio = (TextView) itemView.findViewById(R.id.txtPrecio);
             itemView.setOnClickListener(this);
             //Log.d("productosNuevo","Valor de this-->"+this);
         }
@@ -120,6 +122,7 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 // your logic here
                 holder.txt_title.setText(producto.getProducto());
                 holder.txt_detalle.setText(producto.getProducto_detalle());
+                holder.txt_precio.setText("$"+producto.getPrecio());
                 break;
             }
             default:
