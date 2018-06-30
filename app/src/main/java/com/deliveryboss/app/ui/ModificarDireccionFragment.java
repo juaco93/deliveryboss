@@ -554,7 +554,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         if (requestCode == ABRIR_MAPA_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
 
-                if(latRecibida!=null && longRecibida!=null) {
+                if(data.getStringExtra("CoordLat")!=null && data.getStringExtra("CoordLon")!=null) {
                     latRecibida = data.getStringExtra("CoordLat");
                     longRecibida = data.getStringExtra("CoordLon");
 
@@ -563,6 +563,7 @@ public class ModificarDireccionFragment extends DialogFragment {
                 }
                 // Latitud y longitud en null
                 else{
+                    //latitudLongituse d.setText("No registraste tu ubicación");
                     //Log.d("ubicacion", "Lat y Long desde el mapa no se guardaron");
                 }
             }

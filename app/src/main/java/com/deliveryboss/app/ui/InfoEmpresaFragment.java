@@ -200,12 +200,15 @@ public class InfoEmpresaFragment extends Fragment{
             compraMinima.setText("Compra mínima: $" + empresa.getCompra_minima());
 
             ////// CARD CALIFICACIONES ///////
+            String cal1Redond="0,0";
+            String cal2Redond="0,0";
+            String cal3Redond="0,0";
             lbCalificacion.setText(empresa.getNombre_empresa());
             if(empresa.getCalificacion_general()!=null){
                 String calRedond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion_general()));
-                String cal1Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion1()));
-                String cal2Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion2()));
-                String cal3Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion3()));
+                if(empresa.getCalificacion1()!=null)cal1Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion1()));
+                if(empresa.getCalificacion2()!=null)cal2Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion2()));
+                if(empresa.getCalificacion3()!=null)cal3Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion3()));
                 lbCalificacionFloat.setText(calRedond);
                 lbCalificacion1.setText(cal1Redond);
                 lbCalificacion2.setText(cal2Redond);

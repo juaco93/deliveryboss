@@ -34,6 +34,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
         holder.producto.setText(producto.getProducto());
         holder.detalleproducto.setText(producto.getProducto_detalle());
         holder.precio.setText("$" + producto.getPrecio());
+
     }
 
     @Override

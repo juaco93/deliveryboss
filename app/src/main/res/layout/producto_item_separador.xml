@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgRubroImagen"
+        android:layout_width="20dp"
+        android:layout_height="40dp">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtRubroNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="false"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/imgRubroImagen"
+        android:layout_toRightOf="@id/imgRubroImagen"
+        android:text="Pizzas"
+        android:textSize="18sp"
+        android:textStyle="bold"></TextView>
+</RelativeLayout>

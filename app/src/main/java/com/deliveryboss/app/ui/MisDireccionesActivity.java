@@ -122,7 +122,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
     private void obtenerDirecciones(){
         authorization = SessionPrefs.get(getApplicationContext()).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(getApplicationContext()).getPrefUsuarioIdUsuario();
-        Log.d("gson", "Recuperando Direcciones desde el Server");
+        //Log.d("gson", "Recuperando Direcciones desde el Server");
 
         // Realizar petición HTTP
         Call<ApiResponseDirecciones> call = mDeliverybossApi.obtenerDireccionesUsuario(authorization,idusuario);
@@ -210,7 +210,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
+        //Log.d("eventbus","evento recibido, descripcion: " + event.getDescripcion());
         // Si es 2, es insercion de nueva direccion
         if(event.getIdevento().equals("2")){
             obtenerDirecciones();

@@ -517,6 +517,10 @@ public class CarritoActivity extends AppCompatActivity {
         Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal,"0","");
 
 
+        Log.d("ordenes",new Gson().toJson(orden));
+        Log.d("ordenes",new Gson().toJson(ordenesDetalleLocal));
+
+
         // Realizar petición HTTP
         Call<ApiResponse> call = mDeliverybossApi.insertarOrden(authorization,idempresa,idusuario,orden);
         call.enqueue(new Callback<ApiResponse>() {
