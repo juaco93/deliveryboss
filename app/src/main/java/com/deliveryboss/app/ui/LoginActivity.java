@@ -379,7 +379,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    //FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
 
                     //displayFirebaseRegId();
 
@@ -391,10 +391,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
 
                 }
+
             }
         };
 
-        //displayFirebaseRegId();
+        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+        //Log.d("firebaseMensaje","Me registre al topic GLOBAL");
+
 
         //String idusuario = SessionPrefs.get(this).getPrefUsuarioCiudad();
         //String regId = SessionPrefs.get(LoginActivity.this).getPrefUsuarioRegId();

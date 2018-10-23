@@ -403,7 +403,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         usuarioDireccion = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,"",usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
         // Realizar petición HTTP
-        Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, rubro);
+        Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, "debug_app");
         call.enqueue(new Callback<ApiResponseEmpresas>() {
             @Override
             public void onResponse(Call<ApiResponseEmpresas> call,
