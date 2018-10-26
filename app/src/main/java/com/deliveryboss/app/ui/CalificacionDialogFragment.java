@@ -255,7 +255,7 @@ public class CalificacionDialogFragment extends DialogFragment {
             recibida="0";
         }
 
-        Orden ordenMod = new Orden(idorden,"","","","","","","","","","","","","1","","","",vacia,recibida,fechaHora);
+        Orden ordenMod = new Orden(idorden,"","","","","","","","","","","","","8","","","",vacia,recibida,fechaHora);
 
         Log.d("calificacion",(new Gson()).toJson(ordenMod));
 

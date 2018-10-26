@@ -533,7 +533,7 @@ public class CarritoActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        //Log.d("insertarOrden", "se recibio respuesta json (con error): " + response.errorBody().string());
+                        Log.d("insertarOrden", "se recibio respuesta json (con error): " + response.errorBody().toString());
 
                     } else {
                         Gson gson = new Gson();
@@ -549,8 +549,8 @@ public class CarritoActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Log.d("insertarOrden", "RAW: " + response.raw().toString());
-               // showError(response.body().getMensaje());
+                Log.d("insertarOrden", "RAW: " + response.raw().toString());
+                showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
                 intent.putExtra("estado","1");
                 intent.putExtra("mensaje","Orden enviada correctamente!");

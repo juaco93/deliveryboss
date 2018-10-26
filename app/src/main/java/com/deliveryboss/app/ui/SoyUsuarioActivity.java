@@ -567,7 +567,8 @@ public class SoyUsuarioActivity extends AppCompatActivity {
             }
         };
 
-        //displayFirebaseRegId();
+        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+        //Log.d("firebaseMensaje","Me registre al topic Global");
 
         //String idusuario = SessionPrefs.get(this).getPrefUsuarioCiudad();
         //String regId = SessionPrefs.get(LoginActivity.this).getPrefUsuarioRegId();

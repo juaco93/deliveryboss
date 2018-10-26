@@ -586,8 +586,8 @@ public class RegistrarmeActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                //Log.d("logindb", "RAW: " + response.raw().toString());
-                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                Log.d("logindb", "RAW: " + response.raw().toString());
+                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 //SessionPrefs.get(RegistrarmeActivity.this).saveUsuario(response.body());
@@ -622,8 +622,8 @@ public class RegistrarmeActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                //Log.d("logindb", "RAW: " + response.raw().toString());
-                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                Log.d("logindb", "RAW: " + response.raw().toString());
+                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 SessionPrefs.get(RegistrarmeActivity.this).saveUsuario(response.body());
@@ -678,10 +678,10 @@ public class RegistrarmeActivity extends AppCompatActivity {
                         //showLoginError(error);
                         return;
                     }
-                    //Log.d("logindb", "RAW: " + response.raw().toString());
-                    //Log.d("logindb", "Nombre: " + response.body().getNombre());
-                    //Log.d("logindb", "Apellido: " + response.body().getApellido());
-                    //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                    Log.d("logindb", "RAW: " + response.raw().toString());
+                    Log.d("logindb", "Nombre: " + response.body().getNombre());
+                    Log.d("logindb", "Apellido: " + response.body().getApellido());
+                    Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                     // Guardar usuario en preferencias
                     SessionPrefs.get(RegistrarmeActivity.this).saveUsuario(response.body());
@@ -733,6 +733,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
     // Fetches reg id from shared preferences
     // and displays on the screen
     private void displayFirebaseRegId() {
+
         //Log.d("regId", "Registrar el regID");
         //// PARTE DE MENSAJERIA VIA FCM
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -742,8 +743,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                 // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
                     // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                    // now subscribe to `global` topic to receive app wide notification
 
                     //displayFirebaseRegId();
 
@@ -758,7 +758,8 @@ public class RegistrarmeActivity extends AppCompatActivity {
             }
         };
 
-        //displayFirebaseRegId();
+        FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+        //Log.d("firebaseMensaje","Me registre al topic GLOBAL");
 
         //String idusuario = SessionPrefs.get(this).getPrefUsuarioCiudad();
         //String regId = SessionPrefs.get(LoginActivity.this).getPrefUsuarioRegId();
@@ -791,7 +792,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                //Log.d("regId", "Registre correctamente el RegId en la BD");
+                Log.d("regId", "Registre correctamente el RegId en la BD");
                 //Log.d("regId", "RAW: " + response.raw().toString());
                 //Log.d("regId", "Parseada: " + response.body().getMensaje());
                 //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
