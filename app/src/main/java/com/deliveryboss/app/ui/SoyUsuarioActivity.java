@@ -289,7 +289,7 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                             //Log.d("logindb", "hubo un error: " + response.message());
                         }
 
-                        showLoginError("Usuario o contraseña incorrectos");
+                        showLoginError("Usuario o contraseña incorrecto");
                         return;
                     }
                     //Log.d("logindb", "RAW: " + response.raw().toString());
