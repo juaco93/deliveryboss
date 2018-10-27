@@ -746,7 +746,6 @@ public class RegistrarmeActivity extends AppCompatActivity {
                     // now subscribe to `global` topic to receive app wide notification
 
                     //displayFirebaseRegId();
-
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
 
