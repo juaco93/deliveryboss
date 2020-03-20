@@ -142,7 +142,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
 
-        sendNotification(title,message);
+        sendNotification(title,message,intent);
     }
 
     /**
@@ -160,8 +160,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String title, String messageBody) {
-        Intent intent = new Intent(this, MisOrdenesActivity.class);
+    private void sendNotification(String title, String messageBody, Intent intent) {
+        //Intent intent = new Intent(this, MisOrdenesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

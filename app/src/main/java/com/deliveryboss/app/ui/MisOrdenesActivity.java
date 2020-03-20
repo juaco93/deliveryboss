@@ -161,8 +161,9 @@ public class MisOrdenesActivity extends AppCompatActivity {
                     showLoadingIndicator(false);
                 }
                 if(getIntent()!=null){
-                    //Log.d("notinoti","Recibimos notificacion, ingresando a orden");
+                    Log.d("notinoti","Recibimos notificacion, ingresando a orden");
                     if(getIntent().getStringExtra("idorden")!=null){
+                        Log.d("notinoti","Contenido idorden-->"+getIntent().getStringExtra("estado"));
                         int cant = serverOrdenes.size();
                         for(int i=0;i<cant;i++){
                             // Chequeamos el idorden para ver si esta en las listadas, y si está actuamos según el estado de la orden
