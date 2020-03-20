@@ -120,4 +120,9 @@
     <string name="toastDireccionPorDefecto">Se cambió tu dirección</string>
     <string name="toastPerfilCompletaGenero">Por favor, seleccioná un género.</string>
     <string name="toastCarritoEnviandoOrden">Se está enviando tu orden...</string>
+
+
+    <!-- Configuraciones de Notificaciones -->
+    <string name="default_notification_channel_id">canal_1</string>
+    <string name="fcm_message">Mensaje nuevo!</string>
 </resources>
