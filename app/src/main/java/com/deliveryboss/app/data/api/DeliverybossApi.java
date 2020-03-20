@@ -37,7 +37,7 @@ import retrofit2.http.Path;
 
 public interface  DeliverybossApi {
 
-    public static final String BASE_URL = "http://api.deliveryboss.com.ar/v1/";
+    public static final String BASE_URL = "https://api.deliveryboss.com.ar/v1/";
 
     @POST("usuarios/login")
     Call<Usuario> login(@Body LoginBody loginBody);
