@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponseOrdenes;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Orden;
@@ -39,7 +38,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
     private RecyclerView mListaOrdenes;
     private OrdenesAdapter mOrdenesAdapter;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     private View mEmptyStateContainer;
     private TextView txtEmptyContainer;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -85,11 +84,11 @@ public class MisOrdenesActivity extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         obtenerOrdenes();
     }
@@ -113,7 +112,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
         //Log.d("gson", "Recuperando Ordenes desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseOrdenes> call = mDeliverybossApi.obtenerOrdenesUsuario(authorization,"0",idusuario);
+        Call<ApiResponseOrdenes> call = mVinosYBodegasApi.obtenerOrdenesUsuario(authorization,"0",idusuario);
         call.enqueue(new Callback<ApiResponseOrdenes>() {
             @Override
             public void onResponse(Call<ApiResponseOrdenes> call,
@@ -151,19 +150,26 @@ public class MisOrdenesActivity extends AppCompatActivity {
 
                 serverOrdenes = response.body().getDatos();
                 //Log.d("gson", "toido bien, recibido: " + response.body().getDatos().toString());
-                if (serverOrdenes.size() > 0) {
-                    // Mostrar lista de ordenes
-                    mostrarOrdenes(serverOrdenes);
-                    showLoadingIndicator(false);
-                } else {
+                if(serverOrdenes!=null){
+                    if (serverOrdenes.size() > 0) {
+                        // Mostrar lista de ordenes
+                        mostrarOrdenes(serverOrdenes);
+                        showLoadingIndicator(false);
+                    } else {
+                        // Mostrar empty state
+                        mostrarOrdenesEmpty();
+                        showLoadingIndicator(false);
+                    }
+                }else {
                     // Mostrar empty state
                     mostrarOrdenesEmpty();
                     showLoadingIndicator(false);
                 }
+
                 if(getIntent()!=null){
-                    Log.d("notinoti","Recibimos notificacion, ingresando a orden");
+                    //Log.d("notinoti","Recibimos notificacion, ingresando a orden");
                     if(getIntent().getStringExtra("idorden")!=null){
-                        Log.d("notinoti","Contenido idorden-->"+getIntent().getStringExtra("estado"));
+                        //Log.d("notinoti","Contenido idorden-->"+getIntent().getStringExtra("estado"));
                         int cant = serverOrdenes.size();
                         for(int i=0;i<cant;i++){
                             // Chequeamos el idorden para ver si esta en las listadas, y si está actuamos según el estado de la orden
@@ -171,8 +177,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
                             // Si estado='entregada' entonces mostramos el dialogo para calificar la orden
                             if(serverOrdenes.get(i).getIdorden().equals(getIntent().getStringExtra("idorden"))){
                                 if(getIntent().getStringExtra("estado").equals("entregada")){
-                                    if(serverOrdenes.get(i).getCalificado()==null)showDialogCalificar((new Gson()).toJson(serverOrdenes.get(i)));
-                                }
+                                                                   }
                                 if(getIntent().getStringExtra("estado").equals("confirmada")||getIntent().getStringExtra("estado").equals("cancelada")||getIntent().getStringExtra("estado").equals("anulada")||getIntent().getStringExtra("estado").equals("enviada")){
                                     showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
                                 }
@@ -244,17 +249,6 @@ public class MisOrdenesActivity extends AppCompatActivity {
 
     }
 
-    public void showDialogCalificar(String orden) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        CalificacionDialogFragment newFragment = new CalificacionDialogFragment();
-
-        Bundle args = new Bundle();
-        if(!orden.isEmpty() && !orden.equals(""))args.putString("orden", orden);
-        newFragment.setArguments(args);
-
-        newFragment.show(fragmentManager.beginTransaction(), "Calificá tu orden");
-
-    }
 
     private void showLoadingIndicator(final boolean show) {
         swipeRefreshLayout.setRefreshing(show);

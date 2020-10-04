@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.deliveryboss.app.data.api.model.Usuario;
-import com.deliveryboss.app.data.api.model.Usuario_direccion;
 
 /**
  * Created by Joaquin on 23/6/2017.

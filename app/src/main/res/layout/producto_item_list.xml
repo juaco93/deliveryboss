@@ -20,6 +20,16 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp">
 
+        <ImageView
+            android:id="@+id/img_producto"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:background="@layout/imageview_border"
+            android:contentDescription="Logo de la @string/title_activity_detalle_empresa"
+            android:padding="1dp" />
+
         <TextView
             android:id="@+id/txtPrecio"
             android:layout_width="wrap_content"
@@ -35,22 +45,20 @@
             style="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img_producto"
             android:textColor="@color/cardview_dark_background"
-            tools:text="Lomito Especial" />
+            tools:text="Cabernet Sauvignon" />
 
         <TextView
             android:id="@+id/txtProductoDetalle"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/txtNombreProducto"
             android:layout_centerVertical="true"
-            android:text="Tomate, jamon, huevo"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img_producto"
+            android:text="Fino aroma a hierbas del cerro, color rojo intenso y un añejado que hacen de este vino especial para acompañar pescados, mariscos y carnes blancas"
             android:textColor="@color/com_facebook_button_background_color_focused_disabled" />
 
     </RelativeLayout>

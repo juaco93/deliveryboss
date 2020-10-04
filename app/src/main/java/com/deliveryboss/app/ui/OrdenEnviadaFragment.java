@@ -10,9 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.model.MessageEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Joaquin on 27/03/2018.

@@ -106,7 +106,7 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     if(diffCalificacion<0) {
-                        showDialog((new Gson()).toJson(orden));
+
                     }else{
                         holder.calificar.setTextColor(Color.LTGRAY);
                     }
@@ -128,17 +128,6 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
 
     }
 
-    public void showDialog(String orden) {
-        FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
-        CalificacionDialogFragment newFragment = new CalificacionDialogFragment();
-
-        Bundle args = new Bundle();
-        if(!orden.isEmpty() && !orden.equals(""))args.putString("orden", orden);
-        newFragment.setArguments(args);
-
-        newFragment.show(fragmentManager.beginTransaction(), "Calificar tu orden");
-
-    }
     public void showInfoEstadoOrden(String orden) {
         FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
         OrdenInfoEstadoFragment newFragment = new OrdenInfoEstadoFragment();

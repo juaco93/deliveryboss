@@ -29,18 +29,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.deliveryboss.app.data.api.model.ApiResponseEmpresa_delivery;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
+import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.DeliveryRequest;
 import com.deliveryboss.app.data.api.model.empresa_delivery;
 import com.deliveryboss.app.data.util.Utilidades;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
 import com.deliveryboss.app.data.api.model.ApiResponse;
-import com.deliveryboss.app.data.api.model.ApiResponseDirecciones;
-import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Orden;
 import com.deliveryboss.app.data.api.model.Orden_detalle;
@@ -50,7 +47,6 @@ import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
-import com.google.maps.android.SphericalUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,7 +54,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -76,7 +71,7 @@ public class CarritoActivity extends AppCompatActivity {
     List<Orden_detalle> ordenesDetalleLocal;
     Orden_detalle detalleMod;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     private View mEmptyStateContainer;
     private TextView txtEmptyContainer;
     // TODO: cambiar el request al server, puesto que ya tenemos la direccion del usuario
@@ -101,7 +96,7 @@ public class CarritoActivity extends AppCompatActivity {
     EditText pagaCon;
     Button btnConfirmarOrden;
     //Button btnAgregarDireccion;
-    EmpresasBody empresa;
+    BodegasBody empresa;
     Float importeTotal;
     String tipoEnvio = "1";
     String idDireccionUsuario = "";
@@ -149,7 +144,7 @@ public class CarritoActivity extends AppCompatActivity {
         String empresaJSON = getIntent().getExtras().getString("empresa");
         String direccionJSON = getIntent().getExtras().getString("direccionJson");
         abierto_hoy = getIntent().getExtras().getBoolean("abierto_hoy");
-        empresa = new Gson().fromJson(empresaJSON, EmpresasBody.class);
+        empresa = new Gson().fromJson(empresaJSON, BodegasBody.class);
         String idUsuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
         String usuarioIdciudad = SessionPrefs.get(this).getPrefUsuarioDireccionIdCiudad();
         String usuarioIddireccion = SessionPrefs.get(this).getPrefUsuarioIdDireccion();
@@ -165,7 +160,7 @@ public class CarritoActivity extends AppCompatActivity {
         Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
         importeTotal = sumarTotal();
-        nombreEmpresa.setText(empresa.getNombre_empresa());
+        nombreEmpresa.setText(empresa.getNombre());
 
         //// RETROFIT
         // Interceptor para log del Request
@@ -180,12 +175,12 @@ public class CarritoActivity extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         // Variables de delivery
         obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
@@ -278,15 +273,8 @@ public class CarritoActivity extends AppCompatActivity {
                // if(serverDirecciones!=null && serverDirecciones.size()>0)idDireccionUsuario = serverDirecciones.get(position-1).getIdusuario_direccion();
                 //Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
                 if(position>0)stDireccion = serverDirecciones.get(position-1).getIdusuario_direccion();
-                chequearDireccion();
-                /*if(position>0){
-                    precioDelivery = calcularPrecioDelivery(serverDirecciones.get(position-1),serverDelivery.get(0));
-                    txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
-                }*/
+                //chequearDireccion();
 
-                //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
-               // Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
-                //Log.d("direcciones", "id de direccion elegida: " + stDireccion);
             }
 
             @Override
@@ -465,7 +453,7 @@ public class CarritoActivity extends AppCompatActivity {
         obtenerDirecciones();
 
         // Chequeamos si el local esta abierto para permitir el envio de ordenes
-        chequearLocalAbiertoHoy();
+        //chequearLocalAbiertoHoy();
 
         // Chequeamos que haya seleccionado el tipo de entrega
         chequearTipoEntrega();
@@ -498,8 +486,8 @@ public class CarritoActivity extends AppCompatActivity {
         // Variables del Objeto "Orden"
         String authorization = SessionPrefs.get(this).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
-        String idempresa = empresa.getIdempresa();
-        String nombreEmpresa = empresa.getNombre_empresa();
+        String idempresa = empresa.getIdbodega();
+        String nombreEmpresa = empresa.getNombre();
         String stPrecioDelivery = precioDelivery.toString();
 
         String direccionLocal = direccionUsuario.getIdusuario_direccion();
@@ -522,7 +510,7 @@ public class CarritoActivity extends AppCompatActivity {
 
 
         // Realizar petición HTTP
-        Call<ApiResponse> call = mDeliverybossApi.insertarOrden(authorization,idempresa,idusuario,orden);
+        Call<ApiResponse> call = mVinosYBodegasApi.insertarOrden(authorization,idempresa,idusuario,orden);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call,
@@ -683,7 +671,7 @@ public class CarritoActivity extends AppCompatActivity {
         Log.d("direcciones", "Recuperando Direcciones desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseDirecciones> call2 = mDeliverybossApi.obtenerDireccionesUsuario(authorization,idusuario);
+        Call<ApiResponseDirecciones> call2 = mVinosYBodegasApi.obtenerDireccionesUsuario(authorization,idusuario);
         call2.enqueue(new Callback<ApiResponseDirecciones>() {
             @Override
             public void onResponse(Call<ApiResponseDirecciones> call,

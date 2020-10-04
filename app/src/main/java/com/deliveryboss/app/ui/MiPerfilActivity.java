@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,12 +24,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.CircleTransform;
-import com.deliveryboss.app.data.api.DeliverybossApi;
 import com.deliveryboss.app.data.api.model.ApiResponse;
 import com.deliveryboss.app.data.api.model.ApiResponseUsuario;
 import com.deliveryboss.app.data.api.model.Usuario;
@@ -72,7 +71,7 @@ public class MiPerfilActivity extends AppCompatActivity {
 
 
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     ApiResponseUsuario serverUsuario;
 
     Calendar myCalendar = Calendar.getInstance();
@@ -175,11 +174,11 @@ public class MiPerfilActivity extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         obtenerUsuario();
     }
@@ -264,7 +263,7 @@ public class MiPerfilActivity extends AppCompatActivity {
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
 
         // Realizar petición HTTP
-        Call<ApiResponseUsuario> call = mDeliverybossApi.obtenerUsuarioPorId(authorization,idusuario);
+        Call<ApiResponseUsuario> call = mVinosYBodegasApi.obtenerUsuarioPorId(authorization,idusuario);
         call.enqueue(new Callback<ApiResponseUsuario>() {
             @Override
             public void onResponse(Call<ApiResponseUsuario> call,
@@ -346,7 +345,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             //Log.d("logindb", "Modificando usuario>" + jsonInString);
 
             // Realizar petición HTTP
-            Call<ApiResponse> call = mDeliverybossApi.modificarUsuario(authorization, usuarioMod, idusuario);
+            Call<ApiResponse> call = mVinosYBodegasApi.modificarUsuario(authorization, usuarioMod, idusuario);
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call,

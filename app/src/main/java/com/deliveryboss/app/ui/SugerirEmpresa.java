@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponse;
 import com.deliveryboss.app.data.api.model.EmpresaSugerida;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
@@ -46,7 +45,7 @@ public class SugerirEmpresa extends AppCompatActivity {
     Button btnSugerirEmpresa;
 
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +91,12 @@ public class SugerirEmpresa extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
     }
 
     private void sugerirEmpresa() {
@@ -112,7 +111,7 @@ public class SugerirEmpresa extends AppCompatActivity {
         String direccionEmpresa = DireccionEmpresa.getText().toString();
         String ciudadEmpresa = Ciudad.getText().toString();
 
-            Call<ApiResponse> call = mDeliverybossApi.sugerirEmpresa(authorization,new EmpresaSugerida(tipoSugerencia,nombre,apellido,telefono,email,nombreEmpresa,direccionEmpresa,ciudadEmpresa));
+            Call<ApiResponse> call = mVinosYBodegasApi.sugerirEmpresa(authorization,new EmpresaSugerida(tipoSugerencia,nombre,apellido,telefono,email,nombreEmpresa,direccionEmpresa,ciudadEmpresa));
         call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

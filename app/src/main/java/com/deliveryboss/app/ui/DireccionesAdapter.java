@@ -2,7 +2,6 @@ package com.deliveryboss.app.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,11 +15,11 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
 import com.deliveryboss.app.data.api.model.ApiResponse;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
@@ -41,7 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.ViewHolder> {
     private Context context;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     String authorization;
     private boolean esPrimeraDireccion;
 
@@ -220,18 +219,18 @@ public class DireccionesAdapter extends RecyclerView.Adapter<DireccionesAdapter.
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         authorization = SessionPrefs.get(context).getPrefUsuarioToken();
         String idusuario = SessionPrefs.get(context).getPrefUsuarioIdUsuario();
         Log.d("gson", "Recuperando Direcciones desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponse> call = mDeliverybossApi.eliminarDireccionUsuario(authorization,idusuario, idusuario_direccion);
+        Call<ApiResponse> call = mVinosYBodegasApi.eliminarDireccionUsuario(authorization,idusuario, idusuario_direccion);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call,

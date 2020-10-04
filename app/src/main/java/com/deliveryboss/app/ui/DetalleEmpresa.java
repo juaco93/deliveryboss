@@ -3,7 +3,6 @@ package com.deliveryboss.app.ui;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,14 +14,13 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.model.EmpresasBody;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,7 +35,7 @@ public class DetalleEmpresa extends AppCompatActivity{
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    EmpresasBody empresa;
+    BodegasBody empresa;
     String codRubro;
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -66,8 +64,8 @@ public class DetalleEmpresa extends AppCompatActivity{
         mSharedFab = findViewById(R.id.multiple_actions);
 
         Intent intentRecibido = getIntent();
-        empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
-        getSupportActionBar().setTitle(empresa.getNombre_empresa());
+        empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")), BodegasBody.class);
+        getSupportActionBar().setTitle(empresa.getNombre());
 
         codRubro = getRubro();
 
@@ -146,7 +144,7 @@ public class DetalleEmpresa extends AppCompatActivity{
 
         adapter.addFragment(fragmentMenu, "Menu");
         adapter.addFragment(fragmentInfoEmpresa, "Informacion");
-        adapter.addFragment(fragmentCalificaciones, "Calificacion");
+        //adapter.addFragment(fragmentCalificaciones, "Calificacion");
         viewPager.setAdapter(adapter);
 
         fragmentMenu.shareFab(mSharedFab); // To init the FAB
@@ -187,7 +185,7 @@ public class DetalleEmpresa extends AppCompatActivity{
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        //tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
     @Override
@@ -208,7 +206,7 @@ public class DetalleEmpresa extends AppCompatActivity{
     }
 
     public String getRubro(){
-        String rubro = empresa.getEmpresa_rubro();
+        String rubro = empresa.getIdempresa_rubro();
         String codRubro = "";
         switch (rubro){
             case "Comida":

@@ -12,18 +12,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
         android:paddingRight="8dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/img_logo_empresa"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:background="@layout/imageview_border"
             android:contentDescription="Logo de la @string/title_activity_detalle_empresa"
             android:padding="1dp" />
@@ -31,10 +31,10 @@
         <View
             android:id="@+id/vertical_separator"
             android:layout_width="1dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="7dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="7dp"
             android:layout_toEndOf="@+id/img_logo_empresa"
             android:layout_toRightOf="@+id/img_logo_empresa"
             android:background="#E0E0E0" />
@@ -45,28 +45,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
             android:layout_toEndOf="@+id/vertical_separator"
             android:layout_toRightOf="@+id/vertical_separator"
             android:paddingBottom="0dp"
             android:textSize="15sp"
-            tools:text="Lomitos La Avenida" />
-
-        <TextView
-            android:id="@+id/txtCalificacionFloat"
-            style="@style/Base.TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtNombreEmpresa"
-            android:layout_alignStart="@+id/txtNombreEmpresa"
-            android:layout_below="@+id/txtNombreEmpresa"
-            android:background="@color/colorEstrellas"
-            android:paddingLeft="1dp"
-            android:paddingRight="1dp"
-            android:textColor="@color/cardview_light_background"
-            android:textSize="13sp"
-            tools:text="4.1" />
+            tools:text="Viñedo del Cerro Crux" />
 
         <!--
         <RatingBar
@@ -87,96 +72,43 @@
             android:transformPivotX="0dp" />
             -->
 
-        <TextView
-            android:id="@+id/txtCantidadCalificacion"
-            style="@style/Base.TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtNombreEmpresa"
-            android:layout_marginLeft="2dp"
-            android:layout_toEndOf="@+id/calificacion"
-            android:layout_toRightOf="@+id/calificacion"
-            android:textAppearance="@android:style/TextAppearance.Material.Body1"
-            android:textSize="12sp"
-            tools:text="(10)" />
-
-        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-            android:id="@+id/calificacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtNombreEmpresa"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@+id/txtCalificacionFloat"
-            app:srb_borderColor="@color/colorEstrellas"
-            app:srb_fillColor="@color/colorEstrellas"
-            app:srb_isIndicator="true"
-            app:srb_numberOfStars="5"
-            app:srb_rating="3"
-            app:srb_starSize="15dp"
-            app:srb_stepSize="0.5" />
-
 
         <TextView
             android:id="@+id/txtRubroElegido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtNombreEmpresa"
-            android:layout_alignStart="@+id/txtNombreEmpresa"
             android:layout_below="@+id/txtNombreEmpresa"
-            android:paddingTop="21dp"
+            android:layout_alignStart="@+id/txtNombreEmpresa"
+            android:layout_alignLeft="@+id/txtNombreEmpresa"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
             android:textSize="13sp"
-            tools:text="Pizzas, Lomos, Empanadas" />
+            android:textStyle="bold"
+            tools:text="Vinos, Aceites, Otros" />
 
-
-        <LinearLayout
-            android:id="@+id/layoutDelivery"
+        <TextView
+            android:id="@+id/txtDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtRubroElegido"
-            android:layout_alignStart="@+id/txtRubroElegido"
             android:layout_below="@+id/txtRubroElegido"
-            android:paddingTop="0dp">
-
-            <TextView
-                android:id="@+id/txtPrecioDelivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="13sp"
-                tools:text="Delivery $30" />
-
-            <TextView
-                android:id="@+id/txtTiempoDelivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="13sp"
-                tools:text="30-45min" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txtCompraMinima"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/layoutDelivery"
-            android:layout_alignStart="@+id/layoutDelivery"
-            android:layout_below="@+id/layoutDelivery"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_alignStart="@+id/txtNombreEmpresa"
+            android:layout_alignLeft="@+id/txtNombreEmpresa"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
             android:textSize="13sp"
-            tools:text="Compra minima: $100" />
+            tools:text="Elisa del Sancho Panza 64" />
+
 
         <TextView
-            android:id="@+id/txtHorarios"
+            android:id="@+id/txtTipoEntrega"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/txtCompraMinima"
-            android:layout_alignStart="@+id/txtCompraMinima"
-            android:layout_below="@+id/txtCompraMinima"
-            android:text="Hoy Cerrado"
+            android:layout_below="@+id/txtDireccion"
+            android:layout_alignLeft="@+id/txtNombreEmpresa"
+            android:layout_marginTop="5dp"
+            android:text="Solo Delivery"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textSize="13sp" />
 
@@ -196,7 +128,7 @@
                 android:tint="@color/com_facebook_button_background_color_focused_disabled" />
 
             <TextView
-                android:id="@+id/txtDistancia"
+                android:id="@+id/txtCiudad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/imgDistancia"

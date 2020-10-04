@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.icu.text.IDNA;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,11 +25,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.BadgeDrawable;
+import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.ListItem;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Rubro;
@@ -39,9 +39,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
 import com.deliveryboss.app.data.api.model.ApiResponseProductos;
-import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.api.model.Orden_detalle;
 import com.deliveryboss.app.data.api.model.Producto;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
@@ -52,7 +50,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -69,12 +66,12 @@ import static android.content.Context.SEARCH_SERVICE;
 
 
 public class InfoMenuFragment extends Fragment {
-    EmpresasBody empresa;
+    BodegasBody empresa;
     private RecyclerView mListaProductos;
     //private ProductosAdapter mProductosAdapter;
     private RubrosAdapter mProductosAdapter;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     private View mEmptyStateContainer;
     private TextView txtEmptyContainer;
     private static final int FRAGMENTO_AGREGAR_PRODUCTO = 1;
@@ -195,14 +192,14 @@ public class InfoMenuFragment extends Fragment {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         Intent intentRecibido = getActivity().getIntent();
-        empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
+        empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")), BodegasBody.class);
 
         //Log.d("gson",empresa.getIdempresa());
         //Log.d("gson",empresa.getNombre_empresa());
@@ -233,7 +230,7 @@ public class InfoMenuFragment extends Fragment {
         //Log.d("gson", "Token Header: " + authorization);
 
         // Realizar petición HTTP
-        Call<ApiResponseProductos> call = mDeliverybossApi.obtenerProductos(authorization,empresa.getIdempresa());
+        Call<ApiResponseProductos> call = mVinosYBodegasApi.obtenerProductos("1001",empresa.getIdbodega());
         call.enqueue(new Callback<ApiResponseProductos>() {
             @Override
             public void onResponse(Call<ApiResponseProductos> call,
@@ -266,16 +263,21 @@ public class InfoMenuFragment extends Fragment {
                     //Log.d("gson", response.raw().toString());
                     return;
                 }
+                //La respuesta SI fue exitosa
+                Log.d("joaco", "Respuesta PRODUCTOS SI exitosa");
+                Log.d("joaco", new Gson().toJson(response));
 
                 serverProductos = response.body().getDatos();
                 //Log.d("gson", "todio bien, recibido: " + response.body().getDatos().toString());
-                if (serverProductos.size() > 0) {
-                    //Log.d("gson", "nombre producto: " + serverProductos.get(0).getProducto());
-                    // Mostrar lista de empresas
-                    mostrarProductos(serverProductos);
-                } else {
-                    // Mostrar empty state
-                    mostrarProductosEmpty();
+                if(serverProductos!=null){
+                    if (serverProductos.size() > 0) {
+                        //Log.d("gson", "nombre producto: " + serverProductos.get(0).getProducto());
+                        // Mostrar lista de empresas
+                        mostrarProductos(serverProductos);
+                    } else {
+                        // Mostrar empty state
+                        mostrarProductosEmpty();
+                    }
                 }
             }
 
@@ -303,7 +305,7 @@ public class InfoMenuFragment extends Fragment {
             Rubro header = new Rubro(rubro) {};
             itemsConsolidados.add(header);
             for (Producto producto : mapaProductos.get(rubro)) {
-                Producto item = new Producto(producto.getIdproducto(),producto.getProducto(),producto.getProducto_detalle(),producto.getPrecio(),producto.getDescuento(),producto.getEmpresa_idempresa(),producto.getProducto_rubro_idproducto_rubro(),producto.getProducto_rubro());
+                Producto item = new Producto(producto.getIdproducto(),producto.getFecha_hora_alta(),producto.getProducto(),producto.getDescripcion(),producto.getImagen(),producto.getPrecio1(),producto.getPrecio2(),producto.getStock(),producto.getDescuento(),producto.getActivo(),producto.getIdbodega(),producto.getProducto_rubro());
                 itemsConsolidados.add(item);
             }
         }
@@ -378,7 +380,7 @@ public class InfoMenuFragment extends Fragment {
             Rubro header = new Rubro(rubro) {};
             //filteredList.add(header);
             for (Producto producto : mapaProductos.get(rubro)) {
-                Producto item = new Producto(producto.getIdproducto(),producto.getProducto(),producto.getProducto_detalle(),producto.getPrecio(),producto.getDescuento(),producto.getEmpresa_idempresa(),producto.getProducto_rubro_idproducto_rubro(),producto.getProducto_rubro());
+                Producto item = new Producto(producto.getIdproducto(),producto.getFecha_hora_alta(),producto.getProducto(),producto.getDescripcion(),producto.getImagen(),producto.getPrecio1(),producto.getPrecio2(),producto.getStock(),producto.getDescuento(),producto.getActivo(),producto.getIdbodega(),producto.getProducto_rubro());
                 //itemsConsolidados.add(item);
                 final String nombre_rubro = header.getRubro().toLowerCase();
                 final String nombre = item.getProducto().toLowerCase();

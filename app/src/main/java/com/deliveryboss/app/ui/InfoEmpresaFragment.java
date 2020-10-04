@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.Delivery;
 import com.deliveryboss.app.data.api.model.DeliveryRequest;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
@@ -27,10 +28,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponseCalificaciones;
 import com.deliveryboss.app.data.api.model.Calificacion;
-import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 
 import java.text.DecimalFormat;
@@ -47,7 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InfoEmpresaFragment extends Fragment{
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     List<Calificacion> serverCalificaciones;
     Usuario_direccion direccionUsuario;
     DeliveryRequest calcularPrecioDelivery;
@@ -90,7 +90,7 @@ public class InfoEmpresaFragment extends Fragment{
     TextView lbviernes;
     TextView lbsabado;
     TextView lbdomingo;
-    EmpresasBody empresa;
+    BodegasBody empresa;
 
 
             public InfoEmpresaFragment() {
@@ -115,11 +115,11 @@ public class InfoEmpresaFragment extends Fragment{
 
             // Crear conexión al servicio REST
             mRestAdapter = new Retrofit.Builder()
-                    .baseUrl(DeliverybossApi.BASE_URL)
+                    .baseUrl(VinosYBodegasApi.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
             // Crear conexión a la API de Deliveryboss
-            mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+            mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
             lunes = (TextView) v.findViewById(R.id.txtLunes);
             martes = (TextView) v.findViewById(R.id.txtMartes);
@@ -160,7 +160,7 @@ public class InfoEmpresaFragment extends Fragment{
             ////// CARD HORARIOS //////////
             limpiarHorarios();
             Intent intentRecibido = getActivity().getIntent();
-            empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")),EmpresasBody.class);
+            empresa = (new Gson()).fromJson((intentRecibido.getStringExtra("empresaJson")), BodegasBody.class);
             String idUsuario = SessionPrefs.get(getContext()).getPrefUsuarioIdUsuario();
             String usuarioIdciudad = SessionPrefs.get(getContext()).getPrefUsuarioDireccionIdCiudad();
             String usuarioIddireccion = SessionPrefs.get(getContext()).getPrefUsuarioIdDireccion();
@@ -175,78 +175,6 @@ public class InfoEmpresaFragment extends Fragment{
             mostrarHorarios();
 
 
-            ////// CARD DELIVERY //////////
-            // Si el calculo de distancias es exitoso
-            if(calcularPrecioDelivery.getEstado()==1){
-                Delivery objeto = calcularPrecioDelivery.getDatos();
-                precioDelivery.setText("Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
-                String precio = "";
-                if(objeto.getPrecio()<=0){
-                    precio = "Delivery ¡GRATIS! ";
-                }else{
-                    precio="Precio Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
-                }
-                precioDelivery.setText(precio);
-            }else{
-                if(calcularPrecioDelivery.getEstado()==2){
-                    precioDelivery.setText("No hay delivery a tu zona"+" ");
-                }
-                if(calcularPrecioDelivery.getEstado()==4){
-                    precioDelivery.setText("No tenes definida la ubicación");
-                }
-            }
-
-            tiempoDelivery.setText("Demora usual: " + empresa.getTiempo_minimo_entrega()+"-"+empresa.getTiempo_maximo_entrega()+" minutos.");
-            compraMinima.setText("Compra mínima: $" + empresa.getCompra_minima());
-
-            ////// CARD CALIFICACIONES ///////
-            String cal1Redond="0,0";
-            String cal2Redond="0,0";
-            String cal3Redond="0,0";
-            lbCalificacion.setText(empresa.getNombre_empresa());
-            if(empresa.getCalificacion_general()!=null){
-                String calRedond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion_general()));
-                if(empresa.getCalificacion1()!=null)cal1Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion1()));
-                if(empresa.getCalificacion2()!=null)cal2Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion2()));
-                if(empresa.getCalificacion3()!=null)cal3Redond = String.format("%.1f", Float.parseFloat(empresa.getCalificacion3()));
-                lbCalificacionFloat.setText(calRedond);
-                lbCalificacion1.setText(cal1Redond);
-                lbCalificacion2.setText(cal2Redond);
-                lbCalificacion3.setText(cal3Redond);
-                //detalleCalificacion.setRating(Float.parseFloat(empresa.getCalificacion()));
-                lbCantidadCalificacion.setText("("+empresa.getCantidad_calificacion()+")");
-            }else{
-                lbCalificacionFloat.setText("0.0");
-                lbCalificacion1.setText("0.0");
-                lbCalificacion2.setText("0.0");
-                lbCalificacion3.setText("0.0");
-                lbCantidadCalificacion.setText("(0)");
-            }
-            //lbRubroElegido.setText(empresa.getSubrubro().replace(","," ~ "));
-            if(empresa.getEmpresa_subrubro()!=null){
-                if(empresa.getEmpresa_subrubro().get(0).getSubrubro1()!=null){
-                    lbRubroElegido.setText(empresa.getEmpresa_subrubro().get(0).getSubrubro1());
-                }
-                if(empresa.getEmpresa_subrubro().get(0).getSubrubro2()!=null){
-                    lbRubroElegido.append(", "+empresa.getEmpresa_subrubro().get(0).getSubrubro2());
-                }
-                if(empresa.getEmpresa_subrubro().get(0).getSubrubro3()!=null){
-                    lbRubroElegido.append(", "+empresa.getEmpresa_subrubro().get(0).getSubrubro3());
-                }
-            }
-            /*detalleCalificacion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("idempresa", empresa.getIdempresa());
-                    bundle.putString("cuerpoAnteriorCalificacion", cuerpoAnteriorCalificacion);
-                    bundle.putString("anteriorCalificacion", anteriorCalificacion);
-                    DialogFragment newFragment = new CalificacionDialogFragment();
-                    newFragment.setArguments(bundle);
-                    newFragment.show(getActivity().getSupportFragmentManager(), "Calificar");
-
-                }
-            });*/
 
             //////// CARD UBICACION ///////////
             mMapView = (MapView) v.findViewById(R.id.mapView);
@@ -260,35 +188,6 @@ public class InfoEmpresaFragment extends Fragment{
                 e.printStackTrace();
             }
 
-            mMapView.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap mMap) {
-                    googleMap = mMap;
-
-                    // For showing a move to my location button
-                    //googleMap.setMyLocationEnabled(true);
-
-                    if(empresa.getLatitud()!=null && empresa.getLongitud()!=null){
-                        float lat = Float.valueOf(empresa.getLatitud());
-                        float lon = Float.valueOf(empresa.getLongitud());
-                        LatLng ubicacionEmpresa = new LatLng(lat, lon);
-                        googleMap.addMarker(new MarkerOptions().position(ubicacionEmpresa).title(empresa.getNombre_empresa()).snippet(empresa.getDireccion()));
-
-                        float latCamara = lat+0.001f;
-                        LatLng ubicacionCamara = new LatLng(latCamara,lon);
-                        // For zooming automatically to the location of the marker
-                        CameraPosition cameraPosition = new CameraPosition.Builder().target(ubicacionCamara).zoom(16).build();
-                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                    }else{
-                        // For dropping a marker at a point on the Map
-                        LatLng sydney = new LatLng(-34, 151);
-                        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                        // For zooming automatically to the location of the marker
-                        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(16).build();
-                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                    }
-                }
-            });
 
             //obtenerCalificacionUsuario();
 
@@ -307,51 +206,6 @@ public class InfoEmpresaFragment extends Fragment{
             String turno1hasta = "";
             String turno2hasta = "";
 
-            int cantidad=empresa.getEmpresa_horario().size();
-            for(int i=0;i<cantidad;i++){
-
-                // OBTENEMOS LOS TURNOS DEL DIA
-                turno1desde=empresa.getEmpresa_horario().get(i).getTurno1_desde();
-                turno2desde=empresa.getEmpresa_horario().get(i).getTurno2_desde();
-                turno1hasta=empresa.getEmpresa_horario().get(i).getTurno1_hasta();
-                turno2hasta=empresa.getEmpresa_horario().get(i).getTurno2_hasta();
-                String mensaje = "Cerrado";
-
-                if(turno1desde!=null && turno1hasta!=null && turno2desde!=null & turno2hasta!=null){
-                    mensaje = turno1desde +" a " + turno1hasta + " y " +turno2desde+  " a "+ turno2hasta;
-                }else{
-                    if(turno1desde!=null && turno1hasta!=null)mensaje = turno1desde +" a " + turno1hasta;
-                    if(turno2desde!=null && turno2hasta!=null)mensaje = turno2desde +" a " + turno2hasta;
-                }
-
-
-                switch (empresa.getEmpresa_horario().get(i).getDia()){
-                    case "lun.":
-                        lunes.setText(mensaje);
-                        break;
-                    case "mar.":
-                        martes.setText(mensaje);
-                        break;
-                    case "mié.":
-                        miercoles.setText(mensaje);
-                        break;
-                    case "jue.":
-                        jueves.setText(mensaje);
-                        break;
-                    case "vie.":
-                        viernes.setText(mensaje);
-                        break;
-                    case "sáb.":
-                        sabado.setText(mensaje);
-                        break;
-                    case "dom.":
-                        domingo.setText(mensaje);
-                        break;
-                    case "Feriados":
-                        feriados.setText(mensaje);
-                        break;
-                }
-            }
 
 
 
@@ -496,60 +350,6 @@ public class InfoEmpresaFragment extends Fragment{
     }
 
     public void obtenerCalificacionUsuario(){
-        String authorization = SessionPrefs.get(getActivity()).getPrefUsuarioToken();
-        String idusuario = SessionPrefs.get(getActivity()).getPrefUsuarioIdUsuario();
-        String idempresa = empresa.getIdempresa();
-        //Log.d("calificacionUser", "idusuario: " + idusuario + "idempresa: " + idempresa);
-
-        // Realizar petición HTTP
-        Call<ApiResponseCalificaciones> call = mDeliverybossApi.obtenerCalificacionUsuario(authorization,idempresa, idusuario);
-        call.enqueue(new Callback<ApiResponseCalificaciones>() {
-            @Override
-            public void onResponse(Call<ApiResponseCalificaciones> call,
-                                   Response<ApiResponseCalificaciones> response) {
-                if (!response.isSuccessful()) {
-                    Log.d("calificacionUser", response.raw().toString());
-                    // Procesar error de API
-                    String error = "Ha ocurrido un error. Contacte al administrador";
-                    if (response.errorBody()
-                            .contentType()
-                            .subtype()
-                            .equals("json")) {
-
-                    } else {
-                    }
-
-                    return;
-                }
-                //Log.d("calificacionUser", response.raw().toString());
-                //EN CASO DE QUE SEA EXITOSA
-                serverCalificaciones = response.body().getDatos();
-                if (serverCalificaciones.size() > 0) {
-                    // Mostrar lista de empresas
-                    if(serverCalificaciones.get(0).getCalificacion1()!=null) {
-                        calificacionUsuario.setRating(Float.valueOf(serverCalificaciones.get(0).getCalificacion1()));
-                        anteriorCalificacion = serverCalificaciones.get(0).getCalificacion1();
-                        cuerpoAnteriorCalificacion = serverCalificaciones.get(0).getComentario();
-                    }
-
-                } else {
-                    // Mostrar empty state
-                    //calificacionUsuario.setRating(0.0f);
-                    lbCalificacionUsuario.setText("Aun no calificaste!");
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponseCalificaciones> call, Throwable t) {
-                //showLoadingIndicator(false);
-                //Log.d("logindb", "Petición rechazada:" + t.getMessage());
-                //showErrorMessage("Comprueba tu conexión a Internet");
-            }
-        });
     }
 
     public void onResume(){

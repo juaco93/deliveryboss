@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponseCiudades;
 import com.deliveryboss.app.data.api.model.Ciudad;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
@@ -35,7 +35,7 @@ public class SeleccionarCiudad extends AppCompatActivity {
     Spinner spCiudades;
     CardView cvVerRestaurantes;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     List<Ciudad> serverCiudades;
 
     String stCiudad;
@@ -101,12 +101,12 @@ public class SeleccionarCiudad extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
 
         obtenerCiudades();
@@ -119,7 +119,7 @@ public class SeleccionarCiudad extends AppCompatActivity {
         Log.d("direcciones", "Recuperando Ciudades desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseCiudades> call2 = mDeliverybossApi.obtenerCiudades(authorization);
+        Call<ApiResponseCiudades> call2 = mVinosYBodegasApi.obtenerCiudades(authorization);
         call2.enqueue(new Callback<ApiResponseCiudades>() {
             @Override
             public void onResponse(Call<ApiResponseCiudades> call,

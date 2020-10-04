@@ -2,13 +2,17 @@ package com.deliveryboss.app.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.Producto;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +34,11 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Log.d("joaco","CARGAMOS LOS PRODUCTOS EN EL ADAPTER");
         Producto producto = mItems.get(position);
         holder.producto.setText(producto.getProducto());
-        holder.detalleproducto.setText(producto.getProducto_detalle());
-        holder.precio.setText("$" + producto.getPrecio());
+        holder.detalleproducto.setText(producto.getDescripcion());
+        holder.precio.setText("$" + producto.getPrecio1());
 
     }
 
@@ -66,6 +71,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imagenProducto;
         public TextView producto;
         public TextView detalleproducto;
         public TextView precio;
@@ -73,6 +79,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
+            imagenProducto = (ImageView) itemView.findViewById(R.id.img_producto);
             producto = (TextView) itemView.findViewById(R.id.txtNombreProducto);
             detalleproducto = (TextView) itemView.findViewById(R.id.txtProductoDetalle) ;
             precio = (TextView) itemView.findViewById(R.id.txtPrecio);

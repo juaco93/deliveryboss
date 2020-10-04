@@ -24,7 +24,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponse;
 import com.deliveryboss.app.data.api.model.ApiResponseCiudades;
 import com.deliveryboss.app.data.api.model.Ciudad;
@@ -59,7 +59,7 @@ public class ModificarDireccionFragment extends DialogFragment {
     EditText latitudLongitud;
     Spinner ciudad;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     List<Ciudad> serverCiudades;
     private TextInputLayout mFloatLabelCalle;
     private TextInputLayout mFloatLabelNumero;
@@ -180,12 +180,12 @@ public class ModificarDireccionFragment extends DialogFragment {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         // Cargar spinner de ciudades
         obtenerCiudades();
@@ -248,7 +248,7 @@ public class ModificarDireccionFragment extends DialogFragment {
             nuevaDireccion = new Usuario_direccion("", idusuario, stCiudad, "", stCalle, stNumero, stHabitacion,  stBarrio, stReferencia, latRecibida, longRecibida);
 
             // Realizar petición HTTP
-            Call<ApiResponse> call = mDeliverybossApi.insertarDireccionUsuario(authorization, idusuario, nuevaDireccion);
+            Call<ApiResponse> call = mVinosYBodegasApi.insertarDireccionUsuario(authorization, idusuario, nuevaDireccion);
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call,
@@ -327,7 +327,7 @@ public class ModificarDireccionFragment extends DialogFragment {
             Log.d("ubicacion", "Objeto Direccion enviada a sv-->"+ dire );
 
             // Realizar petición HTTP
-            Call<ApiResponse> call = mDeliverybossApi.modificarDireccionUsuario(authorization, idusuario, iddireccion, nuevaDireccion);
+            Call<ApiResponse> call = mVinosYBodegasApi.modificarDireccionUsuario(authorization, idusuario, iddireccion, nuevaDireccion);
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call,
@@ -384,7 +384,7 @@ public class ModificarDireccionFragment extends DialogFragment {
         //Log.d("direcciones", "Recuperando Ciudades desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseCiudades> call2 = mDeliverybossApi.obtenerCiudades(authorization);
+        Call<ApiResponseCiudades> call2 = mVinosYBodegasApi.obtenerCiudades(authorization);
         call2.enqueue(new Callback<ApiResponseCiudades>() {
             @Override
             public void onResponse(Call<ApiResponseCiudades> call,

@@ -76,8 +76,8 @@ public class AgregarProductoFragment extends DialogFragment {
 
                 // SI ES QUE VENIMOS DEL MENU (FLUJO NORMAL)
                 if(ModOrden_detalle==null) {
-                    String subtotal = String.valueOf(Float.valueOf(producto.getPrecio()) * cantidadProducto.getValue());
-                    ordenDetalle = new Orden_detalle("", "", String.valueOf(cantidadProducto.getValue()), producto.getIdproducto(), producto.getProducto(), producto.getPrecio(), producto.getProducto_rubro_idproducto_rubro(), subtotal);
+                    String subtotal = String.valueOf(Float.valueOf(producto.getPrecio1()) * cantidadProducto.getValue());
+                    ordenDetalle = new Orden_detalle("", "", String.valueOf(cantidadProducto.getValue()), producto.getIdproducto(), producto.getProducto(), producto.getPrecio1(), producto.getProducto_rubro(), subtotal);
                     Intent i = new Intent()
                             .putExtra("detalle", (new Gson()).toJson(ordenDetalle));
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);

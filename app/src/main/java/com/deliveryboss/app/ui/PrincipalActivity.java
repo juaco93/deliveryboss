@@ -1,14 +1,11 @@
 package com.deliveryboss.app.ui;
 
-import android.animation.Animator;
-import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,12 +24,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -42,8 +37,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deliveryboss.app.data.api.model.ApiResponseBodegas;
+import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.DeliveryRequest;
-import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.util.Utilidades;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -52,26 +48,18 @@ import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.CircleTransform;
 import com.deliveryboss.app.data.api.model.ApiResponseMantenimiento;
-import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.deliveryboss.app.data.api.model.Mantenimiento;
 import com.deliveryboss.app.data.app.Config;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
-import com.deliveryboss.app.data.api.model.ApiResponseEmpresas;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.util.NotificationUtils;
 import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,13 +70,13 @@ public class PrincipalActivity extends AppCompatActivity {
     private static final int STATUS_FILTER_DEFAULT_VALUE = 0;
     public static final int EXTRA_REQUEST_FILTRO = 3;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     String authorization;
     private RecyclerView mListaEmpresas;
     private View mEmptyStateContainer;
     private TextView txtEmptyStateEmpresas;
     private EmpresasAdapter mEmpresasAdapter;
-    List<EmpresasBody> serverEmpresas;
+    List<BodegasBody> serverEmpresas;
     List<Mantenimiento> mantenimientos;
     Boolean mantenimientoActivo=false;
     //String ciudadIntent;
@@ -230,10 +218,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
         mListaEmpresas = (RecyclerView) findViewById(R.id.list_empresas);
-        mEmpresasAdapter = new EmpresasAdapter(this, new ArrayList<EmpresasBody>(0),usuarioDireccion);
+        mEmpresasAdapter = new EmpresasAdapter(this, new ArrayList<BodegasBody>(0),usuarioDireccion);
         mEmpresasAdapter.setOnItemClickListener(new EmpresasAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(EmpresasBody clickedEmpresa) {
+            public void onItemClick(BodegasBody clickedEmpresa) {
                 Intent intent2 = new Intent(PrincipalActivity.this, DetalleEmpresa.class);
                 intent2.putExtra("empresaJson",(new Gson()).toJson(clickedEmpresa));
                 startActivity(intent2);
@@ -251,11 +239,11 @@ public class PrincipalActivity extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
 
 
@@ -404,13 +392,14 @@ public class PrincipalActivity extends AppCompatActivity {
         usuarioDireccion = new Usuario_direccion(usuarioIddireccion,idUsuario,usuarioIdciudad,"",usuarioCalle,usuarioNumero,"","","",usuarioLatitud,usuarioLongitud);
         // Realizar petición HTTP
         //MODO DEBUG: SIGUIENTE LINEA
-        //Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, "debug_app");
+        //Call<ApiResponseBodegas> call = mVinosYBodegasApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, "debug_app");
         //MODO NORMAL: SIGUIENTE LINEA
-        Call<ApiResponseEmpresas> call = mDeliverybossApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, "1");
-        call.enqueue(new Callback<ApiResponseEmpresas>() {
+        Log.d("joaco", "Vamos a llamar a la API");
+        Call<ApiResponseBodegas> call = mVinosYBodegasApi.obtenerBodegas("1001");
+        call.enqueue(new Callback<ApiResponseBodegas>() {
             @Override
-            public void onResponse(Call<ApiResponseEmpresas> call,
-                                   Response<ApiResponseEmpresas> response) {
+            public void onResponse(Call<ApiResponseBodegas> call,
+                                   Response<ApiResponseBodegas> response) {
                 if (!response.isSuccessful()) {
                     // Procesar error de API
                     String error = "Ha ocurrido un error. Contacte al administrador";
@@ -421,11 +410,12 @@ public class PrincipalActivity extends AppCompatActivity {
                         //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
 
                         //error = apiError.getMessage();
-                        //Log.d(TAG, apiError.getDeveloperMessage());
+                        Log.d("joaco", response.errorBody().toString());
                     } else {
+                        Log.d("joaco", response.errorBody().toString());
                         /*try {
                             // Reportar causas de error no relacionado con la API
-                            //Log.d(TAG, response.errorBody().string());
+                            Log.d(TAG, response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }*/
@@ -434,24 +424,30 @@ public class PrincipalActivity extends AppCompatActivity {
                     showErrorMessage(error);
                     return;
                 }
+                    //La respuesta SI fue exitosa
+                    Log.d("joaco", "Respuesta SI exitosa");
+                    Log.d("joaco", new Gson().toJson(response));
+
 
                 serverEmpresas = response.body().getDatos();
 
-                if (serverEmpresas.size() > 0) {
-                    // Mostrar lista de empresas
-                    mostrarEmpresas(serverEmpresas);
-                    showLoadingIndicator(false);
-                } else {
-                    // Mostrar empty state
-                    mostrarEmpresasEmpty();
-                    showLoadingIndicator(false);
+                if(serverEmpresas!=null){
+                    if (serverEmpresas.size() > 0) {
+                        // Mostrar lista de empresas
+                        mostrarEmpresas(serverEmpresas);
+                        showLoadingIndicator(false);
+                    } else {
+                        // Mostrar empty state
+                        mostrarEmpresasEmpty();
+                        showLoadingIndicator(false);
+                    }
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<ApiResponseEmpresas> call, Throwable t) {
+            public void onFailure(Call<ApiResponseBodegas> call, Throwable t) {
                 showLoadingIndicator(false);
                 //Log.d("logindb", "Petición rechazada:" + t.getMessage());
                 showErrorMessage(getResources().getString(R.string.toastCompruebaConexion));
@@ -463,7 +459,7 @@ public class PrincipalActivity extends AppCompatActivity {
         authorization = SessionPrefs.get(this).getPrefUsuarioToken();
 
         // Realizar petición HTTP
-        Call<ApiResponseMantenimiento> call = mDeliverybossApi.obtenerMantenimiento(authorization);
+        Call<ApiResponseMantenimiento> call = mVinosYBodegasApi.obtenerMantenimiento(authorization);
         call.enqueue(new Callback<ApiResponseMantenimiento>() {
             @Override
             public void onResponse(Call<ApiResponseMantenimiento> call,
@@ -493,14 +489,16 @@ public class PrincipalActivity extends AppCompatActivity {
 
                 mantenimientos = response.body().getDatos();
 
-                if (mantenimientos.size() > 0) {
-                    //Log.d("mantenimiento",mantenimientos.get(0).getTitulo()+": "+ mantenimientos.get(0).getMensaje());
-                    //Log.d("mantenimiento","Estado Mantenimiento: "+mantenimientos.get(0).getEstado());
-                    chequearMantenimiento(mantenimientos);
-                } else {
-                    // Si por alguna razon no podemos obtener el registro de mantenimiento, activamos el modo normal.
-                    mantenimientoActivo=false;
-                    }
+                if(mantenimientos!=null){
+                    if (mantenimientos.size() > 0) {
+                        //Log.d("mantenimiento",mantenimientos.get(0).getTitulo()+": "+ mantenimientos.get(0).getMensaje());
+                        //Log.d("mantenimiento","Estado Mantenimiento: "+mantenimientos.get(0).getEstado());
+                        chequearMantenimiento(mantenimientos);
+                    } else {
+                        // Si por alguna razon no podemos obtener el registro de mantenimiento, activamos el modo normal.
+                        mantenimientoActivo=false;
+                        }
+                }
             }
 
             @Override
@@ -539,7 +537,7 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarEmpresas(List<EmpresasBody> empresasServer) {
+    private void mostrarEmpresas(List<BodegasBody> empresasServer) {
         mEmpresasAdapter.swapItems(empresasServer,usuarioDireccion);
         mListaEmpresas.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
@@ -572,24 +570,18 @@ public class PrincipalActivity extends AppCompatActivity {
     public void buscar(String query){
         query = query.toString().toLowerCase();
 
-        final List<EmpresasBody> filteredList = new ArrayList<>();
+        final List<BodegasBody> filteredList = new ArrayList<>();
         String rubrosConcat ="";
 
         for (int i = 0; i < serverEmpresas.size(); i++) {
 
-            if(serverEmpresas.get(i).getEmpresa_subrubro()!=null){
-                if(serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro1()!=null){
-                    rubrosConcat= (serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro1());
-                }
-                if(serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro2()!=null){
-                    rubrosConcat +=(", "+serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro2());
-                }
-                if(serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro3()!=null){
-                    rubrosConcat +=(", "+serverEmpresas.get(i).getEmpresa_subrubro().get(0).getSubrubro3());
+            if(serverEmpresas.get(i).getNombre()!=null){
+                if(serverEmpresas.get(i).getNombre()!=null){
+                    rubrosConcat= (serverEmpresas.get(i).getIdempresa_rubro());
                 }
             }
 
-            final String nombre = serverEmpresas.get(i).getNombre_empresa().toLowerCase();
+            final String nombre = serverEmpresas.get(i).getNombre().toLowerCase();
             final String rubro = rubrosConcat.toLowerCase();
             if (nombre.contains(query)|| rubro.contains(query)) {
 
@@ -765,9 +757,9 @@ public class PrincipalActivity extends AppCompatActivity {
     /*private void ordenarListaPorParametro(String param){
         switch (param){
             case "nombre":
-                    serverEmpresas.sort(new Comparator<EmpresasBody>() {
+                    serverEmpresas.sort(new Comparator<BodegasBody>() {
                         @Override
-                        public int compare(EmpresasBody lhs, EmpresasBody rhs) {
+                        public int compare(BodegasBody lhs, BodegasBody rhs) {
                             char l = Character.toUpperCase(lhs.getNombre_empresa().charAt(0));
 
                             if (l < 'A' || l > 'Z')
@@ -781,9 +773,9 @@ public class PrincipalActivity extends AppCompatActivity {
                         }
                     });
             case "calificacion":
-                serverEmpresas.sort(new Comparator<EmpresasBody>() {
+                serverEmpresas.sort(new Comparator<BodegasBody>() {
                     @Override
-                    public int compare(EmpresasBody lhs, EmpresasBody rhs) {
+                    public int compare(BodegasBody lhs, BodegasBody rhs) {
                         String s1 = lhs.getCalificacion_general();
                         String s2 = rhs.getCalificacion_general();
                         return s1.compareTo(s2);
@@ -796,7 +788,7 @@ public class PrincipalActivity extends AppCompatActivity {
         filtro = filtro.toString().toLowerCase();
         //Log.d("juaco1993","Filtrando por: "+filtro);
 
-        final List<EmpresasBody> filteredList = new ArrayList<>();
+        final List<BodegasBody> filteredList = new ArrayList<>();
 
         if(filtro.equals("ambos")) {
             for (int i = 0; i < serverEmpresas.size(); i++) {
@@ -831,45 +823,35 @@ public class PrincipalActivity extends AppCompatActivity {
     public void ordenarListaPorParametro(String ordenamiento){
 
         if(ordenamiento.equals("AZ")) {
-            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+            Collections.sort(serverEmpresas, new Comparator<BodegasBody>() {
                 @Override
-                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
-                    return empresa1.getNombre_empresa().compareToIgnoreCase(empresa2.getNombre_empresa());
+                public int compare(BodegasBody empresa1, BodegasBody empresa2) {
+                    return empresa1.getNombre().compareToIgnoreCase(empresa2.getNombre());
                 }
             });
         }
 
         if(ordenamiento.equals("ZA")) {
-            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+            Collections.sort(serverEmpresas, new Comparator<BodegasBody>() {
                 @Override
-                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
-                    return empresa2.getNombre_empresa().compareToIgnoreCase(empresa1.getNombre_empresa());
+                public int compare(BodegasBody empresa1, BodegasBody empresa2) {
+                    return empresa2.getNombre().compareToIgnoreCase(empresa1.getNombre());
                 }
             });
         }
 
         if(ordenamiento.equals("Calificacion")) {
-            for(int i=0;i<serverEmpresas.size();i++){
-                if(serverEmpresas.get(i).getCalificacion_general()==null){
-                    serverEmpresas.get(i).setCalificacion_general("0");
-                }
-            }
-                Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
-                    @Override
-                    public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
-                        return empresa2.getCalificacion_general().compareToIgnoreCase(empresa1.getCalificacion_general());
-                    }
-                });
         }
 
         if(ordenamiento.equals("Cercanía")) {
-            Collections.sort(serverEmpresas, new Comparator<EmpresasBody>() {
+            /*Collections.sort(serverEmpresas, new Comparator<BodegasBody>() {
                 @Override
-                public int compare(EmpresasBody empresa1, EmpresasBody empresa2) {
+                public int compare(BodegasBody empresa1, BodegasBody empresa2) {
                     //filtrarListaPorParametro("delivery_mi_zona");
                     return Utilidades.calcularPrecioDelivery(usuarioDireccion,empresa1).getDatos().getDistancia().compareTo( Utilidades.calcularPrecioDelivery(usuarioDireccion,empresa2).getDatos().getDistancia());
                 }
             });
+            */
         }
     }
 

@@ -12,10 +12,10 @@ public class UsuarioRegisterBody {
     String contrasena;
     String fecha_nacimiento;
     String usuario_tipo_idusuario_tipo;
-    String sexo_idsexo;
+    String idgenero;
     String usuario_estado_idusuario_estado;
 
-    public UsuarioRegisterBody(String nombre, String apellido, String e_mail, String telefono, String contrasena, String fecha_nacimiento, String usuario_tipo_idusuario_tipo, String sexo_idsexo, String usuario_estado_idusuario_estado) {
+    public UsuarioRegisterBody(String nombre, String apellido, String e_mail, String telefono, String contrasena, String fecha_nacimiento, String usuario_tipo_idusuario_tipo, String idgenero, String usuario_estado_idusuario_estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.e_mail = e_mail;
@@ -23,7 +23,7 @@ public class UsuarioRegisterBody {
         this.contrasena = contrasena;
         this.fecha_nacimiento = fecha_nacimiento;
         this.usuario_tipo_idusuario_tipo = usuario_tipo_idusuario_tipo;
-        this.sexo_idsexo = sexo_idsexo;
+        this.idgenero = idgenero;
         this.usuario_estado_idusuario_estado = usuario_estado_idusuario_estado;
     }
 
@@ -83,12 +83,12 @@ public class UsuarioRegisterBody {
         this.usuario_tipo_idusuario_tipo = usuario_tipo_idusuario_tipo;
     }
 
-    public String getSexo_idsexo() {
-        return sexo_idsexo;
+    public String getIdgenero() {
+        return idgenero;
     }
 
-    public void setSexo_idsexo(String sexo_idsexo) {
-        this.sexo_idsexo = sexo_idsexo;
+    public void setIdgenero(String idgenero) {
+        this.idgenero = idgenero;
     }
 
     public String getUsuario_estado_idusuario_estado() {

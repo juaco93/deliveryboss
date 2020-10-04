@@ -6,14 +6,14 @@ import java.util.List;
  * Created by Joaquin on 25/6/2017.
  */
 
-public class ApiResponseEmpresas {
-    private List<EmpresasBody> datos;
+public class ApiResponseBodegas {
+    private List<BodegasBody> datos;
 
-    public ApiResponseEmpresas(List<EmpresasBody> datos) {
+    public ApiResponseBodegas(List<BodegasBody> datos) {
         this.datos = datos;
     }
 
-    public List<EmpresasBody> getDatos() {
+    public List<BodegasBody> getDatos() {
         return datos;
     }
 }

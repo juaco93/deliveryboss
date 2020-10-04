@@ -2,24 +2,17 @@ package com.deliveryboss.app.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
-import com.deliveryboss.app.data.api.model.ApiResponseCiudades;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponseDirecciones;
-import com.deliveryboss.app.data.api.model.Ciudad;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 import com.deliveryboss.app.data.util.Utilidades;
@@ -41,7 +34,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
     Spinner spDirecciones;
     CardView btnContinuar;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     List<Usuario_direccion> serverDirecciones;
     Usuario_direccion direccionElegida;
 
@@ -119,12 +112,12 @@ public class SeleccionarDireccion extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
 
         obtenerDirecciones();
@@ -137,7 +130,7 @@ public class SeleccionarDireccion extends AppCompatActivity {
         //Log.d("direcciones", "Recuperando Direcciones desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseDirecciones> call2 = mDeliverybossApi.obtenerDireccionesUsuario(authorization,idusuario);
+        Call<ApiResponseDirecciones> call2 = mVinosYBodegasApi.obtenerDireccionesUsuario(authorization,idusuario);
         call2.enqueue(new Callback<ApiResponseDirecciones>() {
             @Override
             public void onResponse(Call<ApiResponseDirecciones> call,

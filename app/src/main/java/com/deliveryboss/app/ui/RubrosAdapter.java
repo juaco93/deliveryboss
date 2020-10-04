@@ -7,21 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.ListItem;
 import com.deliveryboss.app.data.api.model.Producto;
 import com.deliveryboss.app.data.api.model.Rubro;
-import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
-import java.security.Principal;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -31,6 +27,7 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<ListItem> items = Collections.emptyList();
     private Context mContext;
     private OnItemClickListener mOnItemClickListener;
+    private Context context;
 
     public RubrosAdapter(@NonNull List<ListItem> items) {
         this.items = items;
@@ -51,6 +48,7 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        this.context = parent.getContext();
 
         switch (viewType) {
             case ListItem.TYPE_HEADER: {
@@ -77,17 +75,19 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public ImageView imagenProducto;
         TextView txt_title;
         TextView txt_detalle;
         TextView txt_precio;
 
         public EventViewHolder(View itemView) {
             super(itemView);
+            imagenProducto = (ImageView) itemView.findViewById(R.id.img_producto);
             txt_title = (TextView) itemView.findViewById(R.id.txtNombreProducto);
             txt_detalle = (TextView) itemView.findViewById(R.id.txtProductoDetalle);
             txt_precio = (TextView) itemView.findViewById(R.id.txtPrecio);
             itemView.setOnClickListener(this);
-            //Log.d("productosNuevo","Valor de this-->"+this);
+           // Log.d("productosNuevo","Valor de this-->"+this);
         }
 
         @Override
@@ -120,9 +120,17 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 final Producto producto = (Producto) items.get(position);
                 EventViewHolder holder = (EventViewHolder) viewHolder;
                 // your logic here
+                //Carga de los logos de las empresas con Picasso
+                if(producto.getImagen()!=null && !producto.getImagen().isEmpty()){
+                    Picasso
+                            .with(context)
+                            .load(producto.getImagen())
+                            .fit() // will explain later
+                            .into(holder.imagenProducto);
+                }
                 holder.txt_title.setText(producto.getProducto());
-                holder.txt_detalle.setText(producto.getProducto_detalle());
-                holder.txt_precio.setText("$"+producto.getPrecio());
+                holder.txt_detalle.setText(producto.getDescripcion());
+                holder.txt_precio.setText("$"+producto.getPrecio1());
                 break;
             }
             default:

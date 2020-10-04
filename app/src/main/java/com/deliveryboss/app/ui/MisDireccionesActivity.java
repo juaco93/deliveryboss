@@ -14,12 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.deliveryboss.app.data.api.model.EmpresasBody;
-import com.deliveryboss.app.data.api.model.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponseDirecciones;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
@@ -43,7 +41,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
     private RecyclerView mListaDirecciones;
     private DireccionesAdapter mDireccionesAdapter;
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
     private View mEmptyStateContainer;
     private TextView txtEmptyContainer;
     private static final int FRAGMENTO_AGREGAR_DIRECCION = 3;
@@ -97,11 +95,11 @@ public class MisDireccionesActivity extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         obtenerDirecciones();
     }
@@ -125,7 +123,7 @@ public class MisDireccionesActivity extends AppCompatActivity {
         //Log.d("gson", "Recuperando Direcciones desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseDirecciones> call = mDeliverybossApi.obtenerDireccionesUsuario(authorization,idusuario);
+        Call<ApiResponseDirecciones> call = mVinosYBodegasApi.obtenerDireccionesUsuario(authorization,idusuario);
         call.enqueue(new Callback<ApiResponseDirecciones>() {
             @Override
             public void onResponse(Call<ApiResponseDirecciones> call,

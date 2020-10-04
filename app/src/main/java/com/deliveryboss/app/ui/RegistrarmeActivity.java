@@ -43,7 +43,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.DeliverybossApi;
+import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.ApiResponse;
 import com.deliveryboss.app.data.api.model.FbLoginBody;
 import com.deliveryboss.app.data.api.model.FbRegisterBody;
@@ -60,7 +60,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -100,7 +99,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
 
 
     private Retrofit mRestAdapter;
-    private DeliverybossApi mDeliverybossApi;
+    private VinosYBodegasApi mVinosYBodegasApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,11 +122,11 @@ public class RegistrarmeActivity extends AppCompatActivity {
 
         // Crear conexión al servicio REST
         mRestAdapter = new Retrofit.Builder()
-                .baseUrl(DeliverybossApi.BASE_URL)
+                .baseUrl(VinosYBodegasApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         // Crear conexión a la API de Deliveryboss
-        mDeliverybossApi = mRestAdapter.create(DeliverybossApi.class);
+        mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         txtNombre = (EditText) findViewById(R.id.txtNombre);
         txtApellido= (EditText) findViewById(R.id.txtApellido);
@@ -414,7 +413,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             final String[] error = {""};
-            Call<ApiResponse> registerCall = mDeliverybossApi.registroNormal(new UsuarioRegisterBody(nombre,apellido,email,telefono,contrasenia,FechaNac,usuario_tipo_idusuario_tipo,sexo_idsexo,usuario_estado_idusuario_estado));
+            Call<ApiResponse> registerCall = mVinosYBodegasApi.registroNormal(new UsuarioRegisterBody(nombre,apellido,email,telefono,contrasenia,FechaNac,usuario_tipo_idusuario_tipo,sexo_idsexo,usuario_estado_idusuario_estado));
             registerCall.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -565,7 +564,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
     }
 
     private void registerFacebookLogin(final String idfacebook, final String e_mail, String nombre, String apellido, String foto, String ciudad,String FechaNac, String genero) {
-        Call<Usuario> registerFbCall = mDeliverybossApi.registroFb(new FbRegisterBody(idfacebook, e_mail, nombre, apellido, foto,ciudad,FechaNac, "1", genero, "1"));
+        Call<Usuario> registerFbCall = mVinosYBodegasApi.registroFb(new FbRegisterBody(idfacebook, e_mail, nombre, apellido, foto,ciudad,FechaNac, "1", genero, "1"));
         registerFbCall.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -604,7 +603,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
     }
 
     private void FacebookLogin(String e_mail, String idfacebook) {
-        Call<Usuario> registerFbCall = mDeliverybossApi.loginFb(new FbLoginBody(e_mail, idfacebook));
+        Call<Usuario> registerFbCall = mVinosYBodegasApi.loginFb(new FbLoginBody(e_mail, idfacebook));
         registerFbCall.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -656,7 +655,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             //showProgress(true);
-            Call<Usuario> loginCall = mDeliverybossApi.login(new LoginBody(e_mail, contrasena));
+            Call<Usuario> loginCall = mVinosYBodegasApi.login(new LoginBody(e_mail, contrasena));
             loginCall.enqueue(new Callback<Usuario>() {
                 @Override
                 public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -771,7 +770,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
         //Log.d("regId", "Firebase reg id: " + regId);
         //Log.d("regId", "Firebase idusuario: " + idusuario);
 
-        Call<ApiResponse> call = mDeliverybossApi.registrarRegId(new regIdBody(regId,idusuario));
+        Call<ApiResponse> call = mVinosYBodegasApi.registrarRegId(new regIdBody(regId,idusuario));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

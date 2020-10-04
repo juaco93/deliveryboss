@@ -2,26 +2,18 @@ package com.deliveryboss.app.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.deliveryboss.app.data.api.model.Delivery;
-import com.deliveryboss.app.data.api.model.DeliveryRequest;
+import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
-import com.deliveryboss.app.data.util.Utilidades;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.deliveryboss.app.R;
-import com.deliveryboss.app.data.api.model.EmpresasBody;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,7 +35,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        EmpresasBody empresa = mItems.get(position);
+        BodegasBody empresa = mItems.get(position);
 
         //View statusIndicator = holder.statusIndicator;
 
@@ -67,39 +59,22 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             }
             */
 
-        holder.nombreEmpresa.setText(empresa.getNombre_empresa());
+        holder.nombreEmpresa.setText(empresa.getNombre());
+        holder.ciudad.setText(empresa.getCiudad());
+        holder.direccion.setText(empresa.getDireccion());
+        holder.tipoEntrega.setText(empresa.getIdtipo_entrega());
 
-        if(empresa.getCalificacion_general()!=null) {
-            holder.calificacion.setRating(Float.parseFloat(empresa.getCalificacion_general()));
-            if(empresa.getCalificacion_general().length()>=3) holder.calificacionFloat.setText(empresa.getCalificacion_general().substring(0,3));
-            if(empresa.getCalificacion_general().length()<3) holder.calificacionFloat.setText(empresa.getCalificacion_general());
-        }else{
-            holder.calificacion.setRating(0.0f);
-            holder.calificacionFloat.setText("0.0");
-        }
-        holder.cantidad_calificacion.setText("("+empresa.getCantidad_calificacion()+")");
-
-
-        /*
-        if(empresa.getSubrubro().length()>34){
-            String rubroSep = empresa.getSubrubro().replace(",", ", ");
-            holder.rubro_elegido.setText(rubroSep.substring(0,31)+"...");
-        }else {
-            String rubroSep = empresa.getSubrubro().replace(",", ", ");
-            holder.rubro_elegido.setText(rubroSep);
-        }*/
-        if(empresa.getEmpresa_subrubro()!=null){
+        if(empresa.getIdempresa_rubro()!=null){
             String texto="";
-            if(empresa.getEmpresa_subrubro().get(0).getSubrubro1()!=null){
-                texto=empresa.getEmpresa_subrubro().get(0).getSubrubro1();
+            if(empresa.getRubro1()!=null){
+                texto+=empresa.getRubro1();
             }
-            if(empresa.getEmpresa_subrubro().get(0).getSubrubro2()!=null){
-                texto+=", "+empresa.getEmpresa_subrubro().get(0).getSubrubro2();
+            if(empresa.getRubro2()!=null){
+                texto+=","+empresa.getRubro2();
             }
-            if(empresa.getEmpresa_subrubro().get(0).getSubrubro3()!=null){
-                texto+=", "+empresa.getEmpresa_subrubro().get(0).getSubrubro3();
+            if(empresa.getRubro3()!=null){
+                texto+=","+empresa.getRubro3();
             }
-
             if(texto.length()>33) {
                 String textoCorto = texto.substring(0, 29) + "...";
                 holder.rubro_elegido.setText(textoCorto);
@@ -108,104 +83,15 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             }
         }
 
-        //holder.tiempo_delivery.setText(empresa.getTiempo_minimo_entrega() + "-" + empresa.getTiempo_maximo_entrega() + " minutos");
-        holder.compra_minima.setText("Compra minima: $" + empresa.getCompra_minima());
-
-        DeliveryRequest mDeliveryRequest;
-        Delivery objeto;
-
-        mDeliveryRequest = Utilidades.calcularPrecioDelivery(mDireccionUsuario,empresa);
-        objeto = mDeliveryRequest.getDatos();
-
-        // Si el calculo de distancias es exitoso
-        if(mDeliveryRequest.getEstado()==1){
-            holder.tiempo_delivery.setText("");
-            holder.distanciaDelivery.setText(Utilidades.formatearDistancia(objeto.getDistancia()));
-            String precio = "";
-
-         //   if (objeto.getPrecio().equals("0")) {
-            if(objeto.getPrecio()>0){
-                precio="Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
-                holder.precioDelivery.setText(precio);
-            }
-            else {
-                if(objeto.getPrecio()==0){
-                    precio = "Delivery ¡GRATIS! ";
-                    holder.precioDelivery.setText(precio);
-                }
-                else {
-                    holder.tiempo_delivery.setText("");
-                    holder.precioDelivery.setText(R.string.mensajeDeliveryNo);
-                }
-            }
-            // preguntar si es mayor que 0... sino que no hay delivery en tu zona
-            // //
-   /*         else{
-                precio="Delivery $"+(new DecimalFormat("#").format(objeto.getPrecio()))+" ";
-            }*/
-//            holder.precioDelivery.setText(precio);
-        }else{
-            if(mDeliveryRequest.getEstado()==2){
-                //holder.tiempo_delivery.setText(" Distancia: "+Utilidades.formatearDistancia(objeto.getDistancia()));
-                holder.distanciaDelivery.setText(Utilidades.formatearDistancia(objeto.getDistancia()));
-                holder.precioDelivery.setText(R.string.mensajeDeliveryNo);
-            }
-            if(mDeliveryRequest.getEstado()==4){
-                holder.tiempo_delivery.setText("");
-                holder.distanciaDelivery.setText("N");
-                holder.precioDelivery.setText("No se calc"+" ");
-            }
-        }
-
-
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-        String diaActual = sdf.format(new Date());
-
-        Log.d("dia", diaActual);
-
-        Boolean abierto= false;
-        String turno1desde = "";
-        String turno2desde = "";
-        String turno1hasta = "";
-        String turno2hasta = "";
-
-        int cantidad=empresa.getEmpresa_horario().size();
-        for(int i=0;i<cantidad;i++){
-            if(diaActual.equals(empresa.getEmpresa_horario().get(i).getDia())){
-                // OBTENEMOS LOS TURNOS DEL DIA
-                turno1desde=empresa.getEmpresa_horario().get(i).getTurno1_desde();
-                turno2desde=empresa.getEmpresa_horario().get(i).getTurno2_desde();
-                turno1hasta=empresa.getEmpresa_horario().get(i).getTurno1_hasta();
-                turno2hasta=empresa.getEmpresa_horario().get(i).getTurno2_hasta();
-
-                // SI TIENE LOS DOS TURNOS
-                if(turno1desde!=null && turno2desde!=null) {
-                    holder.horarios.setText("Hoy de "+turno1desde+" a " +turno1hasta+" y de "+turno2desde+" a "+turno2hasta);
-                    abierto=true;
-                }
-
-
-                // SI TIENE SOLO TURNO 1
-                if(turno1desde!=null && turno2desde==null){
-                    holder.horarios.setText("Hoy de "+turno1desde+" a " +turno1hasta);
-                    abierto=true;
-                }
-
-                // SI TIENE SOLO TURNO 2
-                if(turno2desde!=null && turno1desde==null){
-                    holder.horarios.setText("Hoy de "+turno2desde+" a " +turno2hasta);
-                    abierto=true;
-                }
-            }
-        }
-        if(!abierto)holder.horarios.setText("Hoy Cerrado");
 
         //Carga de los logos de las empresas con Picasso
-        Picasso
-                .with(context)
-                .load(empresa.getLogo())
-                .fit() // will explain later
-                .into(holder.logoEmpresa);
+        if(empresa.getImagen()!=null && !empresa.getImagen().isEmpty()){
+            Picasso
+                    .with(context)
+                    .load(empresa.getImagen())
+                    .fit() // will explain later
+                    .into(holder.logoEmpresa);
+        }
     }
 
     @Override
@@ -213,11 +99,11 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         return mItems.size();
     }
 
-    private List<EmpresasBody> mItems;
+    private List<BodegasBody> mItems;
     private Usuario_direccion mDireccionUsuario;
     private Context mContext;
 
-    public EmpresasAdapter(Context context, List<EmpresasBody> items, Usuario_direccion direccionUsuario) {
+    public EmpresasAdapter(Context context, List<BodegasBody> items, Usuario_direccion direccionUsuario) {
         mItems = items;
         mContext = context;
         mDireccionUsuario = direccionUsuario;
@@ -226,7 +112,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     private OnItemClickListener mOnItemClickListener;
 
     interface OnItemClickListener {
-        void onItemClick(EmpresasBody clickedEmpresa);
+        void onItemClick(BodegasBody clickedEmpresa);
     }
 
     public OnItemClickListener getOnItemClickListener() {
@@ -241,16 +127,11 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView logoEmpresa;
         public TextView nombreEmpresa;
-        //public TextView direccion;
+        public TextView direccion;
         public TextView precioDelivery;
-        public TextView horarios;
-        public SimpleRatingBar calificacion;
         public TextView rubro_elegido;
-        public TextView tiempo_delivery;
-        public TextView compra_minima;
-        public TextView cantidad_calificacion;
-        public TextView calificacionFloat;
-        public TextView distanciaDelivery;
+        public TextView ciudad;
+        public TextView tipoEntrega;
         public View statusIndicator;
 
         public ViewHolder(View itemView) {
@@ -259,16 +140,10 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             //statusIndicator = itemView.findViewById(R.id.indicator_appointment_status);
             logoEmpresa = (ImageView) itemView.findViewById(R.id.img_logo_empresa);
             nombreEmpresa = (TextView) itemView.findViewById(R.id.txtNombreEmpresa);
-            //direccion = (TextView) itemView.findViewById(R.id.txtDireccion);
-            precioDelivery = (TextView) itemView.findViewById(R.id.txtPrecioDelivery);
-            horarios = (TextView) itemView.findViewById(R.id.txtHorarios);
-            calificacion = (SimpleRatingBar) itemView.findViewById(R.id.calificacion);
+            direccion = (TextView) itemView.findViewById(R.id.txtDireccion);
             rubro_elegido = (TextView) itemView.findViewById(R.id.txtRubroElegido);
-            tiempo_delivery = (TextView) itemView.findViewById(R.id.txtTiempoDelivery);
-            compra_minima = (TextView) itemView.findViewById(R.id.txtCompraMinima);
-            cantidad_calificacion = (TextView) itemView.findViewById(R.id.txtCantidadCalificacion);
-            calificacionFloat = (TextView) itemView.findViewById(R.id.txtCalificacionFloat);
-            distanciaDelivery = (TextView) itemView.findViewById(R.id.txtDistancia);
+            ciudad  = (TextView) itemView.findViewById(R.id.txtCiudad);
+            tipoEntrega = (TextView) itemView.findViewById(R.id.txtTipoEntrega);
 
             itemView.setOnClickListener(this);
         }
@@ -282,7 +157,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         }
     }
 
-    public void swapItems(List<EmpresasBody> empresas, Usuario_direccion direccionUsuario) {
+    public void swapItems(List<BodegasBody> empresas, Usuario_direccion direccionUsuario) {
         if (empresas == null) {
             mItems = new ArrayList<>(0);
         } else {
