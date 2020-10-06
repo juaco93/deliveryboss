@@ -9,22 +9,19 @@
     >
 
     <RelativeLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="@color/colorComida"
-        android:padding="20dp"
-        >
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/lbFiltroOrdenarPor"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:text="Ordenar por"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_marginBottom="20dp"
-            >
-        </TextView>
+            android:textSize="20sp"></TextView>
 
 
         <TextView
@@ -74,16 +71,14 @@
 
         <TextView
             android:id="@+id/lbFiltroFiltrarPor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/txtFiltroNombreAZ"
             android:layout_marginTop="30dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_marginBottom="20dp"
             android:text="Filtrar por"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:layout_marginBottom="20dp"
-            >
-        </TextView>
+            android:textSize="20sp"></TextView>
 
         <TextView
             android:id="@+id/txtFiltroDeliveryEnMiZona"
@@ -119,7 +114,7 @@
             android:padding="10dp"
             android:text="Aceptar"
             android:textAlignment="center"
-            android:textColor="@color/colorComida"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold"></TextView>
     </RelativeLayout>

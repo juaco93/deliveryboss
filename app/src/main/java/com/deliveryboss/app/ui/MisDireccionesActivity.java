@@ -156,11 +156,17 @@ public class MisDireccionesActivity extends AppCompatActivity {
 
                 serverDirecciones = response.body().getDatos();
                 //Log.d("gson", "tod bien, recibido: " + response.body().getDatos().toString());
-                if (serverDirecciones.size() > 0) {
-                    // Mostrar lista de ordenes
-                    mostrarDirecciones(serverDirecciones, direccionGuardada);
-                    showLoadingIndicator(false);
-                } else {
+                if(serverDirecciones!=null){
+                    if (serverDirecciones.size() > 0) {
+                        // Mostrar lista de ordenes
+                        mostrarDirecciones(serverDirecciones, direccionGuardada);
+                        showLoadingIndicator(false);
+                    } else {
+                        // Mostrar empty state
+                        mostrarDireccionesEmpty();
+                        showLoadingIndicator(false);
+                    }
+                }else {
                     // Mostrar empty state
                     mostrarDireccionesEmpty();
                     showLoadingIndicator(false);

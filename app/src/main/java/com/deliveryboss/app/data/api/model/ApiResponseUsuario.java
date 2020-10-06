@@ -11,16 +11,16 @@ public class ApiResponseUsuario {
     String apellido;
     String telefono;
     String e_mail;
-    String sexo_idsexo;
+    String idgenero;
     String fecha_nacimiento;
 
-    public ApiResponseUsuario(String imagen, String nombre, String apellido, String telefono, String e_mail, String sexo_idsexo, String fecha_nacimiento) {
+    public ApiResponseUsuario(String imagen, String nombre, String apellido, String telefono, String e_mail, String idgenero, String fecha_nacimiento) {
         this.imagen = imagen;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.e_mail = e_mail;
-        this.sexo_idsexo = sexo_idsexo;
+        this.idgenero = idgenero;
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -64,12 +64,12 @@ public class ApiResponseUsuario {
         this.e_mail = e_mail;
     }
 
-    public String getSexo_idsexo() {
-        return sexo_idsexo;
+    public String getIdgenero() {
+        return idgenero;
     }
 
-    public void setSexo_idsexo(String sexo_idsexo) {
-        this.sexo_idsexo = sexo_idsexo;
+    public void setIdgenero(String idgenero) {
+        this.idgenero = idgenero;
     }
 
     public String getFecha_nacimiento() {

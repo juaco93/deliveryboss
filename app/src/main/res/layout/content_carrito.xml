@@ -272,11 +272,12 @@
             android:id="@+id/btnConfirmarOrden"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/cvNota"
-            android:backgroundTint="@color/colorComida"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:text="Enviar Orden"
-            android:textColor="@color/cardview_light_background" />
+            android:textColor="@color/cardview_light_background"
+            android:textColorLink="@color/colorPrimaryDark" />
 </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -138,7 +138,7 @@ public class InfoMenuFragment extends Fragment {
         /////// FAB CARRITO ///////////
         button = v.findViewById(R.id.action_b);
         button.setSize(FloatingActionButton.SIZE_NORMAL);
-        button.setColorNormalResId(R.color.colorComida);
+        button.setColorNormalResId(R.color.colorPrimaryDark);
         button.setColorPressedResId(R.color.colorAccent);
         button.setIcon(R.drawable.cajita_sola);
         button.setStrokeVisible(false);
@@ -154,15 +154,6 @@ public class InfoMenuFragment extends Fragment {
             }
         });
 
-        /*
-        buttonA = v.findViewById(R.id.action_a);
-        buttonA.setSize(FloatingActionButton.SIZE_NORMAL);
-        buttonA.setColorNormalResId(R.color.colorComida);
-        buttonA.setColorPressedResId(R.color.colorAccent);
-        buttonA.setIcon(R.drawable.ic_money);
-        buttonA.setStrokeVisible(false);
-        buttonA.setTitle("Monto");
-        */
 
         menuMultipleActions = v.findViewById(R.id.multiple_actions);
        //menuMultipleActions.setIcon(getResources().getDrawable(R.drawable.icono_carrito_items));
@@ -210,7 +201,8 @@ public class InfoMenuFragment extends Fragment {
         // Chequeamos si el local esta abierto para permitir el uso del carrito (o no)
         abierto = Utilidades.ChequearLocalAbiertoHoy(empresa);
 
-        mostrarMensajeCerrado();
+
+        //mostrarMensajeCerrado();
 
         // Inflate the layout for this fragment
         return v;

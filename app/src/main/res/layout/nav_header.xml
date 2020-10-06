@@ -23,16 +23,15 @@
               app:border_color="@android:color/white"
               />
     -->
-          <ImageView
-               android:id="@+id/circle_image"
-               android:layout_width="@dimen/perfil_image_size"
-               android:layout_height="@dimen/perfil_image_size"
-               android:layout_marginBottom="16dp"
-               android:scaleType="centerCrop"
-               android:src="@drawable/ic_miperfil"
-               />
+    <ImageView
+        android:id="@+id/circle_image"
+        android:layout_width="@dimen/perfil_image_size"
+        android:layout_height="@dimen/perfil_image_size"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_miperfil" />
 
-     <!-- Nombre de Usuario -->
+    <!-- Nombre de Usuario -->
     <TextView
         android:id="@+id/userName"
         android:layout_width="match_parent"

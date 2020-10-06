@@ -81,9 +81,7 @@ public class PrincipalActivity extends AppCompatActivity {
     Boolean mantenimientoActivo=false;
     //String ciudadIntent;
     String rubroIntent;
-    String nombreApp = "deliveryboss en ";
     SearchView searchView;
-    //Usuario_direccion direccionUsuario;
     Usuario_direccion usuarioDireccion;
     Intent intentFiltro;
 
@@ -185,37 +183,8 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
         rubroIntent = "1";
-
-        /*
-        if(rubroIntent!=null) {
-            if (rubroIntent.equals("1")) {
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorComida)));
-                getSupportActionBar().setTitle(nombreApp + ciudadNombre);
-                setearColorToolbar(getResources().getColor(R.color.colorComida));
-            }
-            if (rubroIntent.equals("2")) {
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorFarmacia)));
-                getSupportActionBar().setTitle("Farmacia");
-                setearColorToolbar(getResources().getColor(R.color.colorFarmacia));
-            }
-            if (rubroIntent.equals("3")) {
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorMercado)));
-                getSupportActionBar().setTitle(nombreApp + ciudadNombre);
-                setearColorToolbar(getResources().getColor(R.color.colorMercado));
-            }
-            if (rubroIntent.equals("4")) {
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorTaxi)));
-                getSupportActionBar().setTitle("Taxi");
-                setearColorToolbar(getResources().getColor(R.color.colorTaxi));
-            }
-        }
-        */
-
         checkUserSession();
-
         intentFiltro = new Intent(this, FiltroEmpresasActivity.class);
-
-
 
         mListaEmpresas = (RecyclerView) findViewById(R.id.list_empresas);
         mEmpresasAdapter = new EmpresasAdapter(this, new ArrayList<BodegasBody>(0),usuarioDireccion);
@@ -313,7 +282,9 @@ public class PrincipalActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.menu_empresas, menu);
             //return true;
         }
-        if(MenuItemCompat.getActionView(menu.findItem(R.id.action_search))!=null)searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) menuItem.getActionView();
+
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
@@ -333,7 +304,7 @@ public class PrincipalActivity extends AppCompatActivity {
                     nombreRubro = "Taxi";
                     break;
             }
-            searchView.setQueryHint("Buscar comidas, locales...");
+            searchView.setQueryHint("Buscar bodegas, productos...");
         }
 
 

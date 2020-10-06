@@ -14,10 +14,12 @@
  -->
 
     <!-- Colores prueba (morado) -->
-         <color name="colorPrimary">#F44336</color>
-         <color name="colorPrimaryDark">#D32F2F</color>
-         <color name="colorAccent">#FFC003</color>
-         <color name="colorSelect">#8e03abff</color>
+    <color name="colorPrimary">#ad1457</color>
+    <color name="colorPrimaryDark">#78002e</color>
+    <color name="colorLight">#e35183</color>
+    <color name="colorAccent">#e35183</color>
+
+    <color name="colorSelect">#8e03abff</color>
 
 
 

@@ -71,7 +71,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            app:fab_addButtonColorNormal="@color/colorComida"
+            app:fab_addButtonColorNormal="@color/colorPrimaryDark"
             app:fab_addButtonColorPressed="@color/colorAccent"
             app:fab_labelStyle="@style/Etiquetas"
             app:fab_menuIcon="@drawable/icono_carrito_items"
@@ -100,7 +100,7 @@
                 android:textDirection="ltr"
                 android:tooltipText="ggsdgssg"
                 app:fab_title="Ir a carrito"
-                fab:fab_colorNormal="@color/colorComida"
+                fab:fab_colorNormal="@color/colorPrimaryDark"
                 fab:fab_colorPressed="@color/blanco" />
         </toan.android.floatingactionmenu.FloatingActionsMenu>
     </RelativeLayout>

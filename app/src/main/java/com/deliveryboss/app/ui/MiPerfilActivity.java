@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -135,7 +136,7 @@ public class MiPerfilActivity extends AppCompatActivity {
                         startActivity(intent);
                     }else{
                         modificarUsuario();
-                        Intent intent = new Intent(getApplicationContext(), SeleccionarDireccion.class);
+                        Intent intent = new Intent(getApplicationContext(), PrincipalActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -201,7 +202,7 @@ public class MiPerfilActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, PrincipalActivity.class);
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(this, SeleccionarDireccion.class);
+                    Intent intent = new Intent(this, PrincipalActivity.class);
                     startActivity(intent);
                 }
                 return true;
@@ -263,7 +264,7 @@ public class MiPerfilActivity extends AppCompatActivity {
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
 
         // Realizar petición HTTP
-        Call<ApiResponseUsuario> call = mVinosYBodegasApi.obtenerUsuarioPorId(authorization,idusuario);
+        Call<ApiResponseUsuario> call = mVinosYBodegasApi.obtenerUsuarioPorId("1001","4");
         call.enqueue(new Callback<ApiResponseUsuario>() {
             @Override
             public void onResponse(Call<ApiResponseUsuario> call,
@@ -345,7 +346,7 @@ public class MiPerfilActivity extends AppCompatActivity {
             //Log.d("logindb", "Modificando usuario>" + jsonInString);
 
             // Realizar petición HTTP
-            Call<ApiResponse> call = mVinosYBodegasApi.modificarUsuario(authorization, usuarioMod, idusuario);
+            Call<ApiResponse> call = mVinosYBodegasApi.modificarUsuario("1001", usuarioMod, "4");
             call.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call,
@@ -396,13 +397,13 @@ public class MiPerfilActivity extends AppCompatActivity {
         perfilTelefono.setText(user.getTelefono());
         perfilEmail.setText(user.getE_mail());
         perfilFechaNacimiento.setText(user.getFecha_nacimiento());
-        int posicion = Integer.valueOf(user.getSexo_idsexo());
+        int posicion = Integer.valueOf(user.getIdgenero());
         if(posicion>0) {
             perfilGenero.setSelection(posicion);
         }
-
+        Log.d("joaco","Posicion en GENERO obtenido--->"+posicion);
         urlFoto = user.getImagen();
-        sexo = user.getSexo_idsexo();
+        sexo = user.getIdgenero();
 
         if(user.getImagen()!=null){
             if(!user.getImagen().isEmpty()) {
