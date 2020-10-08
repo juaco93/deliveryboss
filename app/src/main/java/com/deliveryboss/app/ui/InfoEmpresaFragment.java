@@ -36,6 +36,8 @@ import com.deliveryboss.app.data.api.model.Calificacion;
 import com.deliveryboss.app.data.prefs.SessionPrefs;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,6 +65,10 @@ public class InfoEmpresaFragment extends Fragment{
     ImageView img1;
     ImageView img2;
     ImageView img3;
+    TextView ciudad;
+    TextView direccion;
+    TextView telefono1;
+    TextView telefono2;
 
 
 
@@ -111,10 +117,19 @@ public class InfoEmpresaFragment extends Fragment{
             nombreBodega = (TextView) v.findViewById(R.id.txtNombreEmpresa);
             rubrosBodega = (TextView) v.findViewById(R.id.lbRubroElegido);
             historia = (TextView) v.findViewById(R.id.lbHistoriaBodega);
+            ciudad = (TextView) v.findViewById(R.id.txtCiudad);
+            direccion = (TextView) v.findViewById(R.id.lbDireccion);
+            telefono1 = (TextView) v.findViewById(R.id.lbTelefono1);
+            telefono2 = (TextView) v.findViewById(R.id.lbTelefono2);
 
             nombreBodega.setText(empresa.getNombre());
             rubrosBodega.setText(empresa.getRubro1()+", "+empresa.getRubro2()+", "+empresa.getRubro3());
             historia.setText(empresa.getHistoria());
+
+            ciudad.setText(empresa.getCiudad());
+            direccion.setText(empresa.getDireccion());
+            telefono1.setText(empresa.getTelefono1());
+            telefono2.setText(empresa.getTelefono2());
 
             ////// CARD IMAGENES ////////
             img1 = (ImageView) v.findViewById(R.id.imgBodega1);

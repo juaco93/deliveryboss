@@ -21,6 +21,10 @@
         <item>Retiro en el local</item>
     </string-array>
 
+    <string-array name="tipo_entrega_solo_delivery">
+        <item>Delivery</item>
+    </string-array>
+
     <string-array name="tipo_sugerencia">
         <item>Soy Cliente</item>
         <item>Soy de la Empresa</item>

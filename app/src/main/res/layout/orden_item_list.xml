@@ -124,18 +124,6 @@
             android:layout_centerHorizontal="true">
 
             <TextView
-                android:id="@+id/txtOrdenCalificar"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="CALIFICAR"
-                android:textAppearance="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:textColorLink="@color/cardview_shadow_start_color"
-                android:textSize="11sp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/txtOrdenLlamar"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"

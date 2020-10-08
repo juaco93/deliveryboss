@@ -18,7 +18,6 @@ public class SessionPrefs {
     public static final String PREF_USUARIO_NOMBRE = "PREF_USUARIO_NOMBRE";
     public static final String PREF_USUARIO_APELLIDO = "PREF_USUARIO_APELLIDO";
     public static final String PREF_USUARIO_EMAIL = "PREF_USUARIO_EMAIL";
-    public static final String PREF_USUARIO_TELEFONO = "PREF_USUARIO_TELEFONO";
     public static final String PREF_USUARIO_TOKEN = "PREF_USUARIO_TOKEN";
     public static final String PREF_USUARIO_CONTRASENA = "PREF_USUARIO_CONTRASENA";
     public static final String PREF_USUARIO_ULTIMA_DIRECCION = "PREF_USUARIO_ULTIMA_DIRECCION";
@@ -61,12 +60,12 @@ public class SessionPrefs {
         if (usuario != null) {
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putString(PREF_IDUSUARIO, usuario.getIdusuario());
+            editor.putString(PREF_USUARIO_NOMBRE, usuario.getNombre());
             editor.putString(PREF_USUARIO_APELLIDO, usuario.getApellido());
             editor.putString(PREF_USUARIO_EMAIL, usuario.getE_mail());
-            editor.putString(PREF_USUARIO_TELEFONO, usuario.getTelefono());
-            editor.putString(PREF_USUARIO_NOMBRE, usuario.getNombre());
-            editor.putString(PREF_USUARIO_TOKEN, usuario.getToken());
             editor.putString(PREF_USUARIO_IMAGEN, usuario.getImagen());
+            editor.putString(PREF_USUARIO_TOKEN, usuario.getToken());
+
             //editor.putString(PREF_USUARIO_CONTRASENA, usuario.getContrasena());
             //editor.putString(PREF_USUARIO_ULTIMA_DIRECCION, usuario.getUltima_direccion());
             editor.apply();
@@ -81,7 +80,6 @@ public class SessionPrefs {
             //editor.putString(PREF_IDUSUARIO, usuario.getIdusuario());
             editor.putString(PREF_USUARIO_APELLIDO, usuario.getApellido());
             editor.putString(PREF_USUARIO_EMAIL, usuario.getE_mail());
-            editor.putString(PREF_USUARIO_TELEFONO, usuario.getTelefono());
             editor.putString(PREF_USUARIO_NOMBRE, usuario.getNombre());
             //editor.putString(PREF_USUARIO_TOKEN, usuario.getToken());
             editor.putString(PREF_USUARIO_IMAGEN, usuario.getImagen());
@@ -133,7 +131,6 @@ public class SessionPrefs {
         editor.putString(PREF_USUARIO_NOMBRE, null);
         editor.putString(PREF_USUARIO_APELLIDO, null);
         editor.putString(PREF_USUARIO_EMAIL, null);
-        editor.putString(PREF_USUARIO_TELEFONO, null);
         editor.putString(PREF_USUARIO_TOKEN, null);
         editor.putString(PREF_USUARIO_CONTRASENA, null);
         editor.putString(PREF_USUARIO_ULTIMA_DIRECCION, null);

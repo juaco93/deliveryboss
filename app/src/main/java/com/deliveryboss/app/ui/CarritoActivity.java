@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.deliveryboss.app.data.api.VinosYBodegasApi;
 import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.DeliveryRequest;
+import com.deliveryboss.app.data.api.model.Venta;
+import com.deliveryboss.app.data.api.model.Venta_detalle;
 import com.deliveryboss.app.data.api.model.empresa_delivery;
 import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
@@ -68,8 +70,8 @@ public class CarritoActivity extends AppCompatActivity {
 
     RecyclerView mListaCarrito;
     CarritoAdapter mCarritoAdapter;
-    List<Orden_detalle> ordenesDetalleLocal;
-    Orden_detalle detalleMod;
+    List<Venta_detalle> ordenesDetalleLocal;
+    Venta_detalle detalleMod;
     private Retrofit mRestAdapter;
     private VinosYBodegasApi mVinosYBodegasApi;
     private View mEmptyStateContainer;
@@ -100,7 +102,8 @@ public class CarritoActivity extends AppCompatActivity {
     Float importeTotal;
     String tipoEnvio = "1";
     String idDireccionUsuario = "";
-    Float precioDelivery;
+    //Float precioDelivery;
+    String precioDelivery = "";
     int c;
     int[] elem_a_borrar;
     CardView cvDireccion;
@@ -135,7 +138,7 @@ public class CarritoActivity extends AppCompatActivity {
         mListaCarrito = (RecyclerView) findViewById(R.id.listaCarrito);
         txtEmptyContainer = (TextView) findViewById(R.id.txtEmptyContainerCarrito);
         mEmptyStateContainer = findViewById(R.id.empty_state_containerCarrito);
-        mCarritoAdapter = new CarritoAdapter(this, new ArrayList<Orden_detalle>(0));
+        mCarritoAdapter = new CarritoAdapter(this, new ArrayList<Venta_detalle>(0));
         spTipoEntrega = (Spinner) findViewById(R.id.spTipoEntrega);
         cvDireccion = (CardView) findViewById(R.id.cvDireccion);
 
@@ -157,7 +160,7 @@ public class CarritoActivity extends AppCompatActivity {
         //Log.d("chequeo","Direccion usuario -->"+direccionUsuario.getLatitud()+","+direccionUsuario.getLongitud());
 
 
-        Type listType = new TypeToken<ArrayList<Orden_detalle>>(){}.getType();
+        Type listType = new TypeToken<ArrayList<Venta_detalle>>(){}.getType();
         ordenesDetalleLocal = new Gson().fromJson(listaOrdenes, listType);
         importeTotal = sumarTotal();
         nombreEmpresa.setText(empresa.getNombre());
@@ -183,23 +186,33 @@ public class CarritoActivity extends AppCompatActivity {
         mVinosYBodegasApi = mRestAdapter.create(VinosYBodegasApi.class);
 
         // Variables de delivery
-        obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
-        if(obtenerPrecioDelivery!=null){
-            if(obtenerPrecioDelivery.getEstado()==1){
+        //obtenerPrecioDelivery = Utilidades.calcularPrecioDelivery(direccionUsuario,empresa);
+
+        // TIPO 1 ----- SOLO DELIVERY
+        if(empresa.getTipo_entrega().equals("1")){
                 soloRetiroEnLocal = false;
-                precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
+                //precioDelivery = obtenerPrecioDelivery.getDatos().getPrecio();
+                precioDelivery = "Acordar con el vendedor";
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                        R.array.tipo_entrega, android.R.layout.simple_spinner_item);
+                        R.array.tipo_entrega_solo_delivery, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spTipoEntrega.setAdapter(adapter);
-            }else{
+
+                // TIPO 2 ----- SOLO RETIRO EN LOCAL
+            }else if(empresa.getTipo_entrega().equals("2")){
                 soloRetiroEnLocal = true;
-                precioDelivery = 0.0f;
+                //precioDelivery = 0.0f;
+            precioDelivery = "Acordar con el vendedor";
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                         R.array.tipo_entrega_solo_retiro, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spTipoEntrega.setAdapter(adapter);
-            }
+            }else{
+                precioDelivery = "Acordar con el vendedor";
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                        R.array.tipo_entrega, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spTipoEntrega.setAdapter(adapter);
         }
         chequearSoloRetiro();
 
@@ -215,7 +228,7 @@ public class CarritoActivity extends AppCompatActivity {
                         importeTotal = sumarTotal();
                     }
                     if(spTipoEntrega.getSelectedItem().equals("Retiro en el local")){
-                        precioDelivery = 0.00f;
+                        //precioDelivery = 0.00f;
                         txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
                         btnConfirmarOrden.setEnabled(true);
                         importeTotal = sumarTotal();
@@ -233,7 +246,7 @@ public class CarritoActivity extends AppCompatActivity {
                     //precioDelivery = Float.valueOf(empresa.getPrecio_delivery());
                     cvDireccion.setVisibility(View.VISIBLE);
                     //Log.d("chequeo","Precio calculado en carrito--> $"+precioDelivery.toString());
-                    txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
+                    txtCarritoImporteDelivery.setText(precioDelivery);
                     importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
                     txtTotal.setText("$"+String.valueOf(subtotSt));
@@ -245,8 +258,8 @@ public class CarritoActivity extends AppCompatActivity {
                 //RETIRO EN LOCAL
                 if(position==2){
                     cvDireccion.setVisibility(View.GONE);
-                    precioDelivery = 0.00f;
-                    txtCarritoImporteDelivery.setText("$" + String.format("%.2f", precioDelivery));
+                    //precioDelivery = 0.00f;
+                    txtCarritoImporteDelivery.setText(precioDelivery);
                     btnConfirmarOrden.setEnabled(true);
                     importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
@@ -291,7 +304,7 @@ public class CarritoActivity extends AppCompatActivity {
         // click normal //
         mCarritoAdapter.setOnItemClickListener(new CarritoAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Orden_detalle clickedItemCarrito) {
+            public void onItemClick(Venta_detalle clickedItemCarrito) {
                 if(c>0){
                     if(clickedItemCarrito.getSelected()){
                         clickedItemCarrito.setSelected(false);
@@ -312,7 +325,7 @@ public class CarritoActivity extends AppCompatActivity {
         // click en el boton EDIT //
         mCarritoAdapter.setOnBtnEditClickListener(new CarritoAdapter.btnEditClickListener() {
             @Override
-            public void onBtnEditClick(Orden_detalle clickedItemCarrito) {
+            public void onBtnEditClick(Venta_detalle clickedItemCarrito) {
                 //Log.d("carrito","click EDIT en un item del carrito: ");
                 showDialog("orden_detalle",(new Gson()).toJson(clickedItemCarrito));
             }
@@ -321,7 +334,7 @@ public class CarritoActivity extends AppCompatActivity {
         // escuchamos los eventos LongClick en la lista de productos
         mCarritoAdapter.setOnLongItemClickListener(new CarritoAdapter.OnLongItemClickListener() {
             @Override
-            public void onLongItemClick(Orden_detalle clickedItemCarrito) {
+            public void onLongItemClick(Venta_detalle clickedItemCarrito) {
                 if (mActionMode == null) {
                     // Start the CAB using the ActionMode.Callback defined above
                     mActionMode = startSupportActionMode(mActionModeCallback);
@@ -377,7 +390,7 @@ public class CarritoActivity extends AppCompatActivity {
             }
         });
 
-        chequearCompraMinima();
+        //chequearCompraMinima();
 
         mListaCarrito.setAdapter(mCarritoAdapter);
         btnConfirmarOrden.setOnClickListener(new View.OnClickListener() {
@@ -463,7 +476,7 @@ public class CarritoActivity extends AppCompatActivity {
 
 
 
-    private void mostrarOrdenesDetalle(List<Orden_detalle> ordenes) {
+    private void mostrarOrdenesDetalle(List<Venta_detalle> ordenes) {
         mCarritoAdapter.swapItems(ordenes);
         mListaCarrito.setVisibility(View.VISIBLE);
     }
@@ -471,10 +484,12 @@ public class CarritoActivity extends AppCompatActivity {
     private float sumarTotal(){
         Float total = 0.00f;
         for (int i=0; i<ordenesDetalleLocal.size(); i++) {
-            total += Float.valueOf(ordenesDetalleLocal.get(i).getOrden_detalle_subtotal());
+            if(ordenesDetalleLocal.get(i).getImporte_subtotal()!=null){
+                total += Float.valueOf(ordenesDetalleLocal.get(i).getImporte_subtotal());
+            }
         }
 
-        if(precioDelivery!=null)total+=precioDelivery;
+        //if(precioDelivery!=null)total+=precioDelivery;
 
         return total;
     }
@@ -502,15 +517,15 @@ public class CarritoActivity extends AppCompatActivity {
         String total = String.valueOf(importeTotal);
 
         // Creacion del Objeto "Orden"
-        Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal,"0","");
+        //Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal,"0","");
+        Venta venta = new Venta("","",empresa.getIdbodega(),idusuario,String.valueOf(importeTotal),textoNota,"2","1",ordenesDetalleLocal);
 
-
-        Log.d("ordenes",new Gson().toJson(orden));
-        Log.d("ordenes",new Gson().toJson(ordenesDetalleLocal));
+        Log.d("venta",new Gson().toJson(venta));
+        Log.d("venta",new Gson().toJson(ordenesDetalleLocal));
 
 
         // Realizar petición HTTP
-        Call<ApiResponse> call = mVinosYBodegasApi.insertarOrden(authorization,idempresa,idusuario,orden);
+        Call<ApiResponse> call = mVinosYBodegasApi.insertarVenta(authorization,idempresa,idusuario,venta);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call,
@@ -521,7 +536,7 @@ public class CarritoActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        Log.d("insertarOrden", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        Log.d("insertarVenta", "se recibio respuesta json (con error): " + response.errorBody().toString());
 
                     } else {
                         Gson gson = new Gson();
@@ -531,19 +546,19 @@ public class CarritoActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(mensaje.getEstado().equals("3"))error = "Tu orden no fué enviada. Revisá su conexión a Internet";
+                        if(mensaje.getEstado().equals("3"))error = "Tu venta no fué enviada. Revisá su conexión a Internet";
                     }
                     showError(error);
                     return;
                 }
 
-                Log.d("insertarOrden", "RAW: " + response.raw().toString());
+                Log.d("invertarVenta", "RAW: " + response.raw().toString());
                 showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
                 intent.putExtra("estado","1");
-                intent.putExtra("mensaje","Orden enviada correctamente!");
+                intent.putExtra("mensaje","Venta enviada correctamente!");
                 startActivity(intent);
-                EventBus.getDefault().post(new MessageEvent("10", "Se envio la orden exitosamente."));
+                EventBus.getDefault().post(new MessageEvent("10", "Se envio la venta exitosamente."));
 
             }
 
@@ -580,6 +595,7 @@ public class CarritoActivity extends AppCompatActivity {
     }
 
     private boolean chequearCompraMinima(){
+        /*
         if(importeTotal>= Float.valueOf(empresa.getCompra_minima())){
             btnConfirmarOrden.setEnabled(true);
             btnConfirmarOrden.setText("Enviar Orden");
@@ -588,7 +604,8 @@ public class CarritoActivity extends AppCompatActivity {
             btnConfirmarOrden.setEnabled(false);
             btnConfirmarOrden.setText("¡Aún no llegas al mínimo!");
             return false;
-        }
+        }*/
+        return  true;
     }
 
     private boolean chequearTipoEntrega() {
@@ -799,6 +816,9 @@ public class CarritoActivity extends AppCompatActivity {
 
             // EVENTO DE MODIFICACION DE ITEM CARRITO
         }else if(event.getIdevento().equals("5")){
+            Log.d("joaco_prod","evento de modificacion de item en carrito");
+            Log.d("joaco_prod",event.getIdevento());
+            Log.d("joaco_prod",event.getDescripcion());
             alModificarItemCarrito(event.getDescripcion());
         }
 
@@ -833,10 +853,12 @@ public class CarritoActivity extends AppCompatActivity {
 
     public void alModificarItemCarrito(String detalle_a_mod){
         int posicion = 0;
-                    detalleMod = (new Gson()).fromJson(detalle_a_mod,Orden_detalle.class);
+        detalleMod = (new Gson()).fromJson(detalle_a_mod,Venta_detalle.class);
+        Log.d("joaco_prod",detalle_a_mod);
+
 
                     for (int i=0; i<ordenesDetalleLocal.size(); i++) {
-                        if(ordenesDetalleLocal.get(i).getProducto_idproducto().equals(detalleMod.getProducto_idproducto())){
+                        if(ordenesDetalleLocal.get(i).getIdproducto().equals(detalleMod.getIdproducto())){
                             //Log.d("eventbus","Encontrado en carrito, posicion-->" + i);
                             posicion = i;
                         }

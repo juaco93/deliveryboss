@@ -268,7 +268,11 @@ public class SoyUsuarioActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             //showProgress(true);
-            Call<Usuario> loginCall = mVinosYBodegasApi.login(new LoginBody(e_mail, contrasena));
+            Log.d("logindb", "Intentando loguearnos NORMALMENTE");
+            LoginBody datosLogueo = new LoginBody(e_mail, contrasena);
+            Call<Usuario> loginCall = mVinosYBodegasApi.login(datosLogueo);
+            Log.d("logindb", new Gson().toJson(datosLogueo));
+
             loginCall.enqueue(new Callback<Usuario>() {
                 @Override
                 public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -284,7 +288,7 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                             //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                         } else {
                             error = response.message();
-                            //Log.d("logindb", "hubo un error: " + response.message());
+                            Log.d("logindb", "hubo un error: " + response.message());
                         }
 
                         showLoginError("Usuario o contraseña incorrecto");
@@ -293,7 +297,10 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                     //Log.d("logindb", "RAW: " + response.raw().toString());
                     //Log.d("logindb", "Nombre: " + response.body().getNombre());
                     //Log.d("logindb", "Apellido: " + response.body().getApellido());
-                    //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                    Log.d("logindb", "Logueado, AHORA Muesto GSON de respuesta ");
+                    Log.d("logindb", new Gson().toJson(response));
+
+                    Log.d("logindb", new Gson().toJson(response.body()));
 
                     // Guardar usuario en preferencias
                     SessionPrefs.get(SoyUsuarioActivity.this).saveUsuario(response.body());
@@ -452,16 +459,16 @@ public class SoyUsuarioActivity extends AppCompatActivity {
                             .contentType()
                             .subtype()
                             .equals("application/json")) {
-                        //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
+                        Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().toString());
                     } else {
                         //POR ARQUITECTURA DEL SERVER NO PUEDE HABER EMAIL REPETIDO, ENTONCES INTENTAMOS LOGUEAR SI YA ESTA REGISTRADO
-                        //Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
+                        Log.d("logindb", "hubo un error: " + response.message() + " Al parecer, su email ya esta registrado");
                         FacebookLogin(e_mail, idfacebook);
                     }
                     return;
                 }
-                //Log.d("logindb", "RAW: " + response.raw().toString());
-                //Log.d("logindb", "Logueado, Token: " + response.body().getToken());
+                Log.d("logindb", "RAW: " + response.raw().toString());
+                Log.d("logindb", "Logueado, Token: " + response.body().getToken());
 
                 // Guardar usuario en preferencias
                 //SessionPrefs.get(SoyUsuarioActivity.this).saveUsuario(response.body());

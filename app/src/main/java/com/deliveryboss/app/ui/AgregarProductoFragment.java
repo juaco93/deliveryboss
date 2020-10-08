@@ -6,12 +6,14 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.Venta_detalle;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.MessageEvent;
@@ -32,8 +34,8 @@ public class AgregarProductoFragment extends DialogFragment {
     Button btnAceptar;
     Button btnCancelar;
     Producto producto;
-    Orden_detalle ordenDetalle;
-    Orden_detalle ModOrden_detalle;
+    Venta_detalle ordenDetalle;
+    Venta_detalle ModOrden_detalle;
 
 
     @Override
@@ -65,8 +67,8 @@ public class AgregarProductoFragment extends DialogFragment {
 
         // SI VENIMOS DESDE EL CARRITO (PARA MODIFICAR ALGO)
         if(getArguments().getString("orden_detalle")!=null){
-            ModOrden_detalle = (new Gson()).fromJson((getArguments().getString("orden_detalle")),Orden_detalle.class);
-            nombreProducto.setText("¿Cantidad de " + ModOrden_detalle.getProducto_nombre()+"?");
+            ModOrden_detalle = (new Gson()).fromJson((getArguments().getString("orden_detalle")),Venta_detalle.class);
+            nombreProducto.setText("¿Cantidad de " + ModOrden_detalle.getProducto()+"?");
             cantidadProducto.setMinValue(0);
         }
 
@@ -77,15 +79,19 @@ public class AgregarProductoFragment extends DialogFragment {
                 // SI ES QUE VENIMOS DEL MENU (FLUJO NORMAL)
                 if(ModOrden_detalle==null) {
                     String subtotal = String.valueOf(Float.valueOf(producto.getPrecio1()) * cantidadProducto.getValue());
-                    ordenDetalle = new Orden_detalle("", "", String.valueOf(cantidadProducto.getValue()), producto.getIdproducto(), producto.getProducto(), producto.getPrecio1(), producto.getProducto_rubro(), subtotal);
+                    //ordenDetalle = new Venta_detalle("", "", String.valueOf(cantidadProducto.getValue()), producto.getIdproducto(), producto.getProducto(), producto.getPrecio1(), producto.getProducto_rubro(), subtotal);
+                    ordenDetalle = new Venta_detalle("", "", producto.getIdbodega(),String.valueOf(cantidadProducto.getValue()),producto.getIdproducto(),producto.getProducto(),producto.getPrecio1(),subtotal,"Si");
                     Intent i = new Intent()
                             .putExtra("detalle", (new Gson()).toJson(ordenDetalle));
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
                     dismiss();
                 }
                 else if(ModOrden_detalle!=null){
-                    String subtotal = String.valueOf(Float.valueOf(ModOrden_detalle.getProducto_precio()) * cantidadProducto.getValue());
-                    ordenDetalle = new Orden_detalle("", "", String.valueOf(cantidadProducto.getValue()), ModOrden_detalle.getProducto_idproducto(), ModOrden_detalle.getProducto_nombre(), ModOrden_detalle.getProducto_precio(), ModOrden_detalle.getProducto_rubro(), subtotal);
+                    String subtotal = String.valueOf(Float.valueOf(ModOrden_detalle.getPrecio()) * cantidadProducto.getValue());
+
+                    Log.d("joaco_prod",(new Gson()).toJson(producto));
+
+                    ordenDetalle = new Venta_detalle("", "", ModOrden_detalle.getProducto(),String.valueOf(cantidadProducto.getValue()),ModOrden_detalle.getIdproducto(),ModOrden_detalle.getProducto(),ModOrden_detalle.getPrecio(),subtotal,"Si");
 
                     EventBus.getDefault().post(new MessageEvent("5",(new Gson()).toJson(ordenDetalle)));
                     dismiss();

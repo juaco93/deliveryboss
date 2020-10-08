@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.Orden_detalle;
+import com.deliveryboss.app.data.api.model.Venta_detalle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,11 @@ public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Orden_detalle orden = mItems.get(position);
+        Venta_detalle orden = mItems.get(position);
             holder.cantidadProducto.setText(orden.getCantidad());
-            holder.nombreProducto.setText(orden.getProducto_nombre());
-            if(orden.getProducto_precio()!=null && orden.getCantidad()!=null){
-                Float subtot = Float.valueOf(orden.getProducto_precio()) * Integer.valueOf(orden.getCantidad());
+            holder.nombreProducto.setText(orden.getProducto());
+            if(orden.getPrecio()!=null && orden.getCantidad()!=null){
+                Float subtot = Float.valueOf(orden.getPrecio()) * Integer.valueOf(orden.getCantidad());
                 String subtotSt = String.format("%.2f", subtot);
                 holder.subtotal.setText("$"+subtotSt);
             }
@@ -59,10 +60,10 @@ public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHold
         return mItems.size();
     }
 
-    private List<Orden_detalle> mItems;
+    private List<Venta_detalle> mItems;
     private Context mContext;
 
-    public CarritoAdapter(Context context, List<Orden_detalle> items) {
+    public CarritoAdapter(Context context, List<Venta_detalle> items) {
         mItems = items;
         mContext = context;
     }
@@ -72,19 +73,19 @@ public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHold
     private CarritoAdapter.btnEditClickListener mOnBtnEditClickListener;
 
     interface OnItemClickListener {
-        void onItemClick(Orden_detalle clickedItemCarrito);
+        void onItemClick(Venta_detalle clickedItemCarrito);
     }
 
     interface OnLongItemClickListener {
-        void onLongItemClick(Orden_detalle clickedItemCarrito);
+        void onLongItemClick(Venta_detalle clickedItemCarrito);
     }
 
     interface btnEditClickListener {
-        void onBtnEditClick(Orden_detalle clickedItemCarrito);
+        void onBtnEditClick(Venta_detalle clickedItemCarrito);
     }
 
     interface btnDeleteClickListener {
-        void onBtnDeleteClick(Orden_detalle clickedItemCarrito);
+        void onBtnDeleteClick(Venta_detalle clickedItemCarrito);
     }
 
     public CarritoAdapter.OnItemClickListener getOnItemClickListener() {
@@ -158,7 +159,7 @@ public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHold
     }
 
 
-    public void swapItems(List<Orden_detalle> ordenes) {
+    public void swapItems(List<Venta_detalle> ordenes) {
         if (ordenes == null) {
             mItems = new ArrayList<>(0);
         } else {

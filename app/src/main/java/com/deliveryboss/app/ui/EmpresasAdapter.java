@@ -62,7 +62,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         holder.nombreEmpresa.setText(empresa.getNombre());
         holder.ciudad.setText(empresa.getCiudad());
         holder.direccion.setText(empresa.getDireccion());
-        holder.tipoEntrega.setText(empresa.getIdtipo_entrega());
+        holder.tipoEntrega.setText(empresa.getTipo_entrega());
 
         if(empresa.getIdempresa_rubro()!=null){
             String texto="";

@@ -264,7 +264,7 @@ public class MiPerfilActivity extends AppCompatActivity {
         String idusuario = SessionPrefs.get(this).getPrefUsuarioIdUsuario();
 
         // Realizar petición HTTP
-        Call<ApiResponseUsuario> call = mVinosYBodegasApi.obtenerUsuarioPorId("1001","4");
+        Call<ApiResponseUsuario> call = mVinosYBodegasApi.obtenerUsuarioPorId("1001",idusuario);
         call.enqueue(new Callback<ApiResponseUsuario>() {
             @Override
             public void onResponse(Call<ApiResponseUsuario> call,

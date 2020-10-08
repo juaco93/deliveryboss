@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.Venta;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.Orden;
@@ -44,22 +45,21 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Orden orden = mItems.get(position);
-        holder.idorden.setText("Orden #" + orden.getIdorden());
-        holder.nombreEmpresa.setText(orden.getNombre_empresa());
+        final Venta orden = mItems.get(position);
+        holder.idorden.setText("Pedido #" + orden.getIdventa());
+        holder.nombreEmpresa.setText(orden.getNombre_bodega());
         holder.fecha.setText(orden.getFecha_hora());
-        holder.estado.setText(orden.getEstado());
+        holder.estado.setText(orden.getVenta_estado());
 
-        if(orden.getEstado().equals("Confirmada")||orden.getEstado().equals("Terminada")||orden.getEstado().equals("Enviada"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenConfirmada));
-        if(orden.getEstado().equals("Pendiente"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenPendiente));
-        if(orden.getEstado().equals("Cancelada")||orden.getEstado().equals("Anulada"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenCancelada));
-        if(orden.getEstado().equals("Entregada"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenEntregada));
-        //holder.info_estado.setText(orden.getInfo_estado());
+        if(orden.getVenta_estado().equals("Confirmado")||orden.getVenta_estado().equals("Terminada")||orden.getVenta_estado().equals("Enviada"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenConfirmada));
+        if(orden.getVenta_estado().equals("Pendiente"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenPendiente));
+        if(orden.getVenta_estado().equals("Rechazado")||orden.getVenta_estado().equals("Anulado"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenCancelada));
+        //if(orden.getEstado().equals("Entregada"))holder.estado.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOrdenEntregada));
 
         int i = 0;
         String previo = "";
-        while (i < orden.getOrden_detalle().size()) {
-            previo += orden.getOrden_detalle().get(i).getCantidad() + " " + orden.getOrden_detalle().get(i).getProducto_nombre() + "\n";
+        while (i < orden.getVenta_detalle().size()) {
+            previo += orden.getVenta_detalle().get(i).getCantidad() + " " + orden.getVenta_detalle().get(i).getProducto() + "\n";
             i++;
         }
         holder.orden_detalle.setText(previo);
@@ -69,53 +69,22 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date fechaOrden = null;
         try {
-           fechaOrden = formatter.parse(orden.getFecha_hora());
+            if(orden.getFecha_hora()!=null)
+                fechaOrden = formatter.parse(orden.getFecha_hora());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Calendar limiteLlamada = Calendar.getInstance();
-        Calendar limiteCalificacion = Calendar.getInstance();
-        limiteCalificacion.setTime(fechaOrden);
-        limiteCalificacion.add(Calendar.HOUR,168);    //limite para calificar 168h = 1 semana
-        limiteLlamada.setTime(fechaOrden);
-        limiteLlamada.add(Calendar.HOUR, 24);         //agregamos 24h a partir de realizada la orden como nuestro "limite" para llamar
-        Calendar ahora = Calendar.getInstance();
 
-        int diffLlamada = ahora.compareTo(limiteLlamada); // da 0 si es igual, menor a 0 si now es menor a su argumento y mayor a 0 si es mayor
-        final int diffCalificacion = ahora.compareTo(limiteCalificacion);
-        if(diffLlamada<0){
-            holder.calificar.setTextColor(Color.BLACK);
             holder.llamar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL);
                     //Log.d("telefono",orden.getTelefono().toString());
-                    callIntent.setData(Uri.parse("tel:"+orden.getTelefono()));
+                    callIntent.setData(Uri.parse("tel:"+orden.getTelefono1_bodega()));
                     context.startActivity(callIntent);
                 }
             });
-        }else{
-            holder.llamar.setTextColor(Color.LTGRAY);
-        }
 
-        //METODO PARA BOTON CALIFICAR
-        if (orden.getCalificado() == null) {
-            holder.calificar.setText("CALIFICAR");
-            holder.calificar.setTextColor(Color.BLACK);
-            holder.calificar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(diffCalificacion<0) {
-
-                    }else{
-                        holder.calificar.setTextColor(Color.LTGRAY);
-                    }
-                }
-            });
-        } else {
-            holder.calificar.setText("YA CALIFICASTE");
-            holder.calificar.setTextColor(Color.LTGRAY);
-        }
 
         //METODO PARA INFORMACION DEL ESTADO DE LA ORDEN
         holder.btnOrdenInfo.setOnClickListener(new View.OnClickListener() {
@@ -145,10 +114,10 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
         return mItems.size();
     }
 
-    private List<Orden> mItems;
+    private List<Venta> mItems;
     private Context mContext;
 
-    public OrdenesAdapter(Context context, List<Orden> items) {
+    public OrdenesAdapter(Context context, List<Venta> items) {
         mItems = items;
         mContext = context;
     }
@@ -156,7 +125,7 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
     private OnItemClickListener mOnItemClickListener;
 
     interface OnItemClickListener {
-        void onItemClick(Orden clickedOrden);
+        void onItemClick(Venta clickedOrden);
     }
 
     public OnItemClickListener getOnItemClickListener() {
@@ -176,7 +145,6 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
         public TextView estado;
         //public TextView info_estado;
         public ImageView btnOrdenInfo;
-        public TextView calificar;
         public TextView llamar;
 
 
@@ -189,7 +157,6 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
             estado = (TextView) itemView.findViewById(R.id.txtOrdenEstado);
             //info_estado = (TextView) itemView.findViewById(R.id.txtOrdenInfoEstado);
             btnOrdenInfo = (ImageView) itemView.findViewById(R.id.btnOrdenInfo);
-            calificar = (TextView) itemView.findViewById(R.id.txtOrdenCalificar);
             llamar = (TextView) itemView.findViewById(R.id.txtOrdenLlamar);
 
             itemView.setOnClickListener(this);
@@ -204,7 +171,7 @@ public class OrdenesAdapter extends RecyclerView.Adapter<OrdenesAdapter.ViewHold
         }
     }
 
-    public void swapItems(List<Orden> ordenes) {
+    public void swapItems(List<Venta> ordenes) {
         if (ordenes == null) {
             mItems = new ArrayList<>(0);
         } else {

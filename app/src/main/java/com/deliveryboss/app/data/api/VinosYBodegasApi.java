@@ -7,6 +7,7 @@ import com.deliveryboss.app.data.api.model.ApiResponseMantenimiento;
 import com.deliveryboss.app.data.api.model.ApiResponseOrdenes;
 import com.deliveryboss.app.data.api.model.ApiResponseProductos;
 import com.deliveryboss.app.data.api.model.ApiResponseUsuario;
+import com.deliveryboss.app.data.api.model.ApiResponseVentas;
 import com.deliveryboss.app.data.api.model.CiudadSugerida;
 import com.deliveryboss.app.data.api.model.EmpresaSugerida;
 import com.deliveryboss.app.data.api.model.FbLoginBody;
@@ -17,6 +18,7 @@ import com.deliveryboss.app.data.api.model.Usuario;
 import com.deliveryboss.app.data.api.model.ApiResponseBodegas;
 import com.deliveryboss.app.data.api.model.UsuarioRegisterBody;
 import com.deliveryboss.app.data.api.model.Usuario_direccion;
+import com.deliveryboss.app.data.api.model.Venta;
 import com.deliveryboss.app.data.api.model.regIdBody;
 
 import retrofit2.Call;
@@ -82,6 +84,19 @@ public interface VinosYBodegasApi {
                               @Path(value = "idempresa", encoded = true) String idempresa,
                               @Path(value = "idusuario", encoded = true) String idusuario,
                               @Body Orden orden
+    );
+
+    @POST("ventas/{idempresa}/{idusuario}")
+    Call<ApiResponse> insertarVenta(@Header("Authorization") String authorization,
+                                    @Path(value = "idempresa", encoded = true) String idempresa,
+                                    @Path(value = "idusuario", encoded = true) String idusuario,
+                                    @Body Venta venta
+    );
+
+    @GET("ventas/{idempresa}/{idusuario}")
+    Call<ApiResponseVentas> obtenerVentasUsuario(@Header("Authorization") String authorization,
+                                                 @Path(value = "idempresa", encoded = true) String idempresa,
+                                                 @Path(value = "idusuario", encoded = true) String idusuario
     );
 
     @PUT("ordenes/{idorden}")

@@ -34,6 +34,7 @@ import com.deliveryboss.app.data.api.model.BodegasBody;
 import com.deliveryboss.app.data.api.model.ListItem;
 import com.deliveryboss.app.data.api.model.MessageEvent;
 import com.deliveryboss.app.data.api.model.Rubro;
+import com.deliveryboss.app.data.api.model.Venta_detalle;
 import com.deliveryboss.app.data.util.Utilidades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -78,8 +79,8 @@ public class InfoMenuFragment extends Fragment {
     List<Producto> serverProductos;
     String authorization;
     Context context;
-    Orden_detalle detalle;
-    List<Orden_detalle> ordenesDetalleLocal = new ArrayList<>();
+    Venta_detalle detalle;
+    List<Venta_detalle> ordenesDetalleLocal = new ArrayList<>();
     Boolean abierto= false;
 
     // FAB //
@@ -418,10 +419,10 @@ public class InfoMenuFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     Bundle bundle = data.getExtras();
 
-                    detalle = (new Gson()).fromJson((bundle.getString("detalle")),Orden_detalle.class);
+                    detalle = (new Gson()).fromJson((bundle.getString("detalle")),Venta_detalle.class);
 
                     for (int i=0; i<ordenesDetalleLocal.size(); i++) {
-                        if(ordenesDetalleLocal.get(i).getProducto_idproducto().equals(detalle.getProducto_idproducto())){
+                        if(ordenesDetalleLocal.get(i).getIdproducto().equals(detalle.getIdproducto())){
                             yaExisteProductoEnCarrito = true;
                             posicion = i;
                         }else{
@@ -432,10 +433,10 @@ public class InfoMenuFragment extends Fragment {
                     // SI EXISTE EL PRODUCTO EN EL CARRITO NO LO AGREGAMOS
                     if(yaExisteProductoEnCarrito){
                         ordenesDetalleLocal.set(posicion,detalle);
-                        Toast.makeText(context,"Cambiaste la cantidad de: " + ordenesDetalleLocal.get(posicion).getProducto_nombre()+"\nCantidad nueva: "+ordenesDetalleLocal.get(posicion).getCantidad(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Cambiaste la cantidad de: " + ordenesDetalleLocal.get(posicion).getProducto()+"\nCantidad nueva: "+ordenesDetalleLocal.get(posicion).getCantidad(),Toast.LENGTH_LONG).show();
                     }else{
                         ordenesDetalleLocal.add(detalle);
-                        Toast.makeText(context,"Agregaste: " + detalle.getCantidad()+" "+detalle.getProducto_nombre()+" a tu orden!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Agregaste: " + detalle.getCantidad()+" "+detalle.getProducto()+" a tu orden!",Toast.LENGTH_LONG).show();
 
 
                         //buttonA.setTitle("$"+String.valueOf(sumarTotal()));
@@ -495,7 +496,9 @@ public class InfoMenuFragment extends Fragment {
         int cantidad= 0;
         cantidad = ordenesDetalleLocal.size();
         for (int i=0; i<cantidad; i++) {
-            total += Float.valueOf(ordenesDetalleLocal.get(i).getOrden_detalle_subtotal());
+            if(ordenesDetalleLocal.get(i).getImporte_subtotal()!=null){
+                total += Float.valueOf(ordenesDetalleLocal.get(i).getImporte_subtotal());
+            }
         }
 
         createCartBadge(cantidad);

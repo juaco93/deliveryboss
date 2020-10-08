@@ -8,10 +8,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.ApiResponseVentas;
+import com.deliveryboss.app.data.api.model.Venta;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.deliveryboss.app.R;
@@ -43,7 +46,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
     private TextView txtEmptyContainer;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    List<Orden> serverOrdenes;
+    List<Venta> serverVentas;
     String authorization;
     Context context;
 
@@ -57,11 +60,11 @@ public class MisOrdenesActivity extends AppCompatActivity {
 
 
         mListaOrdenes = (RecyclerView) findViewById(R.id.list_ordenes);
-        mOrdenesAdapter = new OrdenesAdapter(this, new ArrayList<Orden>(0));
+        mOrdenesAdapter = new OrdenesAdapter(this, new ArrayList<Venta>(0));
         mListaOrdenes.setAdapter(mOrdenesAdapter);
         mOrdenesAdapter.setOnItemClickListener(new OrdenesAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Orden clickedOrden) {
+            public void onItemClick(Venta clickedOrden) {
                 showInfoEstadoOrden((new Gson()).toJson(clickedOrden));
             }
         });
@@ -112,11 +115,11 @@ public class MisOrdenesActivity extends AppCompatActivity {
         //Log.d("gson", "Recuperando Ordenes desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseOrdenes> call = mVinosYBodegasApi.obtenerOrdenesUsuario(authorization,"0",idusuario);
-        call.enqueue(new Callback<ApiResponseOrdenes>() {
+        Call<ApiResponseVentas> call = mVinosYBodegasApi.obtenerVentasUsuario("1001","0",idusuario);
+        call.enqueue(new Callback<ApiResponseVentas>() {
             @Override
-            public void onResponse(Call<ApiResponseOrdenes> call,
-                                   Response<ApiResponseOrdenes> response) {
+            public void onResponse(Call<ApiResponseVentas> call,
+                                   Response<ApiResponseVentas> response) {
                 if (!response.isSuccessful()) {
                     // Procesar error de API
                     String error = "Ha ocurrido un error. Contacte al administrador";
@@ -129,7 +132,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
                         //ApiError apiError = ApiError.fromResponseBody(response.errorBody());
 
                         //error = apiError.getMessage();
-                        //Log.d(TAG, apiError.getDeveloperMessage());
+                        Log.d("ventas", response.errorBody().toString());
                     } else {
                         //Log.d("gson", response.errorBody().toString());
                         /*try {
@@ -142,18 +145,18 @@ public class MisOrdenesActivity extends AppCompatActivity {
                     //showLoadingIndicator(false);
                     //showErrorMessage(error);
                     //Log.d("gson", response.message());
-                    //Log.d("gson", response.raw().toString());
+                    Log.d("ventas", response.raw().toString());
                     // Mostrar empty state
                     mostrarOrdenesEmpty();
                     return;
                 }
 
-                serverOrdenes = response.body().getDatos();
-                //Log.d("gson", "toido bien, recibido: " + response.body().getDatos().toString());
-                if(serverOrdenes!=null){
-                    if (serverOrdenes.size() > 0) {
+                serverVentas = response.body().getDatos();
+                Log.d("ventas", new Gson().toJson(serverVentas));
+                if(serverVentas!=null){
+                    if (serverVentas.size() > 0) {
                         // Mostrar lista de ordenes
-                        mostrarOrdenes(serverOrdenes);
+                        mostrarOrdenes(serverVentas);
                         showLoadingIndicator(false);
                     } else {
                         // Mostrar empty state
@@ -170,16 +173,16 @@ public class MisOrdenesActivity extends AppCompatActivity {
                     //Log.d("notinoti","Recibimos notificacion, ingresando a orden");
                     if(getIntent().getStringExtra("idorden")!=null){
                         //Log.d("notinoti","Contenido idorden-->"+getIntent().getStringExtra("estado"));
-                        int cant = serverOrdenes.size();
+                        int cant = serverVentas.size();
                         for(int i=0;i<cant;i++){
                             // Chequeamos el idorden para ver si esta en las listadas, y si está actuamos según el estado de la orden
                             // Si estado='confirmada' o estado='cancelada' mostramos el estado de la orden
                             // Si estado='entregada' entonces mostramos el dialogo para calificar la orden
-                            if(serverOrdenes.get(i).getIdorden().equals(getIntent().getStringExtra("idorden"))){
+                            if(serverVentas.get(i).getIdventa().equals(getIntent().getStringExtra("idorden"))){
                                 if(getIntent().getStringExtra("estado").equals("entregada")){
                                                                    }
                                 if(getIntent().getStringExtra("estado").equals("confirmada")||getIntent().getStringExtra("estado").equals("cancelada")||getIntent().getStringExtra("estado").equals("anulada")||getIntent().getStringExtra("estado").equals("enviada")){
-                                    showInfoEstadoOrden((new Gson()).toJson(serverOrdenes.get(i)));
+                                    showInfoEstadoOrden((new Gson()).toJson(serverVentas.get(i)));
                                 }
                             }
                         }
@@ -188,7 +191,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ApiResponseOrdenes> call, Throwable t) {
+            public void onFailure(Call<ApiResponseVentas> call, Throwable t) {
                 //showLoadingIndicator(false);
                 //Log.d("gson", "Petición rechazada:" + t.getMessage());
                 showLoadingIndicator(false);
@@ -197,9 +200,9 @@ public class MisOrdenesActivity extends AppCompatActivity {
         });
     }
 
-    private void mostrarOrdenes(List<Orden> ordenesServer) {
+    private void mostrarOrdenes(List<Venta> ventasServer) {
         //Log.d("gson", "Entramos a mostrar ordenes ");
-        mOrdenesAdapter.swapItems(ordenesServer);
+        mOrdenesAdapter.swapItems(ventasServer);
         mListaOrdenes.setVisibility(View.VISIBLE);
         mEmptyStateContainer.setVisibility(View.GONE);
     }

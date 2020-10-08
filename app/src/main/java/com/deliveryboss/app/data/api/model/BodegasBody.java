@@ -25,12 +25,13 @@ public class BodegasBody {
     String rubro2;
     String rubro3;
     String idtipo_entrega;
+    String tipo_entrega;
     String historia;
     String e_commerce_activo;
     String activo;
     String inactivo_fecha_hora;
 
-    public BodegasBody(String idbodega, String nombre, String token, String fecha_hora_alta, String imagen, String imagen1, String imagen2, String imagen3, String cuit, String dni, String direccion, String ciudad, String compra_minima, String telefono1, String telefono2, String idempresa_rubro, String rubro1, String rubro2, String rubro3, String idtipo_entrega, String historia, String e_commerce_activo, String activo, String inactivo_fecha_hora) {
+    public BodegasBody(String idbodega, String nombre, String token, String fecha_hora_alta, String imagen, String imagen1, String imagen2, String imagen3, String cuit, String dni, String direccion, String ciudad, String compra_minima, String telefono1, String telefono2, String idempresa_rubro, String rubro1, String rubro2, String rubro3, String idtipo_entrega, String tipo_entrega, String historia, String e_commerce_activo, String activo, String inactivo_fecha_hora) {
         this.idbodega = idbodega;
         this.nombre = nombre;
         this.token = token;
@@ -51,6 +52,7 @@ public class BodegasBody {
         this.rubro2 = rubro2;
         this.rubro3 = rubro3;
         this.idtipo_entrega = idtipo_entrega;
+        this.tipo_entrega = tipo_entrega;
         this.historia = historia;
         this.e_commerce_activo = e_commerce_activo;
         this.activo = activo;
@@ -215,6 +217,14 @@ public class BodegasBody {
 
     public void setIdtipo_entrega(String idtipo_entrega) {
         this.idtipo_entrega = idtipo_entrega;
+    }
+
+    public String getTipo_entrega() {
+        return tipo_entrega;
+    }
+
+    public void setTipo_entrega(String tipo_entrega) {
+        this.tipo_entrega = tipo_entrega;
     }
 
     public String getHistoria() {

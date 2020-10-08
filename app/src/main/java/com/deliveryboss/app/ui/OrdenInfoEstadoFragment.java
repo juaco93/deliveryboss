@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.deliveryboss.app.data.api.model.Venta;
 import com.google.gson.Gson;
 import com.deliveryboss.app.R;
 import com.deliveryboss.app.data.api.model.Orden;
@@ -29,7 +30,7 @@ public class OrdenInfoEstadoFragment extends DialogFragment {
     TextView txtOrdenEstado;
     TextView txtOrdenEstadoInfoEstado;
     private Context mContext;
-    Orden orden;
+    Venta orden;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -53,17 +54,16 @@ public class OrdenInfoEstadoFragment extends DialogFragment {
 
 
         if(getArguments().getString("orden")!=null){
-            orden = (new Gson()).fromJson((getArguments().getString("orden")),Orden.class);
-            txtOrdenNumeroOrden.setText("Detalle de la orden #"+orden.getIdorden());
-            txtOrdenLocal.setText(orden.getNombre_empresa());
+            orden = (new Gson()).fromJson((getArguments().getString("orden")), Venta.class);
+            txtOrdenNumeroOrden.setText("Detalle del Pedido #"+((Venta) orden).getIdventa());
+            txtOrdenLocal.setText(orden.getNombre_bodega());
             txtOrdenFecha.setText(orden.getFecha_hora());
-            txtOrdenFechaEstado.setText(orden.getFecha_hora_estado());
-            txtOrdenEstado.setText(orden.getEstado());
-            if(orden.getEstado().equals("Confirmada"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenConfirmada));
-            if(orden.getEstado().equals("Pendiente"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenPendiente));
-            if(orden.getEstado().equals("Cancelada"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenCancelada));
-            if(orden.getEstado().equals("Entregada"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenEntregada));
-            txtOrdenEstadoInfoEstado.setText(orden.getInfo_estado());
+            txtOrdenFechaEstado.setText(orden.getFecha_hora());
+            txtOrdenEstado.setText(orden.getVenta_estado());
+            if(orden.getVenta_estado().equals("Confirmado"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenConfirmada));
+            if(orden.getVenta_estado().equals("Pendiente"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenPendiente));
+            if(orden.getVenta_estado().equals("Rechazado"))txtOrdenEstado.setTextColor(ContextCompat.getColor(mContext, R.color.colorOrdenCancelada));
+
         }
 
         btnCerrar.setOnClickListener(new View.OnClickListener() {
