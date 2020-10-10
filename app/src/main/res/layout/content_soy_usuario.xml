@@ -89,12 +89,13 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
             android:layout_marginTop="10dp"
-            android:paddingBottom="15dp"
+            android:layout_marginRight="4dp"
             android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:text="Continuar con Facebook"
-            android:textSize="@dimen/size_texto_boton" />
+            android:textSize="@dimen/size_texto_boton"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

@@ -413,7 +413,9 @@ public class RegistrarmeActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             final String[] error = {""};
-            Call<ApiResponse> registerCall = mVinosYBodegasApi.registroNormal(new UsuarioRegisterBody(nombre,apellido,email,telefono,contrasenia,FechaNac,usuario_tipo_idusuario_tipo,sexo_idsexo,usuario_estado_idusuario_estado));
+            UsuarioRegisterBody usuarioARegistrar = new UsuarioRegisterBody(nombre,apellido,email,telefono,contrasenia,FechaNac,usuario_tipo_idusuario_tipo,sexo_idsexo,usuario_estado_idusuario_estado);
+            Log.d("register",new Gson().toJson(usuarioARegistrar));
+            Call<ApiResponse> registerCall = mVinosYBodegasApi.registroNormal(usuarioARegistrar);
             registerCall.enqueue(new Callback<ApiResponse>() {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -424,7 +426,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                                 .contentType()
                                 .subtype()
                                 .equals("application/json")) {
-                            //Log.d("logindb", "se recibio respuesta json (con error): " + response.errorBody().string());
+                            //Log.d("register", "se recibio respuesta json (con error): " + response.errorBody().toString());
 
                         } else {
                             Gson gson = new Gson();
@@ -439,7 +441,7 @@ public class RegistrarmeActivity extends AppCompatActivity {
                                 error[0] = "Su email ya se encuentra registrado";
                                 yaExiste[0] =true;
                             }
-                            //Log.d("logindb", "Mensaje: " + mensaje.getMensaje() + " Estado>"+mensaje.getEstado());
+                            Log.d("register", "Mensaje: " + mensaje.getMensaje() + " Estado>"+mensaje.getEstado());
                         }
 
                         showLoginError(error[0]);

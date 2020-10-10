@@ -7,15 +7,11 @@ package com.deliveryboss.app.data.api.model;
 public class Ciudad {
     String idciudad;
     String ciudad;
-    String codigo_postal;
-    String provincia_idprovincia;
 
 
-    public Ciudad(String idciudad, String ciudad, String codigo_postal, String provincia_idprovincia) {
+    public Ciudad(String idciudad, String ciudad) {
         this.idciudad = idciudad;
         this.ciudad = ciudad;
-        this.codigo_postal = codigo_postal;
-        this.provincia_idprovincia = provincia_idprovincia;
     }
 
     public String getIdciudad() {
@@ -34,19 +30,4 @@ public class Ciudad {
         this.ciudad = ciudad;
     }
 
-    public String getCodigo_postal() {
-        return codigo_postal;
-    }
-
-    public void setCodigo_postal(String codigo_postal) {
-        this.codigo_postal = codigo_postal;
-    }
-
-    public String getProvincia_idprovincia() {
-        return provincia_idprovincia;
-    }
-
-    public void setProvincia_idprovincia(String provincia_idprovincia) {
-        this.provincia_idprovincia = provincia_idprovincia;
-    }
 }

@@ -15,9 +15,11 @@ public class Venta {
     String telefono1_bodega;
     String telefono2_bodega;
     String venta_estado;
+    String idtipo_entrega;
+    String idusuario_direccion;
     List<Venta_detalle> venta_detalle;
 
-    public Venta(String idventa, String fecha_hora, String idbodega, String idcliente, String importe_total, String nota, String idventa_tipo, String idventa_estado, List<Venta_detalle> venta_detalle) {
+    public Venta(String idventa, String fecha_hora, String idbodega, String idcliente, String importe_total, String nota, String idventa_tipo, String idventa_estado, String idtipo_entrega, String idusuario_direccion, List<Venta_detalle> venta_detalle) {
         this.idventa = idventa;
         this.fecha_hora = fecha_hora;
         this.idbodega = idbodega;
@@ -26,6 +28,8 @@ public class Venta {
         this.nota = nota;
         this.idventa_tipo = idventa_tipo;
         this.idventa_estado = idventa_estado;
+        this.idtipo_entrega = idtipo_entrega;
+        this.idusuario_direccion = idusuario_direccion;
         this.venta_detalle = venta_detalle;
     }
 
@@ -131,5 +135,21 @@ public class Venta {
 
     public void setVenta_estado(String venta_estado) {
         this.venta_estado = venta_estado;
+    }
+
+    public String getIdtipo_entrega() {
+        return idtipo_entrega;
+    }
+
+    public void setIdtipo_entrega(String idtipo_entrega) {
+        this.idtipo_entrega = idtipo_entrega;
+    }
+
+    public String getIdusuario_direccion() {
+        return idusuario_direccion;
+    }
+
+    public void setIdusuario_direccion(String idusuario_direccion) {
+        this.idusuario_direccion = idusuario_direccion;
     }
 }

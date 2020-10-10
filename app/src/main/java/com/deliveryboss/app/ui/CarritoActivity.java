@@ -133,7 +133,7 @@ public class CarritoActivity extends AppCompatActivity {
         txtTotal = (TextView) findViewById(R.id.txtCarritoImporteTotal);
         nombreEmpresa = (TextView) findViewById(R.id.lbCarritoNombreEmpresa);
         nota = (EditText) findViewById(R.id.txtCarritoNota);
-        pagaCon = (EditText) findViewById(R.id.txtCarritoPagaCon);
+        //pagaCon = (EditText) findViewById(R.id.txtCarritoPagaCon);
         btnConfirmarOrden = (Button) findViewById(R.id.btnConfirmarOrden);
         mListaCarrito = (RecyclerView) findViewById(R.id.listaCarrito);
         txtEmptyContainer = (TextView) findViewById(R.id.txtEmptyContainerCarrito);
@@ -234,10 +234,9 @@ public class CarritoActivity extends AppCompatActivity {
                         importeTotal = sumarTotal();
                         String subtotSt = String.format("%.2f", importeTotal);
                         txtTotal.setText("$"+String.valueOf(subtotSt));
-                        tipoEnvio = "2";
+                        tipoEnvio = "1";
                         idDireccionUsuario = null;
                         spDireccion.setEnabled(false);
-
                         chequearDireccion();
                     }
                 }
@@ -250,7 +249,7 @@ public class CarritoActivity extends AppCompatActivity {
                     importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
                     txtTotal.setText("$"+String.valueOf(subtotSt));
-                    tipoEnvio = "1";
+                    tipoEnvio = "2";
                     spDireccion.setEnabled(true);
 
                     chequearDireccion();
@@ -264,7 +263,7 @@ public class CarritoActivity extends AppCompatActivity {
                     importeTotal = sumarTotal();
                     String subtotSt = String.format("%.2f", importeTotal);
                     txtTotal.setText("$"+String.valueOf(subtotSt));
-                    tipoEnvio = "2";
+                    tipoEnvio = "1";
                     idDireccionUsuario = null;
                     spDireccion.setEnabled(false);
 
@@ -286,7 +285,7 @@ public class CarritoActivity extends AppCompatActivity {
                // if(serverDirecciones!=null && serverDirecciones.size()>0)idDireccionUsuario = serverDirecciones.get(position-1).getIdusuario_direccion();
                 //Log.d("direcciones", "id de direccion elegida: " + idDireccionUsuario);
                 if(position>0)stDireccion = serverDirecciones.get(position-1).getIdusuario_direccion();
-                //chequearDireccion();
+                chequearDireccion();
 
             }
 
@@ -360,6 +359,7 @@ public class CarritoActivity extends AppCompatActivity {
         }else{
             mostrarOrdenesDetalle(ordenesDetalleLocal);
         }
+        /*
         pagaCon.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -389,6 +389,7 @@ public class CarritoActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+        */
 
         //chequearCompraMinima();
 
@@ -504,13 +505,22 @@ public class CarritoActivity extends AppCompatActivity {
         String idempresa = empresa.getIdbodega();
         String nombreEmpresa = empresa.getNombre();
         String stPrecioDelivery = precioDelivery.toString();
+        String direccionLocal = "";
 
-        String direccionLocal = direccionUsuario.getIdusuario_direccion();
+        //Retiro en local
+        if(tipoEnvio.equals("1")){
+            direccionLocal = null;
+
+        }else{
+        //Delivery
+            direccionLocal = direccionUsuario.getIdusuario_direccion();
+        }
+
 
         // Tratamiento especial del "Paga con"
-        String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
-        BigDecimal parsed = new BigDecimal(cleanString).setScale(2,BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100),BigDecimal.ROUND_FLOOR);
-        String usuarioPagaCon = String.valueOf(parsed);
+        //String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
+        //BigDecimal parsed = new BigDecimal(cleanString).setScale(2,BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100),BigDecimal.ROUND_FLOOR);
+        //String usuarioPagaCon = String.valueOf(parsed);
         //Log.d("pagacom","Paga con: "+usuarioPagaCon);
 
         String textoNota = nota.getText().toString();
@@ -518,7 +528,7 @@ public class CarritoActivity extends AppCompatActivity {
 
         // Creacion del Objeto "Orden"
         //Orden orden = new Orden("","","","","",idusuario,idempresa,direccionLocal,stPrecioDelivery,total,usuarioPagaCon,textoNota,tipoEnvio,"1",nombreEmpresa,"","",ordenesDetalleLocal,"0","");
-        Venta venta = new Venta("","",empresa.getIdbodega(),idusuario,String.valueOf(importeTotal),textoNota,"2","1",ordenesDetalleLocal);
+        Venta venta = new Venta("","",empresa.getIdbodega(),idusuario,String.valueOf(importeTotal),textoNota,"2","1",tipoEnvio,direccionLocal,ordenesDetalleLocal);
 
         Log.d("venta",new Gson().toJson(venta));
         Log.d("venta",new Gson().toJson(ordenesDetalleLocal));
@@ -612,7 +622,7 @@ public class CarritoActivity extends AppCompatActivity {
         if (spTipoEntrega.getSelectedItem() != null) {
             if (!spTipoEntrega.getSelectedItem().equals("Elegí el tipo de entrega")) {
                 btnConfirmarOrden.setEnabled(true);
-                btnConfirmarOrden.setText("Enviar Orden");
+                btnConfirmarOrden.setText("Enviar Pedido");
                 return true;
             } else {
                 btnConfirmarOrden.setEnabled(false);
@@ -658,6 +668,7 @@ public class CarritoActivity extends AppCompatActivity {
         }
 
     private boolean chequearPagaCon(){
+        /*
         if(pagaCon.getText()!=null && !TextUtils.isEmpty(pagaCon.getText())){
             String cleanString = pagaCon.getText().toString().replaceAll("[$,.]", "");
             double parsed = Double.parseDouble(cleanString);
@@ -677,7 +688,8 @@ public class CarritoActivity extends AppCompatActivity {
             btnConfirmarOrden.setEnabled(false);
             btnConfirmarOrden.setText("Falta el monto con el que pagás");
             return false;
-        }
+        }*/
+        return true;
     }
 
 
