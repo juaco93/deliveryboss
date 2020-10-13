@@ -223,7 +223,7 @@ public class InfoMenuFragment extends Fragment {
         //Log.d("gson", "Token Header: " + authorization);
 
         // Realizar petición HTTP
-        Call<ApiResponseProductos> call = mVinosYBodegasApi.obtenerProductos("1001",empresa.getIdbodega());
+        Call<ApiResponseProductos> call = mVinosYBodegasApi.obtenerProductos(authorization,empresa.getIdbodega());
         call.enqueue(new Callback<ApiResponseProductos>() {
             @Override
             public void onResponse(Call<ApiResponseProductos> call,

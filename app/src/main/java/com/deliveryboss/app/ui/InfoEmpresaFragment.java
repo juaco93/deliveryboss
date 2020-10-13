@@ -2,10 +2,13 @@ package com.deliveryboss.app.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,13 +126,10 @@ public class InfoEmpresaFragment extends Fragment{
             telefono2 = (TextView) v.findViewById(R.id.lbTelefono2);
 
             nombreBodega.setText(empresa.getNombre());
-            rubrosBodega.setText(empresa.getRubro1()+", "+empresa.getRubro2()+", "+empresa.getRubro3());
             historia.setText(empresa.getHistoria());
 
             ciudad.setText(empresa.getCiudad());
             direccion.setText(empresa.getDireccion());
-            telefono1.setText(empresa.getTelefono1());
-            telefono2.setText(empresa.getTelefono2());
 
             ////// CARD IMAGENES ////////
             img1 = (ImageView) v.findViewById(R.id.imgBodega1);
@@ -163,6 +163,53 @@ public class InfoEmpresaFragment extends Fragment{
             }else{
                 img3.setVisibility(View.GONE);
             }
+
+            if(empresa.getTelefono1()!=null){
+                telefono1.setText(empresa.getTelefono1());
+                telefono1.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                telefono1.setPaintFlags(telefono1.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                telefono1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        //Log.d("telefono",orden.getTelefono().toString());
+                        callIntent.setData(Uri.parse("tel:"+empresa.getTelefono1()));
+                        context.startActivity(callIntent);
+                    }
+                });
+            }else{
+
+            }
+
+            if(empresa.getTelefono2()!=null){
+                telefono2.setText(empresa.getTelefono2());
+                telefono2.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+                telefono2.setPaintFlags(telefono2.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+                telefono2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        //Log.d("telefono",orden.getTelefono().toString());
+                        callIntent.setData(Uri.parse("tel:"+empresa.getTelefono2()));
+                        context.startActivity(callIntent);
+                    }
+                });
+            }else{
+
+            }
+
+
+            String rubros = "";
+            if(empresa.getRubro1()!=null){
+                rubros = empresa.getRubro1();
+            }
+            if(empresa.getRubro2()!=null){
+                rubros += ", " + empresa.getRubro2();
+            }
+            if(empresa.getRubro3()!=null){
+                rubros += ", " + empresa.getRubro3();
+            }
+            rubrosBodega.setText(rubros);
 
 
             return v;

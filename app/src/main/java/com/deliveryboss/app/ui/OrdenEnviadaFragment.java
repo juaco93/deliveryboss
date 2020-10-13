@@ -28,7 +28,7 @@ public class OrdenEnviadaFragment extends DialogFragment {
 
         // Get your views by using view.findViewById() here and do your listeners.
         builder.setMessage("")
-                .setPositiveButton("Ir a mis ordenes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ir a mis pedidos", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(getActivity(),MisOrdenesActivity.class);
                         startActivity(intent);

@@ -115,7 +115,7 @@ public class MisOrdenesActivity extends AppCompatActivity {
         //Log.d("gson", "Recuperando Ordenes desde el Server");
 
         // Realizar petición HTTP
-        Call<ApiResponseVentas> call = mVinosYBodegasApi.obtenerVentasUsuario("1001","0",idusuario);
+        Call<ApiResponseVentas> call = mVinosYBodegasApi.obtenerVentasUsuario(authorization,"0",idusuario);
         call.enqueue(new Callback<ApiResponseVentas>() {
             @Override
             public void onResponse(Call<ApiResponseVentas> call,

@@ -405,7 +405,7 @@ public class CarritoActivity extends AppCompatActivity {
                         if (chequearDireccion()){
                             if(chequearPagaCon()){
                             AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
-                            builder.setTitle("¿Deseas enviar tu orden?");
+                            builder.setTitle("¿Deseas enviar tu pedido?");
                             builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User clicked OK button
@@ -428,7 +428,7 @@ public class CarritoActivity extends AppCompatActivity {
                     if(spTipoEntrega.getSelectedItem().toString().equals("Retiro en el local")){
                         if(chequearPagaCon()) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
-                            builder.setTitle("¿Deseas enviar tu orden?");
+                            builder.setTitle("¿Deseas enviar tu pedido?");
                             builder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User clicked OK button
@@ -556,7 +556,7 @@ public class CarritoActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(mensaje.getEstado().equals("3"))error = "Tu venta no fué enviada. Revisá su conexión a Internet";
+                        if(mensaje.getEstado().equals("3"))error = "Tu pedido no fué enviado. Revisá su conexión a Internet";
                     }
                     showError(error);
                     return;
@@ -566,9 +566,9 @@ public class CarritoActivity extends AppCompatActivity {
                 showError(response.body().getMensaje());
                 Intent intent = new Intent(CarritoActivity.this,PrincipalActivity.class);
                 intent.putExtra("estado","1");
-                intent.putExtra("mensaje","Venta enviada correctamente!");
+                intent.putExtra("mensaje","Pedido enviado correctamente!");
                 startActivity(intent);
-                EventBus.getDefault().post(new MessageEvent("10", "Se envio la venta exitosamente."));
+                EventBus.getDefault().post(new MessageEvent("10", "Se envio el pedido exitosamente."));
 
             }
 
@@ -648,12 +648,12 @@ public class CarritoActivity extends AppCompatActivity {
             else {
                     if (spTipoEntrega.getSelectedItem().toString().equals("Retiro en el local")) {
                         btnConfirmarOrden.setEnabled(true);
-                        btnConfirmarOrden.setText("Enviar Orden");
+                        btnConfirmarOrden.setText("Enviar Pedido");
                         return true;
                     } else {
 
                         btnConfirmarOrden.setEnabled(true);
-                        btnConfirmarOrden.setText("Enviar Orden");
+                        btnConfirmarOrden.setText("Enviar Pedido");
                         return true;
                     }
             }
@@ -974,7 +974,7 @@ public class CarritoActivity extends AppCompatActivity {
     public void chequearLocalAbiertoHoy(){
         if(abierto_hoy){
             btnConfirmarOrden.setEnabled(true);
-            btnConfirmarOrden.setText("Enviar Orden");
+            btnConfirmarOrden.setText("Enviar Pedido");
         }else{
             AlertDialog.Builder builder;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

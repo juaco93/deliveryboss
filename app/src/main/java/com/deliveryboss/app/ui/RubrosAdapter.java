@@ -128,7 +128,16 @@ public class RubrosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .fit() // will explain later
                             .into(holder.imagenProducto);
                 }
-                holder.txt_title.setText(producto.getProducto());
+                if(producto.getProducto()!=null){
+                    Log.d("joacoProd",producto.getProducto());
+                    if(producto.getProducto().length()<=30){
+                        holder.txt_title.setText(producto.getProducto());
+                    }else{
+                        String nombreCortado = producto.getProducto().substring(0,30) + "...";
+                        holder.txt_title.setText(nombreCortado);
+                    }
+                }
+
                 holder.txt_detalle.setText(producto.getDescripcion());
                 holder.txt_precio.setText("$"+producto.getPrecio1());
                 break;

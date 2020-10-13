@@ -57,8 +57,8 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
         filtroCalificacion = findViewById(R.id.txtFiltroCalificacion);
         filtroAZ = findViewById(R.id.txtFiltroNombreAZ);
         filtroZA = findViewById(R.id.txtFiltroNombreZA);
-        filtroAbiertoHoy = findViewById(R.id.txtFiltroAbiertoHoy);
-        filtroDeliveryEnMiZona = findViewById(R.id.txtFiltroDeliveryEnMiZona);
+        //filtroAbiertoHoy = findViewById(R.id.txtFiltroAbiertoHoy);
+        //filtroDeliveryEnMiZona = findViewById(R.id.txtFiltroDeliveryEnMiZona);
         btnFiltroAceptar = findViewById(R.id.btnFiltroAceptar);
         btnFiltroAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,14 +71,15 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
         inicializarOrdenamiento(filtroCalificacion);
         inicializarOrdenamiento(filtroAZ);
         inicializarOrdenamiento(filtroZA);
-        inicializarFiltro(filtroAbiertoHoy);
-        inicializarFiltro(filtroDeliveryEnMiZona);
+        //inicializarFiltro(filtroAbiertoHoy);
+        //inicializarFiltro(filtroDeliveryEnMiZona);
 
 
 
         final Intent intent = getIntent();
 
         // Inicializacion segun datos de previo filtrado //
+        /*
         if(intent.getBooleanExtra("Abierto hoy",false)) {
             marcarBotonPresionado(filtroAbiertoHoy);
         }else{
@@ -89,6 +90,7 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
         }else{
             blanquearBoton(filtroDeliveryEnMiZona);
         }
+        */
         if(intent.getBooleanExtra("Nombre A-Z",false)){
             marcarBotonPresionado(filtroAZ);
         }else{
@@ -99,7 +101,7 @@ public class FiltroEmpresasActivity extends AppCompatActivity {
         }else{
             blanquearBoton(filtroZA);
         }
-        if(intent.getBooleanExtra("Calificación",false)){
+        if(intent.getBooleanExtra("Localidad",false)){
             marcarBotonPresionado(filtroCalificacion);
         }else{
             blanquearBoton(filtroCalificacion);

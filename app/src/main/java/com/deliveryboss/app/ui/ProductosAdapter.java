@@ -36,7 +36,6 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d("joaco","CARGAMOS LOS PRODUCTOS EN EL ADAPTER");
         Producto producto = mItems.get(position);
-        holder.producto.setText(producto.getProducto());
         holder.detalleproducto.setText(producto.getDescripcion());
         holder.precio.setText("$" + producto.getPrecio1());
 

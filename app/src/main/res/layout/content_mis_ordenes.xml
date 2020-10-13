@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Cargando ordenes..." />
+            android:text="Cargando pedidos..." />
     </LinearLayout>
     </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

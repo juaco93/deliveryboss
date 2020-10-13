@@ -366,7 +366,7 @@ public class PrincipalActivity extends AppCompatActivity {
         //Call<ApiResponseBodegas> call = mVinosYBodegasApi.obtenerEmpresasPorRubro(authorization,usuarioIdciudad, "debug_app");
         //MODO NORMAL: SIGUIENTE LINEA
         Log.d("joaco", "Vamos a llamar a la API");
-        Call<ApiResponseBodegas> call = mVinosYBodegasApi.obtenerBodegas("1001");
+        Call<ApiResponseBodegas> call = mVinosYBodegasApi.obtenerBodegas(authorization);
         call.enqueue(new Callback<ApiResponseBodegas>() {
             @Override
             public void onResponse(Call<ApiResponseBodegas> call,
@@ -514,8 +514,8 @@ public class PrincipalActivity extends AppCompatActivity {
         mEmptyStateContainer.setVisibility(View.GONE);
 
         if(isFirstOpening) {
-            ordenarListaPorParametro("Cercanía");
-            intentFiltro.putExtra("Cercanía", true);
+            ordenarListaPorParametro("AZ");
+            intentFiltro.putExtra("AZ", true);
             isFirstOpening = false;
         }
 
@@ -606,6 +606,8 @@ public class PrincipalActivity extends AppCompatActivity {
                 startActivity(new Intent(PrincipalActivity.this, MisDireccionesActivity.class));
             }
         });
+
+        txtNombreApp.setText("Vinos y Bodegas");
 
         final android.support.v7.app.ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -721,7 +723,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public void showOrdenEnviadaDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         OrdenEnviadaFragment newFragment = new OrdenEnviadaFragment();
-        newFragment.show(fragmentManager.beginTransaction(), "¡Orden enviada!");
+        newFragment.show(fragmentManager.beginTransaction(), "¡Pedido enviado!");
     }
 
 
@@ -811,7 +813,13 @@ public class PrincipalActivity extends AppCompatActivity {
             });
         }
 
-        if(ordenamiento.equals("Calificacion")) {
+        if(ordenamiento.equals("Localidad")) {
+            Collections.sort(serverEmpresas, new Comparator<BodegasBody>() {
+                @Override
+                public int compare(BodegasBody empresa1, BodegasBody empresa2) {
+                    return empresa1.getCiudad().compareToIgnoreCase(empresa2.getCiudad());
+                }
+            });
         }
 
         if(ordenamiento.equals("Cercanía")) {
@@ -872,6 +880,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 }else{
                     intentFiltro.putExtra("Delivery en mi zona",false);
                 }
+
             }
         }
         //Log.d("juaco1993","Datos intent filtro abierto hoy>"+data.getBooleanExtra("Abierto hoy",false));
@@ -892,11 +901,11 @@ public class PrincipalActivity extends AppCompatActivity {
             intentFiltro.putExtra("Nombre Z-A",false);
         }
 
-        if(data.getBooleanExtra("Calificación",false)){
-            ordenarListaPorParametro("Calificacion");
-            intentFiltro.putExtra("Calificación",true);
+        if(data.getBooleanExtra("Localidad",false)){
+            ordenarListaPorParametro("Localidad");
+            intentFiltro.putExtra("Localidad",true);
         }else{
-            intentFiltro.putExtra("Calificación",false);
+            intentFiltro.putExtra("Localidad",false);
         }
 
         if(data.getBooleanExtra("Cercanía",false)){

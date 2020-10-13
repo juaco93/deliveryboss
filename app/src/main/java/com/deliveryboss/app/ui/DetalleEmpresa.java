@@ -142,7 +142,7 @@ public class DetalleEmpresa extends AppCompatActivity{
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(fragmentMenu, "Menu");
+        adapter.addFragment(fragmentMenu, "Productos");
         adapter.addFragment(fragmentInfoEmpresa, "Informacion");
         //adapter.addFragment(fragmentCalificaciones, "Calificacion");
         viewPager.setAdapter(adapter);

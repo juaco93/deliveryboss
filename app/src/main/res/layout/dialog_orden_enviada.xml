@@ -8,14 +8,13 @@
         android:id="@+id/txtOrdenEnviada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentTop="false"
         android:layout_below="@+id/imgOrdenEnviada"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
-        android:text="¡Orden enviada!"
+        android:text="¡Pedido enviado!"
         android:textSize="24sp"></TextView>
 
     <TextView

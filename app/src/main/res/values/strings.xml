@@ -64,7 +64,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_soy_usuario">SoyUsuarioActivity</string>
     <string name="title_activity_registrarme">RegistrarmeActivity</string>
-    <string name="title_activity_carrito">Mi orden</string>
+    <string name="title_activity_carrito">Mi pedido</string>
     <string name="title_activity_menu_lateral">MenuLateral</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -77,11 +77,11 @@
     <string name="home_item">Home</string>
     <string name="productos_item">Productos</string>
     <string name="compras_item">Carrito</string>
-    <string name="ordenes_item">Ordenes</string>
+    <string name="ordenes_item">Pedidos</string>
     <string name="facturas_item">Facturas</string>
     <string name="log_out_item">Cerrar sesión</string>
     <string name="configuracion_item">Configuración</string>
-    <string name="title_activity_mis_ordenes">Mis órdenes</string>
+    <string name="title_activity_mis_ordenes">Mis pedidos</string>
     <string name="title_activity_seleccionar_ciudad">Seleccioná tu ciudad</string>
     <string name="title_activity_mis_direcciones">Seleccioná tu dirección</string>
     <string name="title_activity_acerca_de">AcercaDeActivity</string>
@@ -95,9 +95,9 @@
 
     <!-- MENSAJES VARIOS DE LA APLICACION -->
     <!-- ALERT DIALOGS -->
-    <string name="alertOrdenEnviada">En instantes el local confirmará tu orden. Podés ver el estado en "Mis Ordenes"</string>
+    <string name="alertOrdenEnviada">En instantes el local confirmará tu pedido. Podés ver el estado en "Mis pedidos"</string>
     <string name="alertRetiroLocalTitle">¡Este local no hace delivery a tu ubicación!</string>
-    <string name="alertRetiroLocalMsg">De igual forma podés realizar tu orden y pasar a retirarla por el local.</string>
+    <string name="alertRetiroLocalMsg">De igual forma podés realizar tu pedido y pasar a retirarlo por el local.</string>
     <string name="alertLocalAbiertoTitle">¡Este local no abre hoy!</string>
     <string name="alertLocalAbiertoMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Consultá los horarios en la pestaña Información para más detalles.</string>
     <string name="alertLocalAbiertoMenuMsg">Lo sentimos, hoy no podrás realizar pedidos en este local. Aún así podés ver el menú y los precios.</string>
@@ -108,13 +108,13 @@
     <string name="text_location_permission">Para mostrar tu ubicación necesitamos que actives el permiso.</string>
 
     <!-- MENSAJES VARIOS -->
-    <string name="mensajeSinRestaurantes">¡No hay restaurantes para tu dirección!</string>
-    <string name="mensajeSinMenu">¡El restaurante aún no cargó su menú!</string>
-    <string name="mensajeSinCalificaciones">¡El restaurante aún no tiene calificaciones!</string>
-    <string name="mensajeSinOrdenes">¡Todavia no realizaste ninguna orden!</string>
+    <string name="mensajeSinRestaurantes">¡No hay lugares disponibles para tu dirección!</string>
+    <string name="mensajeSinMenu">¡El lugar aún no cargó sus productos!</string>
+    <string name="mensajeSinCalificaciones">¡El lugar aún no tiene calificaciones!</string>
+    <string name="mensajeSinOrdenes">¡Todavia no realizaste ningun pedido!</string>
     <string name="mensajeSinDirecciones">¡Todavia no agregaste ninguna dirección! Agregá una haciendo click en +</string>
     <string name="mensajeSinDireccionesToolbar">No hay direcciones registradas</string>
-    <string name="mensajeCompartirApp">Hola! con esta APP se puede ordenar comida en nuestra ciudad! --> https://play.google.com/store/apps/details?id=com.deliveryboss.app</string>
+    <string name="mensajeCompartirApp">Mirá! con esta APP se puede pedir vinos en nuestra ciudad! --> https://play.google.com/store/apps/details?id=com.deliveryboss.app</string>
     <string name="mensajeDeliveryNo">Sin delivery a tu zona</string>
 
 
@@ -123,7 +123,7 @@
     <string name="toastCompruebaConexion">Comprueba tu conexión a Internet</string>
     <string name="toastDireccionPorDefecto">Se cambió tu dirección</string>
     <string name="toastPerfilCompletaGenero">Por favor, seleccioná un género.</string>
-    <string name="toastCarritoEnviandoOrden">Se está enviando tu orden...</string>
+    <string name="toastCarritoEnviandoOrden">Se está enviando tu pedido...</string>
 
 
     <!-- Configuraciones de Notificaciones -->
