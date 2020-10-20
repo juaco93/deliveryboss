@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.deliveryboss.app">
+    package="com.bodegaslarioja.app">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -34,18 +34,18 @@
             android:required="false"/>
 
         <activity
-            android:name=".ui.SeleccionarDireccion"
+            android:name="com.bodegaslarioja.app.ui.SeleccionarDireccion"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ui.SeleccionRubro"
+            android:name="com.bodegaslarioja.app.ui.SeleccionRubro"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TemaMenuLateral" />
         <activity
-            android:name=".ui.PrincipalActivity"
+            android:name="com.bodegaslarioja.app.ui.PrincipalActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -55,7 +55,7 @@
             </intent-filter>
             </activity>
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.bodegaslarioja.app.ui.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
@@ -76,7 +76,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DetalleEmpresa"
+            android:name="com.bodegaslarioja.app.ui.DetalleEmpresa"
             android:label="@string/title_activity_detalle_empresa"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -99,62 +99,62 @@
             android:value="AIzaSyCK9MYHeijzLs4wzKpq88M-trZe-ZizvZc" />
 
         <activity
-            android:name=".ui.SoyUsuarioActivity"
+            android:name="com.bodegaslarioja.app.ui.SoyUsuarioActivity"
             android:label="@string/title_activity_soy_usuario"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.RegistrarmeActivity"
+            android:name="com.bodegaslarioja.app.ui.RegistrarmeActivity"
             android:label="@string/title_activity_registrarme"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.CarritoActivity"
+            android:name="com.bodegaslarioja.app.ui.CarritoActivity"
             android:label="@string/title_activity_carrito"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.MisOrdenesActivity"
+            android:name="com.bodegaslarioja.app.ui.MisOrdenesActivity"
             android:label="@string/title_activity_mis_ordenes"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.MisDireccionesActivity"
+            android:name="com.bodegaslarioja.app.ui.MisDireccionesActivity"
             android:label="@string/title_activity_mis_direcciones"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.AcercaDeActivity"
+            android:name="com.bodegaslarioja.app.ui.AcercaDeActivity"
             android:label="@string/title_activity_acerca_de"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.SugerirEmpresa"
+            android:name="com.bodegaslarioja.app.ui.SugerirEmpresa"
             android:label="@string/title_activity_sugerir_empresa"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.SugerirCiudad"
+            android:name="com.bodegaslarioja.app.ui.SugerirCiudad"
             android:label="@string/title_activity_sugerir_ciudad"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.CiudadNoDisponible"
+            android:name="com.bodegaslarioja.app.ui.CiudadNoDisponible"
             android:label="@string/title_activity_ciudad_no_disponible"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.MiPerfilActivity"
+            android:name="com.bodegaslarioja.app.ui.MiPerfilActivity"
             android:label="@string/title_activity_mi_perfil"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
-        <service android:name=".data.service.MyFirebaseMessagingService">
+        <service android:name="com.bodegaslarioja.app.data.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".data.service.MyFirebaseInstanceIDService">
+        <service android:name="com.bodegaslarioja.app.data.service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -162,14 +162,14 @@
         <!-- ./Firebase Notifications -->
 
         <activity
-            android:name=".ui.MapsActivity"
+            android:name="com.bodegaslarioja.app.ui.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".ui.SeleccionarCiudad"
+            android:name="com.bodegaslarioja.app.ui.SeleccionarCiudad"
             android:label="@string/title_activity_seleccionar_ciudad"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.FiltroEmpresasActivity"
+            android:name="com.bodegaslarioja.app.ui.FiltroEmpresasActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>

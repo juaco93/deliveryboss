@@ -5,7 +5,7 @@
     android:id="@+id/contenedor_transiciones"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.deliveryboss.app.ui.DetalleEmpresa">
+    tools:context="com.bodegaslarioja.app.ui.DetalleEmpresa">
     <!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCarrito"

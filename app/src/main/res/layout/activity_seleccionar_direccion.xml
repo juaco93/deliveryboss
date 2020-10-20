@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.deliveryboss.app.ui.SeleccionarDireccion">
+    tools:context="com.bodegaslarioja.app.ui.SeleccionarDireccion">
 
     <include layout="@layout/content_seleccionar_direccion" />
 

@@ -99,13 +99,39 @@
             android:layout_below="@+id/txtOrdenNombreEmpresa"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtOrdenDetalle"
-                android:layout_width="280dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp">
+
+                <TextView
+                    android:id="@+id/txtOrdenDetalle"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:textSize="13sp"
+                    tools:text="2 Lomito Especial \n3 Pizzas Muzza\n2Porciones papas" />
+
+                <TextView
+                    android:id="@+id/txtOrdenDetalleSubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end"
+                    android:textSize="13sp"
+                    tools:text="$10" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtOrdenDetalleTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:ellipsize="end"
+                android:gravity="end"
                 android:textSize="13sp"
-                tools:text="2 Lomito Especial \n3 Pizzas Muzza\n2Porciones papas" />
+                android:textStyle="bold"
+                tools:text="TOTAL:   $100" />
         </LinearLayout>
 
         <View

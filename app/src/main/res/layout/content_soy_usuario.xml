@@ -5,11 +5,10 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/fondo"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <!-- Login progress -->
     <ProgressBar
@@ -76,10 +75,11 @@
             android:layout_height="@dimen/altura_boton"
             android:layout_marginTop="16dp"
 
-            android:backgroundTint="@color/colorBotonNaranja"
+            android:backgroundTint="@color/colorPrimary"
             android:text="@string/action_sign_in"
             android:textAllCaps="false"
-            android:textColor="@color/colorTextoBoton"
+            android:textColor="@color/blanco"
+            android:textColorLink="@color/colorPrimary"
             android:textSize="@dimen/size_texto_boton" />
 
         <com.facebook.login.widget.LoginButton

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.deliveryboss.app.ui.PrincipalActivity">
+    tools:context="com.bodegaslarioja.app.ui.PrincipalActivity">
 
     <!-- Contenido principal -->
     <include layout="@layout/content_principal" />

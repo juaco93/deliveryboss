@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.deliveryboss.app.ui.FiltroEmpresasActivity"
+    tools:context="com.bodegaslarioja.app.ui.FiltroEmpresasActivity"
     android:id="@+id/root_layout"
     >
 
