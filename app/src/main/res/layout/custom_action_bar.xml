@@ -54,7 +54,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/abIconoDireccion"
                 android:gravity="center_horizontal"
-                android:text="Elisa de quiroga, 806"
+                android:text="No tenés direcciones"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="12sp" />
 
